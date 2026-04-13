@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useInView, useScroll } from 'framer-motion';
+import { motion, AnimatePresence, useInView, useScroll, useSpring } from 'framer-motion';
 
 const IMG = {
   singapore: 'https://image.qwenlm.ai/public_source/a7b586f8-7250-4f86-bc01-7c26cadd0134/1e226a98a-3d48-4cd9-a261-e2c515240501.png',
