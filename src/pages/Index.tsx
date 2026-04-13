@@ -199,6 +199,7 @@ const faqData = [
 export default function Index() {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [pastHero, setPastHero] = useState(false);
   const [activeTab, setActiveTab] = useState('All');
   const [countrySliderIdx, setCountrySliderIdx] = useState(0);
   const [showContactForm, setShowContactForm] = useState(false);
@@ -207,8 +208,6 @@ export default function Index() {
   const [eligResult, setEligResult] = useState<{ score: number; message: string } | null>(null);
   const [heroIdx, setHeroIdx] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [showHeroFlight, setShowHeroFlight] = useState(true);
-  const handleHeroFlightComplete = useCallback(() => setShowHeroFlight(false), []);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
