@@ -693,7 +693,7 @@ export default function Index() {
             {faqData.map((faq, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} className="bg-[#F5F5F0] dark:bg-gray-800 rounded-2xl overflow-hidden">
                 <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full flex items-center justify-between p-4 sm:p-5 text-left">
-                  <span className="text-xs sm:text-sm font-semibold text-gray-900 pr-4">{faq.q}</span>
+                  <span className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white pr-4">{faq.q}</span>
                   <motion.svg animate={{ rotate: openFaq === i ? 180 : 0 }} transition={{ duration: 0.2 }} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" className="flex-shrink-0">
                     <polyline points="6 9 12 15 18 9" />
                   </motion.svg>
