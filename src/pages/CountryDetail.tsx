@@ -47,6 +47,10 @@ export default function CountryDetail() {
 
   return (
     <div className="min-h-screen bg-[#F5F5F0]">
+      {/* Flight Intro Animation */}
+      {showFlight && country && (
+        <FlightIntro countryName={country.country} flag={country.flag} onComplete={handleFlightComplete} />
+      )}
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#F5F5F0]/95 backdrop-blur-xl shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
