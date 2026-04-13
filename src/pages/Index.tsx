@@ -202,6 +202,8 @@ const faqData = [
 ];
 
 export default function Index() {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const [mobileMenu, setMobileMenu] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [pastHero, setPastHero] = useState(false);
