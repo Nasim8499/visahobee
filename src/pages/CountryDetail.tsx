@@ -80,7 +80,7 @@ export default function CountryDetail() {
               </Link>
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-4xl">{country.flag}</span>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white" style={{ fontFamily: 'Inter, sans-serif' }}>{country.country}</h1>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white" className="font-heading">{country.country}</h1>
               </div>
               <p className="text-white/80 text-sm sm:text-base max-w-2xl">{country.desc}</p>
             </div>
@@ -114,13 +114,13 @@ export default function CountryDetail() {
           <div className="lg:col-span-2 space-y-10">
             {/* Overview */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>Overview</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4" className="font-heading">Overview</h2>
               <p className="text-gray-600 text-sm sm:text-base leading-relaxed">{country.overview}</p>
             </motion.div>
 
             {/* Visa Types & Fees */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>Visa Types & Fees</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4" className="font-heading">Visa Types & Fees</h2>
               <div className="space-y-4">
                 {country.visaTypes.map((vt) => (
                   <div key={vt.name} className="bg-white rounded-2xl p-5 sm:p-6 border border-gray-100 shadow-sm">
@@ -146,7 +146,7 @@ export default function CountryDetail() {
 
             {/* Requirements */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>Required Documents</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4" className="font-heading">Required Documents</h2>
               <div className="bg-white rounded-2xl p-5 sm:p-6 border border-gray-100 shadow-sm">
                 <ul className="space-y-3">
                   {country.requirements.map((req) => (
@@ -163,7 +163,7 @@ export default function CountryDetail() {
 
             {/* Industries */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-              <h2 className="text-2xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Inter, sans-serif' }}>Key Industries</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4" className="font-heading">Key Industries</h2>
               <div className="flex flex-wrap gap-2">
                 {country.industries.map((ind) => (
                   <span key={ind} className="bg-white text-gray-700 text-sm font-medium px-4 py-2 rounded-full border border-gray-200 shadow-sm">{ind}</span>
