@@ -23,7 +23,7 @@ export default function FadeIn({
           observer.unobserve(el);
         }
       },
-      { threshold: 0.05 }
+      { threshold: 0.02, rootMargin: '0px 0px 50px 0px' }
     );
 
     observer.observe(el);
@@ -33,8 +33,13 @@ export default function FadeIn({
   return (
     <div
       ref={ref}
-      className={`${className} ${visible ? 'animate-fade-up' : 'opacity-0'}`}
-      style={visible && delay ? { animationDelay: `${delay}ms` } : undefined}
+      className={className}
+      style={{
+        opacity: visible ? undefined : 0,
+        transform: visible ? undefined : 'translateY(24px)',
+        transition: visible ? 'opacity 0.6s ease-out, transform 0.6s ease-out' : undefined,
+        transitionDelay: visible && delay ? `${delay}ms` : undefined,
+      }}
     >
       {children}
     </div>
