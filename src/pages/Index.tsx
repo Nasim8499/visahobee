@@ -308,17 +308,17 @@ export default function Index() {
       <AnimatePresence>
         {mobileMenu && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm" onClick={() => setMobileMenu(false)}>
-            <motion.div initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }} className="absolute left-0 top-0 bottom-0 w-72 bg-white p-6" onClick={e => e.stopPropagation()}>
+            <motion.div initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }} className="absolute left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-900 p-6" onClick={e => e.stopPropagation()}>
               <div className="flex items-center justify-between mb-8">
-                <span className="font-bold text-gray-900 font-heading">Menu</span>
-                <button onClick={() => setMobileMenu(false)} className="text-gray-400 hover:text-gray-900"><CloseIcon /></button>
+                <span className="font-bold text-gray-900 dark:text-white font-heading">Menu</span>
+                <button onClick={() => setMobileMenu(false)} className="text-gray-400 hover:text-gray-900 dark:hover:text-white"><CloseIcon /></button>
               </div>
               {navLinks.map(item => (
-                <button key={item} onClick={() => scrollTo(item === 'Home' ? 'home' : item.toLowerCase().replace(/\s+/g, ''))} className="block w-full text-left py-3 text-gray-700 hover:text-orange-500 text-sm font-medium transition-colors border-b border-gray-100">
+                <button key={item} onClick={() => scrollTo(item === 'Home' ? 'home' : item.toLowerCase().replace(/\s+/g, ''))} className="block w-full text-left py-3 text-gray-700 dark:text-gray-300 hover:text-orange-500 text-sm font-medium transition-colors border-b border-gray-100 dark:border-gray-800">
                   {item}
                 </button>
               ))}
-              <div className="mt-8 pt-4 border-t border-gray-100">
+              <div className="mt-8 pt-4 border-t border-gray-100 dark:border-gray-800">
                 <p className="text-gray-400 text-xs">UEN: 202524173E | Singapore</p>
               </div>
             </motion.div>
