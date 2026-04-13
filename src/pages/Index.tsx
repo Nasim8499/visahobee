@@ -548,7 +548,7 @@ export default function Index() {
         </section>
 
         <section id="process" className="scroll-mt-24 bg-muted/50 py-16 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <FadeIn className="mx-auto max-w-6xl px-4 sm:px-6">
             <SectionIntro
               eyebrow="How It Works"
               title="A structured process without motion-heavy wrappers"
@@ -569,7 +569,7 @@ export default function Index() {
         </section>
 
         <section className="py-16 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <FadeIn className="mx-auto max-w-6xl px-4 sm:px-6">
             <SectionIntro
               eyebrow="Why VisaHOBe"
               title="Trust signals that stay visible on every screen"
@@ -621,7 +621,7 @@ export default function Index() {
         </section>
 
         <section className="bg-muted/50 py-16 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <FadeIn className="mx-auto max-w-6xl px-4 sm:px-6">
             <SectionIntro
               eyebrow="Success Stories"
               title="Feedback from clients across different routes"
@@ -668,7 +668,7 @@ export default function Index() {
         </section>
 
         <section id="contact" className="scroll-mt-24 bg-muted/50 py-16 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <FadeIn className="mx-auto max-w-6xl px-4 sm:px-6">
             <SectionIntro
               eyebrow="Contact"
               title="Ready to start your next move?"
