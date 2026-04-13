@@ -387,52 +387,107 @@ export default function Index() {
         )}
       </AnimatePresence>
 
-      {/* ── HERO SLIDER ── */}
-      <SectionWrap id="home" className="pt-24 pb-36 relative">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <AnimatePresence mode="wait">
-            <motion.div key={heroIdx} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.5 }}>
-              <p className="text-center text-xs sm:text-sm font-medium text-gray-600 mb-3">{slide.subtitle}</p>
-              <h1 className="text-center text-[2.8rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-bold tracking-tighter text-gray-900 leading-none font-heading">
-                {slide.title1}
-              </h1>
-              <h1 className="text-center text-[2.8rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-bold tracking-tighter leading-none font-heading">
-                <span className="text-orange-500">{slide.title2}</span>
-              </h1>
-              <p className="text-center text-xs sm:text-sm text-gray-500 mt-4 max-w-xl mx-auto">{slide.desc}</p>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+      {/* ── HERO — FULL-SCREEN FLIGHT SIMULATOR ── */}
+      <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+        {/* Dark background with world map */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a1a] via-[#0f172a] to-[#1e1b4b]" />
 
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.4, duration: 0.8 }} className="max-w-6xl mx-auto px-4 mt-6 relative">
-          <AnimatePresence mode="wait">
-            <motion.div key={heroIdx} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }} className="relative rounded-3xl overflow-hidden shadow-2xl">
-              <img src={slide.img} alt="VisaHOBe" className="w-full h-48 sm:h-72 md:h-80 object-cover" />
-            </motion.div>
-          </AnimatePresence>
-          <Floating delay={0} dur={3} yR={15} className="absolute top-6 left-4 sm:left-8 hidden sm:block"><PlaneSVG className="w-12 h-12 text-orange-500 drop-shadow-lg" /></Floating>
-          <Floating delay={0.5} dur={4} yR={12} className="absolute top-12 right-4 sm:right-12 hidden sm:block"><VisaStampSVG className="w-14 h-14" /></Floating>
+        {/* Animated world map SVG */}
+        <motion.div className="absolute inset-0 flex items-center justify-center" initial={{ opacity: 0, scale: 1.2 }} animate={{ opacity: 0.5, scale: 1 }} transition={{ duration: 2 }}>
+          <svg className="w-full h-full max-w-none" viewBox="0 0 1000 500" fill="none">
+            <path d="M150 80 L220 60 L280 80 L300 120 L280 180 L240 200 L200 220 L160 200 L120 160 L100 120 Z" fill="rgba(249,115,22,0.12)" stroke="rgba(249,115,22,0.3)" strokeWidth="1"/>
+            <path d="M220 250 L260 240 L280 280 L290 340 L270 400 L240 420 L210 380 L200 320 L210 280 Z" fill="rgba(249,115,22,0.08)" stroke="rgba(249,115,22,0.25)" strokeWidth="1"/>
+            <path d="M440 70 L500 60 L530 80 L520 120 L490 140 L460 130 L440 100 Z" fill="rgba(249,115,22,0.15)" stroke="rgba(249,115,22,0.4)" strokeWidth="1"/>
+            <path d="M460 160 L510 150 L540 180 L550 250 L530 320 L500 350 L470 320 L450 260 L440 200 Z" fill="rgba(249,115,22,0.08)" stroke="rgba(249,115,22,0.25)" strokeWidth="1"/>
+            <path d="M560 60 L700 50 L780 80 L800 140 L760 180 L700 200 L640 190 L580 160 L550 120 L540 80 Z" fill="rgba(249,115,22,0.12)" stroke="rgba(249,115,22,0.3)" strokeWidth="1"/>
+            <path d="M720 200 L780 190 L820 220 L810 260 L770 280 L730 260 L710 230 Z" fill="rgba(249,115,22,0.08)" stroke="rgba(249,115,22,0.25)" strokeWidth="1"/>
+            <path d="M760 320 L840 310 L880 340 L870 380 L830 400 L780 390 L750 360 Z" fill="rgba(249,115,22,0.12)" stroke="rgba(249,115,22,0.3)" strokeWidth="1"/>
+            {[100,200,300,400].map(y => <line key={`h${y}`} x1="0" y1={y} x2="1000" y2={y} stroke="rgba(249,115,22,0.06)" strokeWidth="0.5" strokeDasharray="8 8"/>)}
+            {[200,400,600,800].map(x => <line key={`v${x}`} x1={x} y1="0" x2={x} y2="500" stroke="rgba(249,115,22,0.06)" strokeWidth="0.5" strokeDasharray="8 8"/>)}
+          </svg>
         </motion.div>
 
-        {/* Slide indicators */}
-        <div className="flex justify-center gap-2 mt-4">
-          {heroSlides.map((_, i) => (
-            <button key={i} onClick={() => setHeroIdx(i)} className={`h-2 rounded-full transition-all duration-300 ${i === heroIdx ? 'bg-orange-500 w-8' : 'bg-gray-300 w-2'}`} />
-          ))}
+        {/* Animated dots for countries */}
+        {[
+          { x: 65, y: 35 }, { x: 82, y: 68 }, { x: 50, y: 22 }, { x: 48, y: 25 },
+          { x: 56, y: 30 }, { x: 72, y: 45 }, { x: 60, y: 18 }, { x: 54, y: 32 },
+          { x: 47, y: 20 }, { x: 70, y: 40 },
+        ].map((dot, i) => (
+          <motion.div
+            key={i}
+            className="absolute"
+            style={{ left: `${dot.x}%`, top: `${dot.y}%` }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.5 + i * 0.12, type: 'spring' }}
+          >
+            <div className="w-2 h-2 bg-orange-500 rounded-full" />
+            <motion.div className="absolute inset-0 w-2 h-2 bg-orange-500 rounded-full" animate={{ scale: [1, 3, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.25 }} />
+          </motion.div>
+        ))}
+
+        {/* Animated flight arc */}
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <motion.path d="M 10 75 Q 35 30 50 25 Q 65 20 90 45" fill="none" stroke="rgba(249,115,22,0.5)" strokeWidth="0.3" strokeDasharray="2 2" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 3, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop', repeatDelay: 1 }} />
+          <motion.path d="M 15 65 Q 45 45 55 35 Q 75 25 85 55" fill="none" stroke="rgba(249,115,22,0.25)" strokeWidth="0.2" strokeDasharray="1 2" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 4, ease: 'easeInOut', delay: 1.5, repeat: Infinity, repeatType: 'loop', repeatDelay: 1 }} />
+        </svg>
+
+        {/* Floating airplane */}
+        <motion.div className="absolute z-10" initial={{ x: '-30vw', y: '20vh' }} animate={{ x: ['−30vw', '10vw', '40vw'], y: ['20vh', '-10vh', '15vh'], rotate: [-30, -10, 10] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}>
+          <svg width="48" height="48" viewBox="0 0 64 64" fill="none">
+            <path d="M58 6L28 36M58 6L40 58L28 36M58 6L6 24L28 36" fill="rgba(249,115,22,0.15)" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </motion.div>
+
+        {/* Floating particles */}
+        {Array.from({ length: 15 }).map((_, i) => (
+          <motion.div
+            key={`p${i}`}
+            className="absolute w-1 h-1 bg-orange-400/60 rounded-full"
+            style={{ left: `${10 + Math.random() * 80}%`, top: `${10 + Math.random() * 80}%` }}
+            animate={{ opacity: [0, 0.7, 0], y: [0, -25] }}
+            transition={{ duration: 2.5 + Math.random() * 2, repeat: Infinity, delay: Math.random() * 3 }}
+          />
+        ))}
+
+        {/* Hero text content on top */}
+        <div className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-12 text-center">
+          <AnimatePresence mode="wait">
+            <motion.div key={heroIdx} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.5 }}>
+              <p className="text-xs sm:text-sm font-medium text-orange-400/80 mb-3">{slide.subtitle}</p>
+              <h1 className="text-[2.8rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-bold tracking-tighter text-white leading-none font-heading">
+                {slide.title1}
+              </h1>
+              <h1 className="text-[2.8rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-bold tracking-tighter leading-none font-heading">
+                <span className="text-orange-500">{slide.title2}</span>
+              </h1>
+              <p className="text-xs sm:text-sm text-white/50 mt-4 max-w-xl mx-auto">{slide.desc}</p>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Slide indicators */}
+          <div className="flex justify-center gap-2 mt-8">
+            {heroSlides.map((_, i) => (
+              <button key={i} onClick={() => setHeroIdx(i)} className={`h-2 rounded-full transition-all duration-300 ${i === heroIdx ? 'bg-orange-500 w-8' : 'bg-white/30 w-2'}`} />
+            ))}
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setShowEligibility(true)} className="bg-orange-500 text-white rounded-full px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-bold shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+              Check Eligibility
+            </motion.button>
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setShowContactForm(true)} className="bg-white/10 backdrop-blur-sm text-white border border-white/20 rounded-full px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-bold shadow-lg flex items-center justify-center gap-2 hover:bg-white/20 transition-colors">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
+              Contact VisaHOBe
+            </motion.button>
+          </div>
         </div>
 
-        {/* CTA Buttons */}
-        <div className="max-w-6xl mx-auto px-4 mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setShowEligibility(true)} className="bg-orange-500 text-white rounded-full px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-bold shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-            Check Eligibility
-          </motion.button>
-          <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setShowContactForm(true)} className="bg-gray-900 text-white rounded-full px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-bold shadow-lg flex items-center justify-center gap-2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
-            Contact VisaHOBe
-          </motion.button>
-        </div>
-      </SectionWrap>
+        {/* Bottom fade to page bg */}
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#F5F5F0] to-transparent z-20" />
+      </section>
 
       {/* FEATURED COUNTRIES */}
       <SectionWrap id="countries" className="pt-16 pb-8">
