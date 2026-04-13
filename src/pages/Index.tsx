@@ -37,16 +37,9 @@ const StarRating = ({ rating = 5 }: { rating?: number }) => (
 );
 
 const SectionWrap = ({ children, className = '', id = '' }: { children: React.ReactNode; className?: string; id?: string }) => (
-  <motion.section
-    id={id}
-    className={className}
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: '-40px' }}
-    transition={{ duration: 0.6, ease: 'easeOut' }}
-  >
+  <section id={id} className={className}>
     {children}
-  </motion.section>
+  </section>
 );
 
 const Floating = ({ children, delay = 0, dur = 4, yR = 15, className = "" }: { children: React.ReactNode; delay?: number; dur?: number; yR?: number; className?: string }) => (
