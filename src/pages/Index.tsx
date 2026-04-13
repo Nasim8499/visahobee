@@ -503,7 +503,7 @@ export default function Index() {
             <SectionIntro
               eyebrow="What We Offer"
               title="Services built around real travel and recruitment workflows"
-              description="The homepage now renders as plain HTML while still covering the major visa, documentation, and employer-support topics clients need to review."
+              description="Comprehensive visa and recruitment solutions — from work permits and document preparation to employer coordination and candidate sourcing."
             />
             <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
               {services.map((item) => (
@@ -551,8 +551,8 @@ export default function Index() {
           <FadeIn className="mx-auto max-w-6xl px-4 sm:px-6">
             <SectionIntro
               eyebrow="How It Works"
-              title="A structured process without motion-heavy wrappers"
-              description="The invisible section issue has been isolated by moving the homepage back to straightforward section markup and regular layout flow."
+              title="From consultation to approval in five clear steps"
+              description="A simple, transparent process designed to get you where you need to be — with clear milestones and regular updates at every stage."
             />
             <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-5">
               {processSteps.map((step) => (
@@ -572,8 +572,8 @@ export default function Index() {
           <FadeIn className="mx-auto max-w-6xl px-4 sm:px-6">
             <SectionIntro
               eyebrow="Why VisaHOBe"
-              title="Trust signals that stay visible on every screen"
-              description="Each trust card now renders in normal document flow, making the section stable again on mobile and desktop."
+              title="Trusted by candidates and employers worldwide"
+              description="Our commitment to structured case handling, country-specific guidance, and responsive support sets us apart in international mobility."
             />
             <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
               {trustItems.map((item) => (
@@ -598,8 +598,8 @@ export default function Index() {
                   visa, and recruitment partner for people and employers navigating international mobility.
                 </p>
                 <p>
-                  The current content spans work permit routes, visitor and business mobility, country pages, supporting documentation,
-                  and employer hiring coordination across a growing destination network.
+                  Our services span work permit routes, visitor and business mobility, country-specific guidance, supporting documentation,
+                  and employer hiring coordination across a growing network of 10 destinations.
                 </p>
                 <div className="grid grid-cols-2 gap-3 pt-2">
                   <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
@@ -624,8 +624,8 @@ export default function Index() {
           <FadeIn className="mx-auto max-w-6xl px-4 sm:px-6">
             <SectionIntro
               eyebrow="Success Stories"
-              title="Feedback from clients across different routes"
-              description="The testimonial cards now live in a regular responsive grid, avoiding the collapsed layout issue caused by animated wrappers."
+              title="What our clients say"
+              description="Real experiences from candidates and employers who navigated their international journey with VisaHOBe."
             />
             <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3">
               {testimonials.map((testimonial) => (
@@ -639,8 +639,8 @@ export default function Index() {
           <FadeIn className="mx-auto max-w-3xl px-4 sm:px-6">
             <SectionIntro
               eyebrow="Frequently Asked Questions"
-              title="Answers that stay readable without any motion dependency"
-              description="Common questions remain expandable, but the interaction now uses plain React state and standard HTML layout."
+              title="Common questions answered"
+              description="Everything you need to know about our services, supported countries, and how to get started."
             />
             <div className="space-y-3">
               {faqData.map((faq, index) => {
@@ -672,7 +672,7 @@ export default function Index() {
             <SectionIntro
               eyebrow="Contact"
               title="Ready to start your next move?"
-              description="Use the form below to share your destination, visa type, or recruitment need — the section is now fully restored as standard layout markup."
+              description="Share your destination, visa type, or recruitment need and our team will respond within 24 hours."
             />
 
             <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
@@ -711,7 +711,7 @@ export default function Index() {
                     </div>
                     <h3 className="mt-5 font-heading text-2xl font-bold text-foreground">Thanks for reaching out</h3>
                     <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
-                      Your message has been captured locally in the form flow, and the section remains visually stable after removing motion wrappers.
+                      We've received your message and will get back to you within 24 hours with next steps tailored to your situation.
                     </p>
                     <button
                       onClick={() => setFormSubmitted(false)}
@@ -824,7 +824,7 @@ export default function Index() {
 
           <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
             <p>© 2025 VisaHOBe Pte. Ltd. All rights reserved.</p>
-            <p>Homepage restored with plain HTML sections and no framer-motion dependency.</p>
+            <p>Your trusted partner for international visa and recruitment services.</p>
           </div>
         </div>
       </footer>
