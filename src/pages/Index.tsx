@@ -189,19 +189,6 @@ const stats = [
   { value: 'End-to-end', label: 'Guided support' },
 ];
 
-const tools = [
-  {
-    title: 'Client Portal Preview',
-    desc: 'A future workspace for tracking application progress, storing documents, and keeping every update in one place.',
-    img: IMG.dashboard,
-  },
-  {
-    title: 'International Job Board',
-    desc: 'A curated look at verified openings across destinations, built to connect candidates with active employer demand.',
-    img: IMG.jobboard,
-  },
-];
-
 const starRow = Array.from({ length: 5 });
 
 function SectionIntro({
@@ -313,18 +300,6 @@ function TestimonialCard({
       <div className="mt-5 border-t border-border pt-4">
         <p className="text-sm font-semibold text-foreground">{testimonial.name}</p>
         <p className="text-xs text-muted-foreground">{testimonial.role}</p>
-      </div>
-    </article>
-  );
-}
-
-function ToolCard({ tool }: { tool: (typeof tools)[number] }) {
-  return (
-    <article className="overflow-hidden rounded-[1.8rem] border border-border bg-card shadow-sm">
-      <img src={tool.img} alt={tool.title} className="h-44 w-full object-cover sm:h-56" />
-      <div className="p-5 sm:p-6">
-        <h3 className="font-heading text-lg font-bold text-foreground sm:text-xl">{tool.title}</h3>
-        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{tool.desc}</p>
       </div>
     </article>
   );
@@ -640,21 +615,6 @@ export default function Index() {
 
             <div className="overflow-hidden rounded-[2rem] border border-border bg-card shadow-xl">
               <img src={IMG.traveler} alt="Traveler supported by VisaHOBe" className="h-72 w-full object-cover sm:h-96" />
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <SectionIntro
-              eyebrow="Tools & Updates"
-              title="Additional previews that still render cleanly"
-              description="Supporting previews for the client portal and international job board have been kept as static content so the homepage remains readable and stable."
-            />
-            <div className="grid gap-5 lg:grid-cols-2">
-              {tools.map((tool) => (
-                <ToolCard key={tool.title} tool={tool} />
-              ))}
             </div>
           </div>
         </section>
