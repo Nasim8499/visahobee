@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { getCountryBySlug, countries } from '@/data/countries';
 import { useState, useCallback } from 'react';
 import FlightIntro from '@/components/FlightIntro';
+import PageTransition from '@/components/PageTransition';
 
 const CloseIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -46,6 +47,7 @@ export default function CountryDetail() {
   const otherCountries = countries.filter(c => c.slug !== country.slug).slice(0, 3);
 
   return (
+    <PageTransition>
     <div className="min-h-screen bg-[#F5F5F0]">
       {/* Flight Intro Animation */}
       {showFlight && country && (
@@ -252,5 +254,6 @@ export default function CountryDetail() {
         </div>
       </footer>
     </div>
+    </PageTransition>
   );
 }
