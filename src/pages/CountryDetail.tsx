@@ -29,6 +29,8 @@ export default function CountryDetail() {
   const country = getCountryBySlug(slug || '');
   const [showContact, setShowContact] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [showFlight, setShowFlight] = useState(true);
+  const handleFlightComplete = useCallback(() => setShowFlight(false), []);
 
   if (!country) {
     return (
