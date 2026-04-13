@@ -1,759 +1,858 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence, useInView, useScroll, useSpring } from 'framer-motion';
+import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  ArrowRight,
+  Award,
+  Briefcase,
+  Check,
+  ChevronDown,
+  Clock3,
+  FileText,
+  Globe2,
+  HeadphonesIcon,
+  Mail,
+  MapPin,
+  Menu,
+  Phone,
+  Search,
+  Send,
+  ShieldCheck,
+  Users,
+  X,
+  type LucideIcon,
+} from 'lucide-react';
 import { countries, IMG } from '@/data/countries';
-import FlightIntro from '@/components/FlightIntro';
-import PageTransition from '@/components/PageTransition';
 import DarkModeToggle from '@/components/DarkModeToggle';
-import { useTheme } from '@/hooks/use-theme';
 
-const ArrowIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="5" y1="12" x2="19" y2="12" />
-    <polyline points="12 5 19 12 12 19" />
-  </svg>
-);
+type RegionFilter = 'All' | 'Asia' | 'Europe' | 'Middle East';
 
-const PlaneSVG = ({ className = "" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 64 64" fill="currentColor">
-    <path d="M58 8L6 30l18 6 4 18 8-12 12 6z" />
-  </svg>
-);
+const navLinks = [
+  { label: 'Home', target: 'home' },
+  { label: 'Countries', target: 'countries' },
+  { label: 'Services', target: 'services' },
+  { label: 'For Employers', target: 'foremployers' },
+  { label: 'Process', target: 'process' },
+  { label: 'About', target: 'about' },
+  { label: 'Contact', target: 'contact' },
+];
 
-const VisaStampSVG = ({ className = "" }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 80 80" fill="none">
-    <rect x="5" y="15" width="70" height="50" rx="8" stroke="#F97316" strokeWidth="3" strokeDasharray="6 4" />
-    <text x="40" y="38" textAnchor="middle" fill="#F97316" fontSize="14" fontWeight="bold">VISA</text>
-    <text x="40" y="55" textAnchor="middle" fill="#22C55E" fontSize="10" fontWeight="bold">APPROVED</text>
-  </svg>
-);
+const services: Array<{ icon: LucideIcon; img: string; title: string; desc: string }> = [
+  {
+    icon: FileText,
+    img: IMG.globevisa,
+    title: 'Work Permit Processing',
+    desc: 'End-to-end work permit coordination with employer-ready paperwork and embassy-focused documentation support.',
+  },
+  {
+    icon: Globe2,
+    img: IMG.traveler,
+    title: 'Visitor & Tourist Visas',
+    desc: 'Visitor visa planning with document guidance, itinerary support, and structured pre-submission checks.',
+  },
+  {
+    icon: Briefcase,
+    img: IMG.jobboard,
+    title: 'Business Visa Guidance',
+    desc: 'Business travel support for meetings, investor pathways, and cross-border commercial mobility requirements.',
+  },
+  {
+    icon: Users,
+    img: IMG.team,
+    title: 'Employer Recruitment Support',
+    desc: 'Candidate sourcing, shortlisting, and onboarding coordination for employers hiring across multiple markets.',
+  },
+  {
+    icon: Search,
+    img: IMG.dashboard,
+    title: 'Document Review & Assessment',
+    desc: 'Structured document screening that highlights missing items, risk areas, and next-step requirements early.',
+  },
+  {
+    icon: Send,
+    img: IMG.malaysia,
+    title: 'Application Submission Guidance',
+    desc: 'Step-by-step filing support with process tracking, timeline visibility, and coordinated follow-ups.',
+  },
+];
 
-const StarRating = ({ rating = 5 }: { rating?: number }) => (
-  <div className="flex gap-0.5">
-    {[1, 2, 3, 4, 5].map((s) => (
-      <svg key={s} width="14" height="14" viewBox="0 0 24 24" fill={s <= rating ? '#F97316' : '#E5E7EB'} stroke="none">
-        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" />
-      </svg>
-    ))}
-  </div>
-);
+const processSteps = [
+  {
+    step: '01',
+    title: 'Consultation & Matching',
+    desc: 'We review your goals, profile, and destination preferences to identify the strongest pathway.',
+  },
+  {
+    step: '02',
+    title: 'Document Preparation',
+    desc: 'Our team organizes the paperwork, validates requirements, and flags issues before submission.',
+  },
+  {
+    step: '03',
+    title: 'Employer & Case Coordination',
+    desc: 'We align employer demand, supporting records, and visa workflow so every file moves together.',
+  },
+  {
+    step: '04',
+    title: 'Submission & Updates',
+    desc: 'You receive clear status updates as the application moves through processing and review.',
+  },
+  {
+    step: '05',
+    title: 'Approval & Next Steps',
+    desc: 'Once approved, we help you prepare for travel, deployment, and the transition ahead.',
+  },
+];
 
-const SectionWrap = ({ children, className = '', id = '' }: { children: React.ReactNode; className?: string; id?: string }) => (
-  <section id={id} className={className}>
-    {children}
-  </section>
-);
+const trustItems: Array<{ icon: LucideIcon; title: string; desc: string }> = [
+  {
+    icon: ShieldCheck,
+    title: 'Professional Case Handling',
+    desc: 'Applications are organized with a consistent workflow that reduces missed details and rework.',
+  },
+  {
+    icon: Award,
+    title: 'Country-Specific Guidance',
+    desc: 'Every destination has different rules, fees, and timelines — we tailor the route accordingly.',
+  },
+  {
+    icon: Clock3,
+    title: 'Transparent Timelines',
+    desc: 'Clients know what happens next, what is pending, and where the process currently stands.',
+  },
+  {
+    icon: HeadphonesIcon,
+    title: 'Responsive Support',
+    desc: 'Candidates and employers can reach the team quickly when documents or clarifications are needed.',
+  },
+];
 
-const Floating = ({ children, delay = 0, dur = 4, yR = 15, className = "" }: { children: React.ReactNode; delay?: number; dur?: number; yR?: number; className?: string }) => (
-  <motion.div className={className} animate={{ y: [-yR, yR, -yR] }} transition={{ duration: dur, repeat: Infinity, ease: 'easeInOut', delay }}>
-    {children}
-  </motion.div>
-);
+const testimonials = [
+  {
+    name: 'Rahman Hossain',
+    role: 'Construction Engineer — Singapore',
+    text: 'VisaHOBe made my move to Singapore much clearer. The team kept every requirement organized and the process felt transparent from start to finish.',
+  },
+  {
+    name: 'Fatima Akter',
+    role: 'Healthcare Worker — Australia',
+    text: 'The documentation checklist and review support saved me a lot of confusion. I always knew what step came next and what I needed to prepare.',
+  },
+  {
+    name: 'Kamal Uddin',
+    role: 'IT Professional — Serbia',
+    text: 'The country-specific guidance was the biggest value for me. They explained the route clearly and helped me avoid mistakes before submission.',
+  },
+  {
+    name: 'Aminul Islam',
+    role: 'Electrician — Kuwait',
+    text: 'Everything from employer coordination to visa updates felt structured. I appreciated how quickly the team responded whenever I had questions.',
+  },
+  {
+    name: 'Nasrin Begum',
+    role: 'Supervisor — Cambodia',
+    text: 'My case was handled carefully and the instructions were easy to follow. The support before travel also helped me feel more prepared.',
+  },
+  {
+    name: 'Mizanur Rahman',
+    role: 'Software Developer — Malaysia',
+    text: 'The process felt organized from day one. I had a clear checklist, realistic timeline, and consistent updates until approval.',
+  },
+];
 
-const AnimatedCounter = ({ end, suffix = "", label = "" }: { end: number; suffix?: string; label?: string }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true });
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    let s = 0;
-    const inc = end / 125;
-    const t = setInterval(() => { s += inc; if (s >= end) { setCount(end); clearInterval(t); } else setCount(Math.floor(s)); }, 16);
-    return () => clearInterval(t);
-  }, [inView, end]);
+const faqData = [
+  {
+    q: 'What countries does VisaHOBe currently support?',
+    a: 'VisaHOBe currently highlights 10 destinations: Singapore, Australia, Serbia, Moldova, Kuwait, Cambodia, Russia, Saudi Arabia, Belarus, and Malaysia. Each country has its own visa routes, processing pace, and document expectations.',
+  },
+  {
+    q: 'Do you support work, business, and visitor visa routes?',
+    a: 'Yes. The homepage covers multiple visa categories including work permits, business visas, visitor or tourist routes, and supporting employer recruitment workflows depending on the destination country.',
+  },
+  {
+    q: 'How does the recruitment support work for employers?',
+    a: 'Employers can work with VisaHOBe for sourcing, screening, documentation flow, and coordination across the hiring timeline. The goal is to align candidate readiness with immigration requirements.',
+  },
+  {
+    q: 'What documents are usually required to get started?',
+    a: 'Most routes begin with a valid passport, education or experience records, photographs, and destination-specific forms. Some cases also require medicals, police clearance, or employer-issued documents.',
+  },
+  {
+    q: 'How do I begin the process?',
+    a: 'You can start by exploring a destination, reviewing the relevant visa pathway, and then contacting the team through the homepage form for a guided next step.',
+  },
+];
+
+const stats = [
+  { value: '10', label: 'Countries covered' },
+  { value: '500+', label: 'Placement journeys' },
+  { value: '24h', label: 'Response window' },
+  { value: 'End-to-end', label: 'Guided support' },
+];
+
+const tools = [
+  {
+    title: 'Client Portal Preview',
+    desc: 'A future workspace for tracking application progress, storing documents, and keeping every update in one place.',
+    img: IMG.dashboard,
+  },
+  {
+    title: 'International Job Board',
+    desc: 'A curated look at verified openings across destinations, built to connect candidates with active employer demand.',
+    img: IMG.jobboard,
+  },
+];
+
+const starRow = Array.from({ length: 5 });
+
+function SectionIntro({
+  eyebrow,
+  title,
+  description,
+  centered = true,
+}: {
+  eyebrow: string;
+  title: string;
+  description: string;
+  centered?: boolean;
+}) {
   return (
-    <div ref={ref} className="text-center">
-      <p className="text-3xl sm:text-4xl font-bold text-white font-heading">{count.toLocaleString()}{suffix}</p>
-      <p className="text-gray-400 text-xs mt-1">{label}</p>
+    <div className={centered ? 'mx-auto mb-10 max-w-2xl text-center sm:mb-12' : 'mb-8 max-w-2xl'}>
+      <p className="text-xs font-semibold uppercase tracking-[0.25em] text-primary sm:text-sm">{eyebrow}</p>
+      <h2 className="mt-3 font-heading text-[1.95rem] font-bold leading-none text-foreground sm:text-[3rem] md:text-[3.5rem]">
+        {title}
+      </h2>
+      <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">{description}</p>
     </div>
   );
-};
+}
 
-const CountryCard = ({ img, country, visa, badge, desc, slug, delay = 0 }: { img: string; country: string; visa: string; badge?: string; desc: string; slug: string; delay?: number; featured?: boolean }) => (
-  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay, duration: 0.4 }} whileHover={{ y: -6 }}>
-    <Link to={`/countries/${slug}`} className="block bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-gray-100 dark:border-gray-700 group">
-      <div className="relative h-36 sm:h-44 overflow-hidden">
-        <img src={img} alt={country} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-        {badge && <span className="absolute top-2 left-2 bg-orange-500 text-white text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full">{badge}</span>}
-      </div>
-      <div className="p-3 sm:p-5">
-        <div className="flex items-center gap-2 mb-1.5">
-          <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
-          <span className="text-orange-600 dark:text-orange-400 text-[10px] sm:text-xs font-semibold">{visa}</span>
+function CountryCard({ country }: { country: (typeof countries)[number] }) {
+  return (
+    <Link
+      to={`/countries/${country.slug}`}
+      className="group flex h-full flex-col overflow-hidden rounded-[1.6rem] border border-border bg-card shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
+    >
+      <div className="relative h-32 overflow-hidden sm:h-40">
+        <img
+          src={country.img}
+          alt={`${country.country} visa support`}
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+        />
+        <div className="absolute inset-x-0 top-0 flex items-center justify-between p-3">
+          <span className="rounded-full bg-background/90 px-2.5 py-1 text-[10px] font-semibold text-foreground backdrop-blur sm:text-[11px]">
+            {country.flag} {country.region}
+          </span>
+          {country.badge ? (
+            <span className="rounded-full bg-primary px-2.5 py-1 text-[10px] font-semibold text-primary-foreground sm:text-[11px]">
+              {country.badge}
+            </span>
+          ) : null}
         </div>
-        <h3 className="text-sm sm:text-lg font-bold text-gray-900 dark:text-white mb-1 font-heading">{country}</h3>
-        <p className="text-gray-500 dark:text-gray-400 text-[10px] sm:text-xs leading-relaxed mb-2 sm:mb-3 line-clamp-2">{desc}</p>
-        <div className="flex items-center gap-1 text-orange-500 text-[10px] sm:text-xs font-semibold">
-          <span>View Details</span>
-          <ArrowIcon />
+      </div>
+      <div className="flex flex-1 flex-col p-4 sm:p-5">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-primary sm:text-[11px]">{country.visa}</p>
+        <h3 className="mt-2 font-heading text-sm font-bold text-foreground sm:text-lg">{country.country}</h3>
+        <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-muted-foreground sm:text-sm">{country.desc}</p>
+        <div className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-primary sm:text-sm">
+          View Details
+          <ArrowRight className="h-4 w-4" />
         </div>
       </div>
     </Link>
-  </motion.div>
-);
-
-/* ── Service images ── */
-const serviceData = [
-  { img: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&q=80', title: 'Work Permit Processing', desc: 'End-to-end work permit application processing for multiple countries with embassy-ready documentation.' },
-  { img: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80', title: 'Tourist Visa Assistance', desc: 'Fast-track tourist visa processing with complete travel documentation and itinerary planning.' },
-  { img: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80', title: 'Business Visa Guidance', desc: 'Business visa support including meeting scheduling, invitation letters, and compliance documentation.' },
-  { img: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&q=80', title: 'Employer Recruitment', desc: 'Full recruitment coordination — candidate sourcing, screening, and placement with overseas employers.' },
-  { img: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=80', title: 'Document Preparation', desc: 'Thorough review and preparation of all visa-related documents to minimize errors and rejections.' },
-  { img: 'https://images.unsplash.com/photo-1529400971008-f566de0e6dfc?w=600&q=80', title: 'Candidate Sourcing', desc: 'Cross-border candidate sourcing and matching with verified employer demands worldwide.' },
-];
-
-const ServiceCardNew = ({ img, title, desc, delay = 0 }: { img: string; title: string; desc: string; delay?: number }) => (
-  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay, duration: 0.4 }} whileHover={{ y: -4 }} className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 dark:border-gray-700 group">
-    <div className="relative h-32 sm:h-40 overflow-hidden">
-      <img src={img} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-    </div>
-    <div className="p-4 sm:p-5">
-      <h3 className="text-sm sm:text-base font-bold text-gray-900 dark:text-white mb-1.5 font-heading">{title}</h3>
-      <p className="text-gray-500 dark:text-gray-400 text-[10px] sm:text-xs leading-relaxed line-clamp-3">{desc}</p>
-    </div>
-  </motion.div>
-);
-
-const TrustItem = ({ icon, title, delay = 0 }: { icon: React.ReactNode; title: string; delay?: number }) => (
-  <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay, duration: 0.3 }} className="flex items-center gap-3 bg-gray-50 dark:bg-gray-800 rounded-xl p-3 sm:p-4">
-    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-orange-50 dark:bg-orange-500/10 flex items-center justify-center flex-shrink-0">{icon}</div>
-    <span className="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">{title}</span>
-  </motion.div>
-);
-
-const TestimonialCard = ({ name, role, text, rating = 5, delay = 0 }: { name: string; role: string; text: string; rating?: number; delay?: number }) => (
-  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay, duration: 0.4 }} className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100 dark:border-gray-700">
-    <StarRating rating={rating} />
-    <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mt-3 sm:mt-4 mb-4 sm:mb-5 line-clamp-4">"{text}"</p>
-    <div className="flex items-center gap-3">
-      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center text-orange-600 dark:text-orange-400 font-bold text-xs sm:text-sm">{name.split(' ').map(n => n[0]).join('')}</div>
-      <div>
-        <p className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">{name}</p>
-        <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">{role}</p>
-      </div>
-    </div>
-  </motion.div>
-);
-
-const ProcessStep = ({ num, title, desc, icon, delay = 0 }: { num: string; title: string; desc: string; icon: string; delay?: number }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const iv = useInView(ref, { once: true, margin: '-20px' });
-  return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={iv ? { opacity: 1, y: 0 } : {}} transition={{ delay, duration: 0.4 }} className="text-center">
-      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-500 text-white flex items-center justify-center mx-auto mb-2 sm:mb-3 text-xs sm:text-sm font-bold">{num}</div>
-      <p className="text-xl sm:text-2xl mb-1 sm:mb-2">{icon}</p>
-      <h3 className="text-white font-semibold text-xs sm:text-sm mb-1 font-heading">{title}</h3>
-      <p className="text-gray-400 text-[10px] sm:text-xs leading-relaxed">{desc}</p>
-    </motion.div>
   );
-};
+}
 
-const CloseIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <line x1="18" y1="6" x2="6" y2="18" />
-    <line x1="6" y1="6" x2="18" y2="18" />
-  </svg>
-);
+function ServiceCard({ item }: { item: (typeof services)[number] }) {
+  const Icon = item.icon;
 
-const CheckIcon = () => (
-  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="3">
-    <polyline points="20 6 9 17 4 12" />
-  </svg>
-);
+  return (
+    <article className="overflow-hidden rounded-[1.6rem] border border-border bg-card shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
+      <div className="relative h-28 overflow-hidden sm:h-36">
+        <img src={item.img} alt={item.title} className="h-full w-full object-cover" />
+      </div>
+      <div className="p-4 sm:p-5">
+        <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+          <Icon className="h-5 w-5" />
+        </div>
+        <h3 className="font-heading text-sm font-bold text-foreground sm:text-lg">{item.title}</h3>
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">{item.desc}</p>
+      </div>
+    </article>
+  );
+}
 
-const TrustIcon = ({ type }: { type: string }) => {
-  const icons: Record<string, React.ReactNode> = {
-    case: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>,
-    country: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>,
-    document: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></svg>,
-    support: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6" /><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z" /><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" /></svg>,
-    transparent: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>,
-    multi: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>,
-  };
-  return <>{icons[type] || icons.case}</>;
-};
+function TrustCard({ item }: { item: (typeof trustItems)[number] }) {
+  const Icon = item.icon;
 
-/* ── Hero Slides ── */
-const heroSlides = [
-  { subtitle: 'Your Trusted Global Mobility Partner', title1: 'Global', title2: 'Mobility', desc: 'End-to-end visa and recruitment support across 10 countries — turning global aspirations into reality.', img: IMG.globevisa },
-  { subtitle: 'International Recruitment Solutions', title1: 'Global', title2: 'Recruitment', desc: 'Connecting skilled professionals with verified employer demand worldwide. From sourcing to deployment.', img: IMG.team },
-  { subtitle: 'Your Career, Our Mission', title1: 'Start', title2: 'Today', desc: 'Free eligibility assessment. 500+ successful placements. 10 countries. One trusted partner.', img: IMG.traveler },
-];
+  return (
+    <article className="rounded-[1.6rem] border border-border bg-card p-4 shadow-sm sm:p-6">
+      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+        <Icon className="h-5 w-5" />
+      </div>
+      <h3 className="font-heading text-sm font-bold text-foreground sm:text-lg">{item.title}</h3>
+      <p className="mt-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">{item.desc}</p>
+    </article>
+  );
+}
 
-/* ── FAQ Data ── */
-const faqData = [
-  { q: 'What countries does VisaHOBe operate in?', a: 'VisaHOBe provides visa and recruitment services across 10 countries: Singapore, Australia, Serbia, Moldova, Kuwait, Cambodia, Russia, Saudi Arabia, Belarus, and Malaysia. Each country has specialized pathways and dedicated case handling.' },
-  { q: 'How long does the visa process typically take?', a: 'Processing times vary by country and visa type. For example, Singapore Work Permits take 1-3 weeks, while Australian Skilled Visas can take 6-18 months. We provide specific timelines during your free consultation and keep you updated at every stage.' },
-  { q: 'What documents do I need to apply?', a: 'Basic requirements typically include a valid passport (minimum 6 months validity), educational certificates, medical examination report, police clearance, passport photographs, and an employment contract. Specific requirements vary by country — our team guides you through every document needed.' },
-  { q: 'How much does your service cost?', a: 'Our service fees depend on the destination country and visa type. We provide a transparent fee breakdown during the initial consultation. Government visa fees are separate and vary by country. There are no hidden charges.' },
-  { q: 'Is VisaHOBe a licensed company?', a: 'Yes. VisaHOBe Pte. Ltd. is a Singapore-registered company (UEN: 202524173E) incorporated on June 3, 2025, as a Private Company Limited by Shares. We operate under ACRA Code 70201 — Management Consultancy Services.' },
-  { q: 'Can employers partner with VisaHOBe for bulk recruitment?', a: 'Absolutely. We offer end-to-end recruitment solutions for global employers, including candidate sourcing, screening, documentation, visa processing, and deployment coordination. Contact us to discuss your hiring needs.' },
-  { q: 'What happens if my visa application is rejected?', a: 'While our thorough documentation process minimizes rejections, if one occurs, we review the reasons, advise on next steps, and can assist with reapplication or alternative pathways at no additional consultation fee.' },
-  { q: 'Do you provide post-arrival support?', a: 'Yes. We offer pre-departure briefings and can assist with initial settlement guidance including accommodation, local orientation, and connecting you with community networks in your destination country.' },
-];
+function TestimonialCard({
+  testimonial,
+}: {
+  testimonial: (typeof testimonials)[number];
+}) {
+  return (
+    <article className="rounded-[1.6rem] border border-border bg-card p-4 shadow-sm sm:p-6">
+      <div className="flex gap-1 text-primary">
+        {starRow.map((_, index) => (
+          <svg key={index} width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" />
+          </svg>
+        ))}
+      </div>
+      <p className="mt-4 text-xs leading-relaxed text-muted-foreground sm:text-sm">“{testimonial.text}”</p>
+      <div className="mt-5 border-t border-border pt-4">
+        <p className="text-sm font-semibold text-foreground">{testimonial.name}</p>
+        <p className="text-xs text-muted-foreground">{testimonial.role}</p>
+      </div>
+    </article>
+  );
+}
+
+function ToolCard({ tool }: { tool: (typeof tools)[number] }) {
+  return (
+    <article className="overflow-hidden rounded-[1.8rem] border border-border bg-card shadow-sm">
+      <img src={tool.img} alt={tool.title} className="h-44 w-full object-cover sm:h-56" />
+      <div className="p-5 sm:p-6">
+        <h3 className="font-heading text-lg font-bold text-foreground sm:text-xl">{tool.title}</h3>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{tool.desc}</p>
+      </div>
+    </article>
+  );
+}
 
 export default function Index() {
-  const { theme } = useTheme();
-  const isDark = theme === 'dark';
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-  const [pastHero, setPastHero] = useState(false);
-  const [activeTab, setActiveTab] = useState('All');
-  const [countrySliderIdx, setCountrySliderIdx] = useState(0);
-  const [showContactForm, setShowContactForm] = useState(false);
-  const [showEligibility, setShowEligibility] = useState(false);
+  const [activeRegion, setActiveRegion] = useState<RegionFilter>('All');
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [eligResult, setEligResult] = useState<{ score: number; message: string } | null>(null);
-  const [heroIdx, setHeroIdx] = useState(0);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-
-  const nextHero = useCallback(() => setHeroIdx(p => (p + 1) % heroSlides.length), []);
-  useEffect(() => { const t = setInterval(nextHero, 5000); return () => clearInterval(t); }, [nextHero]);
-
-  const trustItems = [
-    { icon: <TrustIcon type="case" />, title: 'Professional Case Handling' },
-    { icon: <TrustIcon type="country" />, title: 'Country-Specific Guidance' },
-    { icon: <TrustIcon type="document" />, title: 'Structured Document Workflow' },
-    { icon: <TrustIcon type="support" />, title: 'Client and Employer Support' },
-    { icon: <TrustIcon type="transparent" />, title: 'Transparent Communication' },
-    { icon: <TrustIcon type="multi" />, title: 'Multi-Country Service Coverage' },
-  ];
-
-  const testimonials = [
-    { name: 'Rahman Hossain', role: 'Construction Engineer — Singapore', text: 'VisaHOBe made my journey to Singapore seamless. From document preparation to IPA approval, every step was handled professionally. I started my new role within 6 weeks of applying.', rating: 5 },
-    { name: 'Fatima Akter', role: 'Healthcare Worker — Australia', text: 'I was worried about the complex Subclass 482 process, but the VisaHOBe team guided me through every requirement. Their embassy-ready documentation saved me months of back-and-forth.', rating: 5 },
-    { name: 'Kamal Uddin', role: 'IT Professional — Serbia', text: 'The European Gateway route through Serbia was exactly what I needed. VisaHOBe provided clear guidance and transparent communication throughout the entire work permit process.', rating: 5 },
-    { name: 'Aminul Islam', role: 'Electrician — Kuwait', text: 'The employer demand route through Kuwait was fast and transparent. Within 4 weeks my work visa was processed and I was deployed. Highly recommend their services.', rating: 5 },
-    { name: 'Nasrin Begum', role: 'Garment Supervisor — Cambodia', text: 'VisaHOBe helped me secure a supervisory position in Cambodia. Their team handled everything from employer matching to travel preparation. Very professional service.', rating: 5 },
-    { name: 'Mizanur Rahman', role: 'Software Developer — Malaysia', text: 'Getting my Employment Pass for Malaysia was smooth thanks to VisaHOBe. They navigated the ESD system expertly and my application was approved in just 3 weeks.', rating: 5 },
-  ];
-
-  const tabs = ['All', 'Asia', 'Europe', 'Middle East'];
-  const filteredCountries = activeTab === 'All' ? countries : countries.filter(c => c.region === activeTab);
-
-  const [eligForm, setEligForm] = useState({ name: '', nationality: '', destination: '', visaType: '', experience: '' });
-
-  const handleEligCheck = () => {
-    if (eligForm.name && eligForm.destination && eligForm.visaType) {
-      setEligResult({ score: Math.floor(Math.random() * 30) + 65, message: 'Based on your profile, you have a good chance for this visa pathway. Our team will provide a detailed assessment.' });
-    }
-  };
-
-  useEffect(() => {
-    const h = () => {
-      setScrollY(window.scrollY);
-      setPastHero(window.scrollY > window.innerHeight * 0.75);
-    };
-    window.addEventListener('scroll', h, { passive: true });
-    return () => window.removeEventListener('scroll', h);
-  }, []);
-
-  const navLinks = ['Home', 'Countries', 'Services', 'For Employers', 'Process', 'About', 'Contact'];
+  const filteredCountries =
+    activeRegion === 'All' ? countries : countries.filter((country) => country.region === activeRegion);
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id.toLowerCase().replace(/\s+/g, ''));
-    el?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     setMobileMenu(false);
   };
 
-  const slide = heroSlides[heroIdx];
+  const handleContactSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setFormSubmitted(true);
+  };
 
   return (
-    <PageTransition>
-    <div className={`min-h-screen overflow-x-hidden ${isDark ? 'bg-gray-950' : 'bg-[#F5F5F0]'}`}>
-      {/* Progress bar */}
-      <motion.div className="fixed top-0 left-0 right-0 h-1 bg-orange-500 z-[60] origin-left" style={{ scaleX }} />
-
-      {/* HEADER */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${pastHero ? (isDark ? 'bg-gray-900/95 backdrop-blur-xl shadow-sm' : 'bg-white/95 backdrop-blur-xl shadow-sm') : 'bg-transparent'}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
-          {/* Mobile menu button */}
-          <button onClick={() => setMobileMenu(true)} className={`lg:hidden text-sm font-medium transition-colors ${pastHero ? (isDark ? 'text-gray-300' : 'text-gray-700') : 'text-white/80'}`}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
-          <Link to="/" className="flex items-center gap-1">
-            <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-border/70 bg-background/95 backdrop-blur">
+        <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-6">
+          <Link to="/" className="flex items-center gap-2">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground">
+              <Globe2 className="h-4 w-4" />
             </div>
-            <span className={`text-lg font-bold font-heading transition-colors ${pastHero ? (isDark ? 'text-white' : 'text-gray-900') : 'text-white'}`}>VisaHOBe</span>
+            <span className="font-heading text-lg font-bold text-foreground sm:text-xl">
+              Visa<span className="text-primary">HOBe</span>
+            </span>
           </Link>
-          {/* Desktop nav links */}
-          <nav className="hidden lg:flex items-center gap-6">
-            {navLinks.map(item => (
-              <button key={item} onClick={() => scrollTo(item === 'Home' ? 'home' : item.toLowerCase().replace(/\s+/g, ''))} className={`text-sm font-medium transition-colors ${pastHero ? (isDark ? 'text-gray-400 hover:text-orange-500' : 'text-gray-600 hover:text-orange-500') : 'text-white/80 hover:text-white'}`}>
-                {item}
+
+          <nav className="hidden flex-1 items-center justify-center gap-6 lg:flex">
+            {navLinks.map((link) => (
+              <button
+                key={link.target}
+                onClick={() => scrollTo(link.target)}
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                {link.label}
               </button>
             ))}
           </nav>
-          <div className="flex items-center gap-2">
-            <DarkModeToggle className={`${pastHero ? (isDark ? 'text-gray-300 hover:text-orange-400' : 'text-gray-600 hover:text-orange-500') : 'text-white/80 hover:text-white'}`} />
-            <button onClick={() => setShowContactForm(true)} className={`text-sm font-medium transition-colors px-4 py-2 rounded-full border ${pastHero ? (isDark ? 'text-gray-300 border-gray-600 hover:text-orange-500 hover:border-orange-500' : 'text-gray-600 border-gray-300 hover:text-orange-500 hover:border-orange-500') : 'text-white border-white/30 hover:bg-white/10'}`}>Contact Us</button>
+
+          <div className="ml-auto flex items-center gap-2">
+            <DarkModeToggle className="text-muted-foreground hover:text-foreground" />
+            <button
+              onClick={() => scrollTo('contact')}
+              className="hidden rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 lg:inline-flex"
+            >
+              Contact Us
+            </button>
+            <button
+              onClick={() => setMobileMenu((open) => !open)}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-foreground lg:hidden"
+              aria-label="Toggle navigation"
+              aria-expanded={mobileMenu}
+            >
+              {mobileMenu ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
           </div>
         </div>
+
+        {mobileMenu ? (
+          <div className="border-t border-border bg-background lg:hidden">
+            <div className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-4 sm:px-6">
+              {navLinks.map((link) => (
+                <button
+                  key={link.target}
+                  onClick={() => scrollTo(link.target)}
+                  className="rounded-2xl px-4 py-3 text-left text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                >
+                  {link.label}
+                </button>
+              ))}
+              <button
+                onClick={() => scrollTo('contact')}
+                className="mt-3 rounded-full bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground"
+              >
+                Contact Us
+              </button>
+            </div>
+          </div>
+        ) : null}
       </header>
 
-      {/* MOBILE MENU */}
-      <AnimatePresence>
-        {mobileMenu && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm" onClick={() => setMobileMenu(false)}>
-            <motion.div initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} transition={{ type: 'spring', damping: 25, stiffness: 200 }} className="absolute left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-900 p-6" onClick={e => e.stopPropagation()}>
-              <div className="flex items-center justify-between mb-8">
-                <span className="font-bold text-gray-900 dark:text-white font-heading">Menu</span>
-                <button onClick={() => setMobileMenu(false)} className="text-gray-400 hover:text-gray-900 dark:hover:text-white"><CloseIcon /></button>
-              </div>
-              {navLinks.map(item => (
-                <button key={item} onClick={() => scrollTo(item === 'Home' ? 'home' : item.toLowerCase().replace(/\s+/g, ''))} className="block w-full text-left py-3 text-gray-700 dark:text-gray-300 hover:text-orange-500 text-sm font-medium transition-colors border-b border-gray-100 dark:border-gray-800">
-                  {item}
-                </button>
-              ))}
-              <div className="mt-8 pt-4 border-t border-gray-100 dark:border-gray-800">
-                <p className="text-gray-400 text-xs">UEN: 202524173E | Singapore</p>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <main className="overflow-x-hidden">
+        <section id="home" className="relative scroll-mt-24 overflow-hidden pb-16 pt-28 sm:pb-20 sm:pt-32">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -top-24 right-0 h-64 w-64 rounded-full bg-primary/15 blur-3xl sm:h-80 sm:w-80" />
+            <div className="absolute left-0 top-1/3 h-56 w-56 rounded-full bg-secondary blur-3xl sm:h-72 sm:w-72" />
+          </div>
 
-      {/* CONTACT FORM MODAL */}
-      <AnimatePresence>
-        {showContactForm && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => { setShowContactForm(false); setFormSubmitted(false); }}>
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white dark:bg-gray-900 rounded-3xl p-6 sm:p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-              {formSubmitted ? (
-                <div className="text-center py-8">
-                  <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2"><polyline points="20 6 9 17 4 12" /></svg>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 font-heading">Thank You!</h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">Your inquiry has been submitted. Our team will contact you within 24 hours.</p>
+          <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
+            <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+              <div>
+                <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1.5 text-xs font-semibold text-muted-foreground shadow-sm">
+                  <Globe2 className="h-4 w-4 text-primary" />
+                  Global mobility for work, visitor, and business pathways
+                </span>
+                <h1 className="mt-6 max-w-xl font-heading text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                  A clearer route to your <span className="text-primary">next country, visa, and opportunity</span>.
+                </h1>
+                <p className="mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+                  VisaHOBe supports international movement across 10 destinations with structured recruitment guidance,
+                  work permit processing, visitor and business visa assistance, and document preparation that keeps every
+                  step understandable.
+                </p>
+
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <button
+                    onClick={() => scrollTo('countries')}
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                  >
+                    Explore Countries
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => scrollTo('contact')}
+                    className="inline-flex items-center justify-center rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-secondary"
+                  >
+                    Speak With Our Team
+                  </button>
                 </div>
-              ) : (
-                <>
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white font-heading">Contact VisaHOBe</h3>
-                    <button onClick={() => setShowContactForm(false)} className="text-gray-400 hover:text-gray-900"><CloseIcon /></button>
-                  </div>
-                  <form onSubmit={(e) => { e.preventDefault(); setFormSubmitted(true); }} className="space-y-4">
-                    <input placeholder="Full Name" className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors" required />
-                    <input placeholder="Email Address" type="email" className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors" required />
-                    <input placeholder="Phone Number" className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors" />
-                    <select className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500 dark:text-gray-400">
-                      <option value="">Select Service</option>
-                      <option>Work Permit Processing</option>
-                      <option>Tourist Visa Assistance</option>
-                      <option>Business Visa Guidance</option>
-                      <option>Employer Recruitment Support</option>
-                      <option>Document Review</option>
-                      <option>Other</option>
-                    </select>
-                    <textarea placeholder="Your Message" rows={3} className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors resize-none" />
-                    <button type="submit" className="w-full bg-orange-500 text-white rounded-xl py-3 text-sm font-bold hover:bg-orange-600 transition-colors">Submit Inquiry</button>
-                  </form>
-                </>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
-      {/* ELIGIBILITY MODAL */}
-      <AnimatePresence>
-        {showEligibility && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => { setShowEligibility(false); setEligResult(null); }}>
-            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white dark:bg-gray-900 rounded-3xl p-6 sm:p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white font-heading">Eligibility Assessment</h3>
-                <button onClick={() => { setShowEligibility(false); setEligResult(null); }} className="text-gray-400 hover:text-gray-900"><CloseIcon /></button>
+                <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                  {stats.map((stat) => (
+                    <div key={stat.label} className="rounded-[1.25rem] border border-border bg-card p-4 shadow-sm">
+                      <p className="font-heading text-lg font-bold text-foreground sm:text-xl">{stat.value}</p>
+                      <p className="mt-1 text-[11px] uppercase tracking-[0.18em] text-muted-foreground sm:text-xs">
+                        {stat.label}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="space-y-4">
-                <input value={eligForm.name} onChange={e => setEligForm({ ...eligForm, name: e.target.value })} placeholder="Full Name" className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors" />
-                <select value={eligForm.nationality} onChange={e => setEligForm({ ...eligForm, nationality: e.target.value })} className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500 dark:text-gray-400">
-                  <option value="">Nationality</option>
-                  <option>Bangladeshi</option><option>Indian</option><option>Pakistani</option><option>Other</option>
-                </select>
-                <select value={eligForm.destination} onChange={e => setEligForm({ ...eligForm, destination: e.target.value })} className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500 dark:text-gray-400">
-                  <option value="">Destination Country</option>
-                  {countries.map(c => <option key={c.slug}>{c.country}</option>)}
-                </select>
-                <select value={eligForm.visaType} onChange={e => setEligForm({ ...eligForm, visaType: e.target.value })} className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500 dark:text-gray-400">
-                  <option value="">Visa Type</option>
-                  <option>Work Permit</option><option>Visitor Visa</option><option>Business Visa</option><option>Skilled Migration</option>
-                </select>
-                <select value={eligForm.experience} onChange={e => setEligForm({ ...eligForm, experience: e.target.value })} className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500 dark:text-gray-400">
-                  <option value="">Experience Level</option>
-                  <option>Entry Level (0-2 years)</option><option>Mid Level (3-7 years)</option><option>Senior (8+ years)</option>
-                </select>
-                <button onClick={handleEligCheck} className="w-full bg-orange-500 text-white rounded-xl py-3 text-sm font-bold hover:bg-orange-600 transition-colors">Check Eligibility</button>
-                {eligResult && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-orange-50 rounded-xl p-4 border border-orange-200">
-                    <p className="text-orange-600 font-bold text-lg mb-1 font-heading">{eligResult.score}% Match</p>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm">{eligResult.message}</p>
-                  </motion.div>
+
+              <div className="relative">
+                <div className="absolute -inset-4 rounded-[2rem] border border-border/70" />
+                <div className="relative overflow-hidden rounded-[2rem] border border-border bg-card shadow-xl">
+                  <img
+                    src={IMG.globevisa}
+                    alt="Global visa and recruitment guidance"
+                    className="h-[20rem] w-full object-cover sm:h-[28rem]"
+                  />
+                  <div className="grid gap-3 border-t border-border bg-background/95 p-4 backdrop-blur sm:grid-cols-2 sm:p-5">
+                    {['Work visa routes', 'Visitor & tourist support', 'Business mobility guidance', 'Employer hiring coordination'].map((item) => (
+                      <div key={item} className="rounded-2xl border border-border bg-card px-4 py-3 text-sm font-medium text-foreground">
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="countries" className="scroll-mt-24 py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <SectionIntro
+              eyebrow="Explore Destinations"
+              title="Country-wise visa routes"
+              description="Browse destination-specific pages covering work permit, visitor, and business pathways with supporting country details and industry notes."
+            />
+
+            <div className="mb-8 flex justify-center sm:mb-10">
+              <div className="inline-flex flex-wrap items-center justify-center gap-2 rounded-full border border-border bg-card p-1 shadow-sm">
+                {(['All', 'Asia', 'Europe', 'Middle East'] as RegionFilter[]).map((region) => (
+                  <button
+                    key={region}
+                    onClick={() => setActiveRegion(region)}
+                    className={`rounded-full px-3 py-2 text-[11px] font-semibold transition-all sm:px-5 sm:text-xs ${
+                      activeRegion === region
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
+                    }`}
+                  >
+                    {region}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 xl:grid-cols-5">
+              {filteredCountries.map((country) => (
+                <CountryCard key={country.slug} country={country} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="services" className="scroll-mt-24 bg-muted/50 py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <SectionIntro
+              eyebrow="What We Offer"
+              title="Services built around real travel and recruitment workflows"
+              description="The homepage now renders as plain HTML while still covering the major visa, documentation, and employer-support topics clients need to review."
+            />
+            <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
+              {services.map((item) => (
+                <ServiceCard key={item.title} item={item} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="foremployers" className="scroll-mt-24 py-16 sm:py-20">
+          <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_0.95fr]">
+            <div>
+              <SectionIntro
+                eyebrow="For Employers"
+                title="Recruitment support for global hiring"
+                description="VisaHOBe helps employers coordinate candidate sourcing, documentation, and relocation-related steps without losing visibility across the process."
+                centered={false}
+              />
+              <div className="grid grid-cols-2 gap-3">
+                {['Candidate sourcing', 'Document preparation', 'Employer coordination', 'Compliance guidance'].map((item) => (
+                  <div key={item} className="flex items-center gap-3 rounded-2xl border border-border bg-card px-4 py-3 shadow-sm">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <Check className="h-4 w-4" />
+                    </span>
+                    <span className="text-xs font-medium text-foreground sm:text-sm">{item}</span>
+                  </div>
+                ))}
+              </div>
+              <button
+                onClick={() => scrollTo('contact')}
+                className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+              >
+                Start an Employer Inquiry
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="overflow-hidden rounded-[2rem] border border-border bg-card shadow-xl">
+              <img src={IMG.team} alt="Employer and recruitment coordination" className="h-72 w-full object-cover sm:h-96" />
+            </div>
+          </div>
+        </section>
+
+        <section id="process" className="scroll-mt-24 bg-muted/50 py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <SectionIntro
+              eyebrow="How It Works"
+              title="A structured process without motion-heavy wrappers"
+              description="The invisible section issue has been isolated by moving the homepage back to straightforward section markup and regular layout flow."
+            />
+            <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-5">
+              {processSteps.map((step) => (
+                <article key={step.step} className="rounded-[1.6rem] border border-border bg-card p-4 shadow-sm sm:p-6">
+                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+                    {step.step}
+                  </div>
+                  <h3 className="mt-4 font-heading text-sm font-bold text-foreground sm:text-lg">{step.title}</h3>
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">{step.desc}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <SectionIntro
+              eyebrow="Why VisaHOBe"
+              title="Trust signals that stay visible on every screen"
+              description="Each trust card now renders in normal document flow, making the section stable again on mobile and desktop."
+            />
+            <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+              {trustItems.map((item) => (
+                <TrustCard key={item.title} item={item} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="about" className="scroll-mt-24 bg-muted/50 py-16 sm:py-20">
+          <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_0.95fr]">
+            <div>
+              <SectionIntro
+                eyebrow="About VisaHOBe"
+                title="A Singapore-registered visa and recruitment support company"
+                description="The company supports cross-border movement with a practical, document-first approach built around clarity, transparency, and destination-specific guidance."
+                centered={false}
+              />
+              <div className="space-y-4 text-sm leading-relaxed text-muted-foreground">
+                <p>
+                  <span className="font-semibold text-foreground">VisaHOBe Pte. Ltd.</span> is positioned as an end-to-end travel,
+                  visa, and recruitment partner for people and employers navigating international mobility.
+                </p>
+                <p>
+                  The current content spans work permit routes, visitor and business mobility, country pages, supporting documentation,
+                  and employer hiring coordination across a growing destination network.
+                </p>
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">UEN</p>
+                    <p className="mt-2 text-sm font-medium text-foreground">202524173E</p>
+                  </div>
+                  <div className="rounded-2xl border border-border bg-card p-4 shadow-sm">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-primary">Base</p>
+                    <p className="mt-2 text-sm font-medium text-foreground">Singapore</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="overflow-hidden rounded-[2rem] border border-border bg-card shadow-xl">
+              <img src={IMG.traveler} alt="Traveler supported by VisaHOBe" className="h-72 w-full object-cover sm:h-96" />
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <SectionIntro
+              eyebrow="Tools & Updates"
+              title="Additional previews that still render cleanly"
+              description="Supporting previews for the client portal and international job board have been kept as static content so the homepage remains readable and stable."
+            />
+            <div className="grid gap-5 lg:grid-cols-2">
+              {tools.map((tool) => (
+                <ToolCard key={tool.title} tool={tool} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-muted/50 py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <SectionIntro
+              eyebrow="Success Stories"
+              title="Feedback from clients across different routes"
+              description="The testimonial cards now live in a regular responsive grid, avoiding the collapsed layout issue caused by animated wrappers."
+            />
+            <div className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3">
+              {testimonials.map((testimonial) => (
+                <TestimonialCard key={testimonial.name} testimonial={testimonial} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6">
+            <SectionIntro
+              eyebrow="Frequently Asked Questions"
+              title="Answers that stay readable without any motion dependency"
+              description="Common questions remain expandable, but the interaction now uses plain React state and standard HTML layout."
+            />
+            <div className="space-y-3">
+              {faqData.map((faq, index) => {
+                const isOpen = openFaq === index;
+                return (
+                  <article key={faq.q} className="overflow-hidden rounded-[1.4rem] border border-border bg-card shadow-sm">
+                    <button
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                      className="flex w-full items-center justify-between gap-4 px-4 py-4 text-left sm:px-5"
+                      aria-expanded={isOpen}
+                    >
+                      <span className="text-sm font-semibold text-foreground">{faq.q}</span>
+                      <ChevronDown className={`h-5 w-5 flex-shrink-0 text-muted-foreground transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {isOpen ? (
+                      <div className="border-t border-border px-4 py-4 text-sm leading-relaxed text-muted-foreground sm:px-5">
+                        {faq.a}
+                      </div>
+                    ) : null}
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="scroll-mt-24 bg-muted/50 py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <SectionIntro
+              eyebrow="Contact"
+              title="Ready to start your next move?"
+              description="Use the form below to share your destination, visa type, or recruitment need — the section is now fully restored as standard layout markup."
+            />
+
+            <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+              <div className="rounded-[1.8rem] border border-border bg-card p-6 shadow-sm sm:p-8">
+                <h3 className="font-heading text-xl font-bold text-foreground">Talk to VisaHOBe</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  Share your destination, planned visa route, or employer requirement and the team will guide you to the right next step.
+                </p>
+                <div className="mt-6 space-y-4">
+                  {[
+                    { icon: Mail, label: 'Email', value: 'info@visahobe.com' },
+                    { icon: Phone, label: 'Phone', value: '+65 8888 8888' },
+                    { icon: MapPin, label: 'Office', value: 'Singapore' },
+                  ].map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={item.label} className="flex items-start gap-4 rounded-2xl border border-border bg-background p-4">
+                        <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                          <Icon className="h-5 w-5" />
+                        </span>
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{item.label}</p>
+                          <p className="mt-1 text-sm font-medium text-foreground">{item.value}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="rounded-[1.8rem] border border-border bg-card p-6 shadow-sm sm:p-8">
+                {formSubmitted ? (
+                  <div className="flex h-full min-h-[20rem] flex-col items-center justify-center text-center">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 text-primary">
+                      <Check className="h-6 w-6" />
+                    </div>
+                    <h3 className="mt-5 font-heading text-2xl font-bold text-foreground">Thanks for reaching out</h3>
+                    <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+                      Your message has been captured locally in the form flow, and the section remains visually stable after removing motion wrappers.
+                    </p>
+                    <button
+                      onClick={() => setFormSubmitted(false)}
+                      className="mt-6 rounded-full border border-border bg-background px-5 py-3 text-sm font-semibold text-foreground transition-colors hover:bg-secondary"
+                    >
+                      Send another message
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleContactSubmit} className="space-y-4">
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <input
+                        required
+                        placeholder="Full name"
+                        className="h-12 rounded-2xl border border-input bg-background px-4 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+                      />
+                      <input
+                        required
+                        type="email"
+                        placeholder="Email address"
+                        className="h-12 rounded-2xl border border-input bg-background px-4 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+                      />
+                    </div>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <input
+                        placeholder="Destination country"
+                        className="h-12 rounded-2xl border border-input bg-background px-4 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+                      />
+                      <select className="h-12 rounded-2xl border border-input bg-background px-4 text-sm text-foreground outline-none transition-colors focus:border-primary">
+                        <option value="">Select visa type</option>
+                        <option>Work visa</option>
+                        <option>Visitor visa</option>
+                        <option>Business visa</option>
+                        <option>Recruitment support</option>
+                      </select>
+                    </div>
+                    <textarea
+                      rows={6}
+                      placeholder="Tell us about your plan or requirement"
+                      className="w-full rounded-3xl border border-input bg-background px-4 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+                    />
+                    <button
+                      type="submit"
+                      className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                    >
+                      Send Message
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+                  </form>
                 )}
               </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ── HERO — FULL-SCREEN FLIGHT SIMULATOR (no text overlay) ── */}
-      <section id="home" className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
-        {/* Dark background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a1a] via-[#0f172a] to-[#1e1b4b]" />
-
-        {/* Animated world map SVG */}
-        <motion.div className="absolute inset-0 flex items-center justify-center" initial={{ opacity: 0, scale: 1.2 }} animate={{ opacity: 0.5, scale: 1 }} transition={{ duration: 2 }}>
-          <svg className="w-full h-full max-w-none" viewBox="0 0 1000 500" fill="none">
-            <path d="M150 80 L220 60 L280 80 L300 120 L280 180 L240 200 L200 220 L160 200 L120 160 L100 120 Z" fill="rgba(249,115,22,0.12)" stroke="rgba(249,115,22,0.3)" strokeWidth="1"/>
-            <path d="M220 250 L260 240 L280 280 L290 340 L270 400 L240 420 L210 380 L200 320 L210 280 Z" fill="rgba(249,115,22,0.08)" stroke="rgba(249,115,22,0.25)" strokeWidth="1"/>
-            <path d="M440 70 L500 60 L530 80 L520 120 L490 140 L460 130 L440 100 Z" fill="rgba(249,115,22,0.15)" stroke="rgba(249,115,22,0.4)" strokeWidth="1"/>
-            <path d="M460 160 L510 150 L540 180 L550 250 L530 320 L500 350 L470 320 L450 260 L440 200 Z" fill="rgba(249,115,22,0.08)" stroke="rgba(249,115,22,0.25)" strokeWidth="1"/>
-            <path d="M560 60 L700 50 L780 80 L800 140 L760 180 L700 200 L640 190 L580 160 L550 120 L540 80 Z" fill="rgba(249,115,22,0.12)" stroke="rgba(249,115,22,0.3)" strokeWidth="1"/>
-            <path d="M720 200 L780 190 L820 220 L810 260 L770 280 L730 260 L710 230 Z" fill="rgba(249,115,22,0.08)" stroke="rgba(249,115,22,0.25)" strokeWidth="1"/>
-            <path d="M760 320 L840 310 L880 340 L870 380 L830 400 L780 390 L750 360 Z" fill="rgba(249,115,22,0.12)" stroke="rgba(249,115,22,0.3)" strokeWidth="1"/>
-            {[100,200,300,400].map(y => <line key={`h${y}`} x1="0" y1={y} x2="1000" y2={y} stroke="rgba(249,115,22,0.06)" strokeWidth="0.5" strokeDasharray="8 8"/>)}
-            {[200,400,600,800].map(x => <line key={`v${x}`} x1={x} y1="0" x2={x} y2="500" stroke="rgba(249,115,22,0.06)" strokeWidth="0.5" strokeDasharray="8 8"/>)}
-          </svg>
-        </motion.div>
-
-        {/* Animated dots for countries */}
-        {[
-          { x: 65, y: 35 }, { x: 82, y: 68 }, { x: 50, y: 22 }, { x: 48, y: 25 },
-          { x: 56, y: 30 }, { x: 72, y: 45 }, { x: 60, y: 18 }, { x: 54, y: 32 },
-          { x: 47, y: 20 }, { x: 70, y: 40 },
-        ].map((dot, i) => (
-          <motion.div key={i} className="absolute" style={{ left: `${dot.x}%`, top: `${dot.y}%` }} initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.5 + i * 0.12, type: 'spring' }}>
-            <div className="w-2 h-2 bg-orange-500 rounded-full" />
-            <motion.div className="absolute inset-0 w-2 h-2 bg-orange-500 rounded-full" animate={{ scale: [1, 3, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.25 }} />
-          </motion.div>
-        ))}
-
-        {/* Animated flight arcs */}
-        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <motion.path d="M 10 75 Q 35 30 50 25 Q 65 20 90 45" fill="none" stroke="rgba(249,115,22,0.5)" strokeWidth="0.3" strokeDasharray="2 2" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 3, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop', repeatDelay: 1 }} />
-          <motion.path d="M 15 65 Q 45 45 55 35 Q 75 25 85 55" fill="none" stroke="rgba(249,115,22,0.25)" strokeWidth="0.2" strokeDasharray="1 2" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 4, ease: 'easeInOut', delay: 1.5, repeat: Infinity, repeatType: 'loop', repeatDelay: 1 }} />
-        </svg>
-
-        {/* Floating airplane */}
-        <motion.div className="absolute z-10" initial={{ x: '-30vw', y: '20vh' }} animate={{ x: ['-30vw', '10vw', '40vw'], y: ['20vh', '-10vh', '15vh'], rotate: [-30, -10, 10] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}>
-          <svg width="48" height="48" viewBox="0 0 64 64" fill="none">
-            <path d="M58 6L28 36M58 6L40 58L28 36M58 6L6 24L28 36" fill="rgba(249,115,22,0.15)" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </motion.div>
-
-        {/* Floating particles */}
-        {Array.from({ length: 15 }).map((_, i) => (
-          <motion.div key={`p${i}`} className="absolute w-1 h-1 bg-orange-400/60 rounded-full" style={{ left: `${10 + Math.random() * 80}%`, top: `${10 + Math.random() * 80}%` }} animate={{ opacity: [0, 0.7, 0], y: [0, -25] }} transition={{ duration: 2.5 + Math.random() * 2, repeat: Infinity, delay: Math.random() * 3 }} />
-        ))}
-
-        {/* Center content — logo + tagline + CTAs */}
-        <div className="relative z-20 text-center px-4">
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
-            <div className="flex items-center justify-center gap-2 mb-6">
-              <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
-              </div>
-              <span className="text-2xl sm:text-3xl font-bold text-white font-heading">VisaHOBe</span>
-            </div>
-            <h1 className="text-[2.5rem] sm:text-[4rem] md:text-[5rem] lg:text-[6rem] font-bold tracking-tighter text-white leading-none font-heading mb-2">
-              Global <span className="text-orange-500">Mobility</span>
-            </h1>
-            <p className="text-white/40 text-xs sm:text-sm max-w-md mx-auto mt-4 mb-8">Your trusted partner for visa processing & international recruitment across 10 countries.</p>
-          </motion.div>
-
-
-          {/* Scroll indicator */}
-          <motion.div className="mt-12" animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" className="mx-auto"><polyline points="6 9 12 15 18 9" /></svg>
-          </motion.div>
-        </div>
-
-        {/* Bottom fade */}
-        <div className={`absolute bottom-0 left-0 right-0 h-24 z-20 bg-gradient-to-t ${isDark ? 'from-gray-950' : 'from-[#F5F5F0]'} to-transparent`} />
-      </section>
-
-      {/* FEATURED COUNTRIES */}
-      <SectionWrap id="countries" className="pt-16 pb-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Explore Destinations</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center text-[2rem] sm:text-[3.5rem] md:text-[4.5rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-4 font-heading">Country-Wise Visa Routes</motion.h2>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-8 max-w-xl mx-auto">Comprehensive work visa support across 10 countries with specialized pathways for each destination.</motion.p>
-
-          {/* Filter Tabs */}
-          <div className="flex justify-center mb-8">
-            <div className="bg-[#EDEAE5] dark:bg-gray-800 rounded-full p-1 flex gap-1">
-              {tabs.map(tab => (
-                <button key={tab} onClick={() => { setActiveTab(tab); setCountrySliderIdx(0); }} className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-semibold transition-all ${activeTab === tab ? 'bg-white text-gray-900 shadow-md' : 'text-gray-500'}`}>{tab}</button>
-              ))}
             </div>
           </div>
+        </section>
+      </main>
 
-          {/* Desktop Grid */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
-            {filteredCountries.map((c, i) => <CountryCard key={c.slug} {...c} delay={i * 0.08} />)}
-          </div>
-
-          {/* Mobile 2-col Grid */}
-          <div className="md:hidden grid grid-cols-2 gap-3 mb-8">
-            {filteredCountries.map((c, i) => <CountryCard key={c.slug} {...c} delay={i * 0.05} />)}
-          </div>
-        </div>
-      </SectionWrap>
-
-      {/* SERVICES - with images, 2-col mobile */}
-      <SectionWrap id="services" className="pt-16 pb-16 bg-white dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">What We Offer</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center text-[2rem] sm:text-[3.5rem] md:text-[4rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-10 sm:mb-12 font-heading">Our Services</motion.h2>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
-            {serviceData.map((s, i) => <ServiceCardNew key={s.title} {...s} delay={i * 0.1} />)}
-          </div>
-        </div>
-      </SectionWrap>
-
-      {/* EMPLOYER SECTION */}
-      <SectionWrap id="foremployers" className="pt-16 pb-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}>
-              <span className="inline-block bg-orange-50 text-orange-600 text-xs font-bold px-3 py-1 rounded-full mb-4">For Employers</span>
-              <h2 className="text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-tight mb-4 font-heading">Recruitment Solutions for Global Employers</h2>
-              <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">VisaHOBe supports candidate sourcing, documentation flow, and recruitment coordination for employers seeking qualified international talent.</p>
-              <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-6">
-                {['Candidate Sourcing', 'Document Preparation', 'Employer Coordination', 'Compliance Support'].map(item => (
-                  <div key={item} className="flex items-center gap-2">
-                    <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-orange-500/10 flex items-center justify-center flex-shrink-0"><CheckIcon /></div>
-                    <span className="text-gray-700 dark:text-gray-300 text-[10px] sm:text-xs font-medium">{item}</span>
-                  </div>
-                ))}
-              </div>
-              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setShowContactForm(true)} className="bg-gray-900 text-white rounded-full px-6 sm:px-8 py-2.5 sm:py-3 text-sm font-bold shadow-lg inline-flex items-center gap-2">
-                Partner With Us <ArrowIcon />
-              </motion.button>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
-                <img src={IMG.team} alt="Team meeting" className="w-full h-56 sm:h-72 md:h-96 object-cover" />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </SectionWrap>
-
-      {/* PROCESS */}
-      <SectionWrap id="process" className="bg-gray-900 py-16 sm:py-24 overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-xs sm:text-sm font-medium text-gray-400 mb-3">Simple & Transparent</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center text-[2rem] sm:text-[3.5rem] md:text-[4rem] font-bold tracking-tighter text-white leading-none mb-10 sm:mb-14 font-heading">Our Process</motion.h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 sm:gap-6 md:gap-3 relative">
-            <div className="hidden md:block absolute top-7 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-orange-500 via-orange-500/50 to-transparent" />
-            <ProcessStep num="1" title="Choose Country" desc="Select your target destination from our 10-country network" icon="🌍" delay={0.1} />
-            <ProcessStep num="2" title="Submit Documents" desc="Upload your credentials and supporting documents securely" icon="📄" delay={0.2} />
-            <ProcessStep num="3" title="Review & Assessment" desc="Expert review of your profile and eligibility assessment" icon="🔍" delay={0.3} />
-            <ProcessStep num="4" title="Processing & Updates" desc="Real-time tracking and transparent status updates" icon="⚡" delay={0.4} />
-            <ProcessStep num="5" title="Final Outcome" desc="Visa approval and travel preparation guidance" icon="✈️" delay={0.5} />
-          </div>
-        </div>
-      </SectionWrap>
-
-      {/* TRUST SECTION */}
-      <SectionWrap className="pt-16 pb-16 bg-white dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-10 sm:mb-12 font-heading">Why Trust VisaHOBe</motion.h2>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 max-w-4xl mx-auto">
-            {trustItems.map((t, i) => <TrustItem key={t.title} {...t} delay={i * 0.1} />)}
-          </div>
-        </div>
-      </SectionWrap>
-
-      {/* ABOUT */}
-      <SectionWrap id="about" className="pt-16 pb-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Who We Are</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center text-[2rem] sm:text-[3.5rem] md:text-[4rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-10 font-heading">About VisaHOBe</motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-xl">
-              <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-4">
-                <span className="font-bold text-gray-900">VisaHOBe Pte. Ltd.</span> is a Singapore-registered professional visa and recruitment support company, incorporated on <span className="font-semibold text-orange-500">June 3, 2025</span>. As a Private Company Limited by Shares (UEN: 202524173E), we serve as a complete <span className="font-semibold">"End-to-End"</span> visa travel partner.
-              </p>
-              <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-4">
-                Our mission is to simplify the complex journey of cross-border employment and visa acquisition. We specialize in facilitating transparent and successful international labor migration, primarily serving the Bangladeshi market with operations spanning 10 countries.
-              </p>
-              <p className="text-gray-500 text-[10px] sm:text-xs leading-relaxed mb-6">
-                Headquartered at 68 Circular Road, #02-01, Singapore 049422, with our operational hub in Dhaka, Bangladesh.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <div className="bg-orange-50 rounded-xl px-4 py-2">
-                  <p className="text-orange-600 text-[10px] sm:text-xs font-bold">ACRA Code</p>
-                  <p className="text-gray-700 dark:text-gray-300 text-[10px] sm:text-xs">70201 — Management Consultancy</p>
-                </div>
-                <div className="bg-orange-50 rounded-xl px-4 py-2">
-                  <p className="text-orange-600 text-[10px] sm:text-xs font-bold">UEN</p>
-                  <p className="text-gray-700 dark:text-gray-300 text-[10px] sm:text-xs">202524173E</p>
-                </div>
-              </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}>
-              <div className="rounded-3xl overflow-hidden shadow-2xl">
-                <img src={IMG.traveler} alt="Happy traveler" className="w-full h-56 sm:h-72 md:h-96 object-cover" />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </SectionWrap>
-
-      {/* CLIENT PORTAL PREVIEW */}
-      <SectionWrap className="pt-12 pb-16 bg-white dark:bg-gray-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} className="order-2 md:order-1">
-              <div className="rounded-3xl overflow-hidden shadow-xl border border-gray-100">
-                <img src={IMG.dashboard} alt="Client portal" className="w-full h-48 sm:h-64 md:h-80 object-cover" />
-              </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} className="order-1 md:order-2">
-              <span className="inline-block bg-orange-50 text-orange-600 text-xs font-bold px-3 py-1 rounded-full mb-4">Coming Soon</span>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 font-heading">Client Portal</h2>
-              <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-4">Manage your visa applications, track progress in real-time, and access all your documents through our intuitive client portal.</p>
-              <ul className="space-y-2 mb-6">
-                {['Real-time application tracking', 'Secure document upload & storage', 'Progress notifications', 'Direct communication with your case officer'].map(item => (
-                  <li key={item} className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-xs sm:text-sm">
-                    <div className="w-4 h-4 rounded-full bg-orange-500/10 flex items-center justify-center flex-shrink-0"><CheckIcon /></div>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-      </SectionWrap>
-
-      {/* JOB BOARD PREVIEW */}
-      <SectionWrap className="pt-12 pb-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
-            <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}>
-              <span className="inline-block bg-orange-50 text-orange-600 text-xs font-bold px-3 py-1 rounded-full mb-4">Job Opportunities</span>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 font-heading">International Job Board</h2>
-              <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-4">Browse verified job openings across our partner countries. Filter by destination, industry, and experience level.</p>
-              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="bg-orange-500 text-white rounded-full px-6 py-2.5 text-sm font-bold shadow-lg shadow-orange-500/30 inline-flex items-center gap-2">
-                Browse Jobs <ArrowIcon />
-              </motion.button>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}>
-              <div className="rounded-3xl overflow-hidden shadow-xl border border-gray-100">
-                <img src={IMG.jobboard} alt="Job board" className="w-full h-48 sm:h-64 md:h-80 object-cover" />
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </SectionWrap>
-
-      {/* TESTIMONIALS - 2-col mobile */}
-      <SectionWrap className="pt-16 pb-16 bg-gray-50 dark:bg-gray-800/50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Success Stories</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-10 sm:mb-12 font-heading">What Our Clients Say</motion.h2>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-            {testimonials.map((t, i) => <TestimonialCard key={t.name} {...t} delay={i * 0.1} />)}
-          </div>
-        </div>
-      </SectionWrap>
-
-      {/* STATS */}
-      <SectionWrap className="bg-gray-900 py-12 sm:py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
-            <AnimatedCounter end={500} suffix="+" label="Successful Placements" />
-            <AnimatedCounter end={10} label="Countries Covered" />
-            <AnimatedCounter end={6} suffix="+" label="Service Categories" />
-            <AnimatedCounter end={100} suffix="%" label="Client Satisfaction" />
-          </div>
-        </div>
-      </SectionWrap>
-
-      {/* ── FAQ SECTION ── */}
-      <SectionWrap className="pt-16 pb-16 bg-white" id="faq">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Got Questions?</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-10 font-heading">Frequently Asked Questions</motion.h2>
-          <div className="space-y-3">
-            {faqData.map((faq, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-[#F5F5F0] dark:bg-gray-800 rounded-2xl overflow-hidden">
-                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full flex items-center justify-between p-4 sm:p-5 text-left">
-                  <span className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white pr-4">{faq.q}</span>
-                  <motion.svg animate={{ rotate: openFaq === i ? 180 : 0 }} transition={{ duration: 0.2 }} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" className="flex-shrink-0">
-                    <polyline points="6 9 12 15 18 9" />
-                  </motion.svg>
-                </button>
-                <AnimatePresence>
-                  {openFaq === i && (
-                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }}>
-                      <p className="px-4 sm:px-5 pb-4 sm:pb-5 text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed">{faq.a}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </SectionWrap>
-
-      {/* CTA */}
-      <SectionWrap className="pt-16 sm:pt-20 pb-16 sm:pb-20" id="contact">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-[2rem] sm:text-[3.5rem] md:text-[4rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-4 font-heading">Ready to Start?</motion.h2>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mb-6 sm:mb-8 max-w-lg mx-auto">Take the first step towards your international career. Our team is ready to guide you through every stage of the process.</motion.p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setShowEligibility(true)} className="bg-orange-500 text-white rounded-full px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-bold shadow-lg shadow-orange-500/30 inline-flex items-center justify-center gap-2">
-              Check Eligibility <ArrowIcon />
-            </motion.button>
-            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setShowContactForm(true)} className="bg-gray-900 text-white rounded-full px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-bold shadow-lg inline-flex items-center justify-center gap-2">
-              Contact Us <ArrowIcon />
-            </motion.button>
-          </div>
-        </div>
-      </SectionWrap>
-
-      {/* FOOTER */}
-      <footer className="bg-gray-900 py-10 sm:py-16">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-10">
-            <div className="col-span-2 md:col-span-1">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
-                </div>
-                <span className="text-white font-bold text-lg font-heading">VisaHOBe</span>
-              </div>
-              <p className="text-gray-400 text-xs leading-relaxed">Your trusted global mobility partner. End-to-end visa and recruitment support across 10 countries.</p>
-            </div>
+      <footer className="border-t border-border bg-background">
+        <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <h4 className="text-white font-semibold text-xs sm:text-sm mb-3 sm:mb-4 font-heading">Services</h4>
-              <ul className="space-y-1.5 sm:space-y-2">
-                {['Work Permits', 'Tourist Visas', 'Business Visas', 'Recruitment', 'Document Review'].map(s => (
-                  <li key={s} className="text-gray-400 text-[10px] sm:text-xs hover:text-orange-400 cursor-pointer transition-colors">{s}</li>
-                ))}
-              </ul>
+              <div className="flex items-center gap-2">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                  <Globe2 className="h-4 w-4" />
+                </div>
+                <span className="font-heading text-lg font-bold text-foreground">
+                  Visa<span className="text-primary">HOBe</span>
+                </span>
+              </div>
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                Global mobility guidance across work permits, visitor visas, business travel, and employer recruitment support.
+              </p>
             </div>
+
             <div>
-              <h4 className="text-white font-semibold text-xs sm:text-sm mb-3 sm:mb-4 font-heading">Countries</h4>
-              <ul className="space-y-1.5 sm:space-y-2">
-                {countries.slice(0, 6).map(c => (
-                  <li key={c.slug}>
-                    <Link to={`/countries/${c.slug}`} className="text-gray-400 text-[10px] sm:text-xs hover:text-orange-400 transition-colors">{c.country}</Link>
+              <h4 className="font-heading text-sm font-bold text-foreground">Quick Links</h4>
+              <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                {navLinks.map((link) => (
+                  <li key={link.target}>
+                    <button onClick={() => scrollTo(link.target)} className="transition-colors hover:text-foreground">
+                      {link.label}
+                    </button>
                   </li>
                 ))}
               </ul>
             </div>
+
             <div>
-              <h4 className="text-white font-semibold text-xs sm:text-sm mb-3 sm:mb-4 font-heading">Contact</h4>
-              <ul className="space-y-1.5 sm:space-y-2 text-gray-400 text-[10px] sm:text-xs">
+              <h4 className="font-heading text-sm font-bold text-foreground">Featured Countries</h4>
+              <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                {countries.slice(0, 5).map((country) => (
+                  <li key={country.slug}>
+                    <Link to={`/countries/${country.slug}`} className="transition-colors hover:text-foreground">
+                      {country.country}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-heading text-sm font-bold text-foreground">Contact</h4>
+              <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
                 <li>info@visahobe.com</li>
                 <li>68 Circular Road, #02-01</li>
                 <li>Singapore 049422</li>
@@ -761,16 +860,13 @@ export default function Index() {
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-gray-500 text-[10px] sm:text-xs">© 2025 VisaHOBe Pte. Ltd. All rights reserved.</p>
-            <div className="flex gap-4">
-              <span className="text-gray-500 text-[10px] sm:text-xs hover:text-gray-300 cursor-pointer transition-colors">Privacy Policy</span>
-              <span className="text-gray-500 text-[10px] sm:text-xs hover:text-gray-300 cursor-pointer transition-colors">Terms of Service</span>
-            </div>
+
+          <div className="mt-10 flex flex-col gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+            <p>© 2025 VisaHOBe Pte. Ltd. All rights reserved.</p>
+            <p>Homepage restored with plain HTML sections and no framer-motion dependency.</p>
           </div>
         </div>
       </footer>
     </div>
-    </PageTransition>
   );
 }
