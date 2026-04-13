@@ -481,7 +481,7 @@ export default function Index() {
         </div>
 
         {/* Bottom fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#F5F5F0] to-transparent z-20" />
+        <div className={`absolute bottom-0 left-0 right-0 h-24 z-20 bg-gradient-to-t ${isDark ? 'from-gray-950' : 'from-[#F5F5F0]'} to-transparent`} />
       </section>
 
       {/* FEATURED COUNTRIES */}
