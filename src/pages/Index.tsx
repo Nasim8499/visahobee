@@ -272,7 +272,7 @@ export default function Index() {
 
   return (
     <PageTransition>
-    <div className="min-h-screen bg-[#F5F5F0] overflow-x-hidden">
+    <div className={`min-h-screen overflow-x-hidden ${isDark ? 'bg-gray-950' : 'bg-[#F5F5F0]'}`}>
       {/* Progress bar */}
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-orange-500 z-[60] origin-left" style={{ scaleX }} />
 
