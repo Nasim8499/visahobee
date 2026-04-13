@@ -336,20 +336,20 @@ export default function Index() {
                   <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2"><polyline points="20 6 9 17 4 12" /></svg>
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 font-heading">Thank You!</h3>
-                  <p className="text-gray-500 text-sm">Your inquiry has been submitted. Our team will contact you within 24 hours.</p>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 font-heading">Thank You!</h3>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">Your inquiry has been submitted. Our team will contact you within 24 hours.</p>
                 </div>
               ) : (
                 <>
                   <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-xl font-bold text-gray-900 font-heading">Contact VisaHOBe</h3>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white font-heading">Contact VisaHOBe</h3>
                     <button onClick={() => setShowContactForm(false)} className="text-gray-400 hover:text-gray-900"><CloseIcon /></button>
                   </div>
                   <form onSubmit={(e) => { e.preventDefault(); setFormSubmitted(true); }} className="space-y-4">
-                    <input placeholder="Full Name" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors" required />
-                    <input placeholder="Email Address" type="email" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors" required />
-                    <input placeholder="Phone Number" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors" />
-                    <select className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500">
+                    <input placeholder="Full Name" className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors" required />
+                    <input placeholder="Email Address" type="email" className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors" required />
+                    <input placeholder="Phone Number" className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors" />
+                    <select className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500 dark:text-gray-400">
                       <option value="">Select Service</option>
                       <option>Work Permit Processing</option>
                       <option>Tourist Visa Assistance</option>
@@ -358,7 +358,7 @@ export default function Index() {
                       <option>Document Review</option>
                       <option>Other</option>
                     </select>
-                    <textarea placeholder="Your Message" rows={3} className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors resize-none" />
+                    <textarea placeholder="Your Message" rows={3} className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors resize-none" />
                     <button type="submit" className="w-full bg-orange-500 text-white rounded-xl py-3 text-sm font-bold hover:bg-orange-600 transition-colors">Submit Inquiry</button>
                   </form>
                 </>
@@ -374,24 +374,24 @@ export default function Index() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => { setShowEligibility(false); setEligResult(null); }}>
             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-gray-900 font-heading">Eligibility Assessment</h3>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white font-heading">Eligibility Assessment</h3>
                 <button onClick={() => { setShowEligibility(false); setEligResult(null); }} className="text-gray-400 hover:text-gray-900"><CloseIcon /></button>
               </div>
               <div className="space-y-4">
-                <input value={eligForm.name} onChange={e => setEligForm({ ...eligForm, name: e.target.value })} placeholder="Full Name" className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors" />
-                <select value={eligForm.nationality} onChange={e => setEligForm({ ...eligForm, nationality: e.target.value })} className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500">
+                <input value={eligForm.name} onChange={e => setEligForm({ ...eligForm, name: e.target.value })} placeholder="Full Name" className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors" />
+                <select value={eligForm.nationality} onChange={e => setEligForm({ ...eligForm, nationality: e.target.value })} className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500 dark:text-gray-400">
                   <option value="">Nationality</option>
                   <option>Bangladeshi</option><option>Indian</option><option>Pakistani</option><option>Other</option>
                 </select>
-                <select value={eligForm.destination} onChange={e => setEligForm({ ...eligForm, destination: e.target.value })} className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500">
+                <select value={eligForm.destination} onChange={e => setEligForm({ ...eligForm, destination: e.target.value })} className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500 dark:text-gray-400">
                   <option value="">Destination Country</option>
                   {countries.map(c => <option key={c.slug}>{c.country}</option>)}
                 </select>
-                <select value={eligForm.visaType} onChange={e => setEligForm({ ...eligForm, visaType: e.target.value })} className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500">
+                <select value={eligForm.visaType} onChange={e => setEligForm({ ...eligForm, visaType: e.target.value })} className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500 dark:text-gray-400">
                   <option value="">Visa Type</option>
                   <option>Work Permit</option><option>Visitor Visa</option><option>Business Visa</option><option>Skilled Migration</option>
                 </select>
-                <select value={eligForm.experience} onChange={e => setEligForm({ ...eligForm, experience: e.target.value })} className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500">
+                <select value={eligForm.experience} onChange={e => setEligForm({ ...eligForm, experience: e.target.value })} className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors text-gray-500 dark:text-gray-400">
                   <option value="">Experience Level</option>
                   <option>Entry Level (0-2 years)</option><option>Mid Level (3-7 years)</option><option>Senior (8+ years)</option>
                 </select>
@@ -399,7 +399,7 @@ export default function Index() {
                 {eligResult && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-orange-50 rounded-xl p-4 border border-orange-200">
                     <p className="text-orange-600 font-bold text-lg mb-1 font-heading">{eligResult.score}% Match</p>
-                    <p className="text-gray-600 text-sm">{eligResult.message}</p>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm">{eligResult.message}</p>
                   </motion.div>
                 )}
               </div>
@@ -487,13 +487,13 @@ export default function Index() {
       {/* FEATURED COUNTRIES */}
       <SectionWrap id="countries" className="pt-16 pb-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-xs sm:text-sm font-medium text-gray-600 mb-2">Explore Destinations</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center text-[2rem] sm:text-[3.5rem] md:text-[4.5rem] font-bold tracking-tighter text-gray-900 leading-none mb-4 font-heading">Country-Wise Visa Routes</motion.h2>
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-xs sm:text-sm text-gray-500 mb-8 max-w-xl mx-auto">Comprehensive work visa support across 10 countries with specialized pathways for each destination.</motion.p>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Explore Destinations</motion.p>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center text-[2rem] sm:text-[3.5rem] md:text-[4.5rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-4 font-heading">Country-Wise Visa Routes</motion.h2>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-xs sm:text-sm text-gray-500 dark:text-gray-400 mb-8 max-w-xl mx-auto">Comprehensive work visa support across 10 countries with specialized pathways for each destination.</motion.p>
 
           {/* Filter Tabs */}
           <div className="flex justify-center mb-8">
-            <div className="bg-[#EDEAE5] rounded-full p-1 flex gap-1">
+            <div className="bg-[#EDEAE5] dark:bg-gray-800 rounded-full p-1 flex gap-1">
               {tabs.map(tab => (
                 <button key={tab} onClick={() => { setActiveTab(tab); setCountrySliderIdx(0); }} className={`px-3 sm:px-5 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-semibold transition-all ${activeTab === tab ? 'bg-white text-gray-900 shadow-md' : 'text-gray-500'}`}>{tab}</button>
               ))}
@@ -513,10 +513,10 @@ export default function Index() {
       </SectionWrap>
 
       {/* SERVICES - with images, 2-col mobile */}
-      <SectionWrap id="services" className="pt-16 pb-16 bg-white">
+      <SectionWrap id="services" className="pt-16 pb-16 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-xs sm:text-sm font-medium text-gray-600 mb-2">What We Offer</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center text-[2rem] sm:text-[3.5rem] md:text-[4rem] font-bold tracking-tighter text-gray-900 leading-none mb-10 sm:mb-12 font-heading">Our Services</motion.h2>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">What We Offer</motion.p>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center text-[2rem] sm:text-[3.5rem] md:text-[4rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-10 sm:mb-12 font-heading">Our Services</motion.h2>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
             {serviceData.map((s, i) => <ServiceCardNew key={s.title} {...s} delay={i * 0.1} />)}
           </div>
@@ -529,13 +529,13 @@ export default function Index() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <span className="inline-block bg-orange-50 text-orange-600 text-xs font-bold px-3 py-1 rounded-full mb-4">For Employers</span>
-              <h2 className="text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 leading-tight mb-4 font-heading">Recruitment Solutions for Global Employers</h2>
-              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-6">VisaHOBe supports candidate sourcing, documentation flow, and recruitment coordination for employers seeking qualified international talent.</p>
+              <h2 className="text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-tight mb-4 font-heading">Recruitment Solutions for Global Employers</h2>
+              <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">VisaHOBe supports candidate sourcing, documentation flow, and recruitment coordination for employers seeking qualified international talent.</p>
               <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-6">
                 {['Candidate Sourcing', 'Document Preparation', 'Employer Coordination', 'Compliance Support'].map(item => (
                   <div key={item} className="flex items-center gap-2">
                     <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-orange-500/10 flex items-center justify-center flex-shrink-0"><CheckIcon /></div>
-                    <span className="text-gray-700 text-[10px] sm:text-xs font-medium">{item}</span>
+                    <span className="text-gray-700 dark:text-gray-300 text-[10px] sm:text-xs font-medium">{item}</span>
                   </div>
                 ))}
               </div>
@@ -569,9 +569,9 @@ export default function Index() {
       </SectionWrap>
 
       {/* TRUST SECTION */}
-      <SectionWrap className="pt-16 pb-16 bg-white">
+      <SectionWrap className="pt-16 pb-16 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 leading-none mb-10 sm:mb-12 font-heading">Why Trust VisaHOBe</motion.h2>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-10 sm:mb-12 font-heading">Why Trust VisaHOBe</motion.h2>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 max-w-4xl mx-auto">
             {trustItems.map((t, i) => <TrustItem key={t.title} {...t} delay={i * 0.1} />)}
           </div>
@@ -581,14 +581,14 @@ export default function Index() {
       {/* ABOUT */}
       <SectionWrap id="about" className="pt-16 pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-xs sm:text-sm font-medium text-gray-600 mb-2">Who We Are</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center text-[2rem] sm:text-[3.5rem] md:text-[4rem] font-bold tracking-tighter text-gray-900 leading-none mb-10 font-heading">About VisaHOBe</motion.h2>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Who We Are</motion.p>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center text-[2rem] sm:text-[3.5rem] md:text-[4rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-10 font-heading">About VisaHOBe</motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-xl">
-              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-4">
+              <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-4">
                 <span className="font-bold text-gray-900">VisaHOBe Pte. Ltd.</span> is a Singapore-registered professional visa and recruitment support company, incorporated on <span className="font-semibold text-orange-500">June 3, 2025</span>. As a Private Company Limited by Shares (UEN: 202524173E), we serve as a complete <span className="font-semibold">"End-to-End"</span> visa travel partner.
               </p>
-              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-4">
+              <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-4">
                 Our mission is to simplify the complex journey of cross-border employment and visa acquisition. We specialize in facilitating transparent and successful international labor migration, primarily serving the Bangladeshi market with operations spanning 10 countries.
               </p>
               <p className="text-gray-500 text-[10px] sm:text-xs leading-relaxed mb-6">
@@ -597,11 +597,11 @@ export default function Index() {
               <div className="flex flex-wrap gap-3">
                 <div className="bg-orange-50 rounded-xl px-4 py-2">
                   <p className="text-orange-600 text-[10px] sm:text-xs font-bold">ACRA Code</p>
-                  <p className="text-gray-700 text-[10px] sm:text-xs">70201 — Management Consultancy</p>
+                  <p className="text-gray-700 dark:text-gray-300 text-[10px] sm:text-xs">70201 — Management Consultancy</p>
                 </div>
                 <div className="bg-orange-50 rounded-xl px-4 py-2">
                   <p className="text-orange-600 text-[10px] sm:text-xs font-bold">UEN</p>
-                  <p className="text-gray-700 text-[10px] sm:text-xs">202524173E</p>
+                  <p className="text-gray-700 dark:text-gray-300 text-[10px] sm:text-xs">202524173E</p>
                 </div>
               </div>
             </motion.div>
@@ -615,7 +615,7 @@ export default function Index() {
       </SectionWrap>
 
       {/* CLIENT PORTAL PREVIEW */}
-      <SectionWrap className="pt-12 pb-16 bg-white">
+      <SectionWrap className="pt-12 pb-16 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="order-2 md:order-1">
@@ -625,11 +625,11 @@ export default function Index() {
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="order-1 md:order-2">
               <span className="inline-block bg-orange-50 text-orange-600 text-xs font-bold px-3 py-1 rounded-full mb-4">Coming Soon</span>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-4 font-heading">Client Portal</h2>
-              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-4">Manage your visa applications, track progress in real-time, and access all your documents through our intuitive client portal.</p>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 font-heading">Client Portal</h2>
+              <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-4">Manage your visa applications, track progress in real-time, and access all your documents through our intuitive client portal.</p>
               <ul className="space-y-2 mb-6">
                 {['Real-time application tracking', 'Secure document upload & storage', 'Progress notifications', 'Direct communication with your case officer'].map(item => (
-                  <li key={item} className="flex items-center gap-2 text-gray-600 text-xs sm:text-sm">
+                  <li key={item} className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-xs sm:text-sm">
                     <div className="w-4 h-4 rounded-full bg-orange-500/10 flex items-center justify-center flex-shrink-0"><CheckIcon /></div>
                     {item}
                   </li>
@@ -646,8 +646,8 @@ export default function Index() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <span className="inline-block bg-orange-50 text-orange-600 text-xs font-bold px-3 py-1 rounded-full mb-4">Job Opportunities</span>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-4 font-heading">International Job Board</h2>
-              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mb-4">Browse verified job openings across our partner countries. Filter by destination, industry, and experience level.</p>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 font-heading">International Job Board</h2>
+              <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-4">Browse verified job openings across our partner countries. Filter by destination, industry, and experience level.</p>
               <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="bg-orange-500 text-white rounded-full px-6 py-2.5 text-sm font-bold shadow-lg shadow-orange-500/30 inline-flex items-center gap-2">
                 Browse Jobs <ArrowIcon />
               </motion.button>
@@ -662,10 +662,10 @@ export default function Index() {
       </SectionWrap>
 
       {/* TESTIMONIALS - 2-col mobile */}
-      <SectionWrap className="pt-16 pb-16 bg-gray-50">
+      <SectionWrap className="pt-16 pb-16 bg-gray-50 dark:bg-gray-800/50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-xs sm:text-sm font-medium text-gray-600 mb-2">Success Stories</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 leading-none mb-10 sm:mb-12 font-heading">What Our Clients Say</motion.h2>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Success Stories</motion.p>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-10 sm:mb-12 font-heading">What Our Clients Say</motion.h2>
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
             {testimonials.map((t, i) => <TestimonialCard key={t.name} {...t} delay={i * 0.1} />)}
           </div>
@@ -687,11 +687,11 @@ export default function Index() {
       {/* ── FAQ SECTION ── */}
       <SectionWrap className="pt-16 pb-16 bg-white" id="faq">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-xs sm:text-sm font-medium text-gray-600 mb-2">Got Questions?</motion.p>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 leading-none mb-10 font-heading">Frequently Asked Questions</motion.h2>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Got Questions?</motion.p>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-10 font-heading">Frequently Asked Questions</motion.h2>
           <div className="space-y-3">
             {faqData.map((faq, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} className="bg-[#F5F5F0] rounded-2xl overflow-hidden">
+              <motion.div key={i} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} className="bg-[#F5F5F0] dark:bg-gray-800 rounded-2xl overflow-hidden">
                 <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full flex items-center justify-between p-4 sm:p-5 text-left">
                   <span className="text-xs sm:text-sm font-semibold text-gray-900 pr-4">{faq.q}</span>
                   <motion.svg animate={{ rotate: openFaq === i ? 180 : 0 }} transition={{ duration: 0.2 }} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" className="flex-shrink-0">
@@ -701,7 +701,7 @@ export default function Index() {
                 <AnimatePresence>
                   {openFaq === i && (
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }}>
-                      <p className="px-4 sm:px-5 pb-4 sm:pb-5 text-gray-600 text-xs sm:text-sm leading-relaxed">{faq.a}</p>
+                      <p className="px-4 sm:px-5 pb-4 sm:pb-5 text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed">{faq.a}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -714,8 +714,8 @@ export default function Index() {
       {/* CTA */}
       <SectionWrap className="pt-16 sm:pt-20 pb-16 sm:pb-20" id="contact">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-[2rem] sm:text-[3.5rem] md:text-[4rem] font-bold tracking-tighter text-gray-900 leading-none mb-4 font-heading">Ready to Start?</motion.h2>
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-gray-500 text-xs sm:text-sm mb-6 sm:mb-8 max-w-lg mx-auto">Take the first step towards your international career. Our team is ready to guide you through every stage of the process.</motion.p>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-[2rem] sm:text-[3.5rem] md:text-[4rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-4 font-heading">Ready to Start?</motion.h2>
+          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mb-6 sm:mb-8 max-w-lg mx-auto">Take the first step towards your international career. Our team is ready to guide you through every stage of the process.</motion.p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setShowEligibility(true)} className="bg-orange-500 text-white rounded-full px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-bold shadow-lg shadow-orange-500/30 inline-flex items-center justify-center gap-2">
               Check Eligibility <ArrowIcon />
