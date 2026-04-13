@@ -465,7 +465,7 @@ export default function Index() {
         </section>
 
         <section id="countries" className="scroll-mt-24 py-16 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <FadeIn className="mx-auto max-w-6xl px-4 sm:px-6">
             <SectionIntro
               eyebrow="Explore Destinations"
               title="Country-wise visa routes"
@@ -499,7 +499,7 @@ export default function Index() {
         </section>
 
         <section id="services" className="scroll-mt-24 bg-muted/50 py-16 sm:py-20">
-          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <FadeIn className="mx-auto max-w-6xl px-4 sm:px-6">
             <SectionIntro
               eyebrow="What We Offer"
               title="Services built around real travel and recruitment workflows"
