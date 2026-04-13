@@ -305,18 +305,6 @@ function TestimonialCard({
   );
 }
 
-function ToolCard({ tool }: { tool: (typeof tools)[number] }) {
-  return (
-    <article className="overflow-hidden rounded-[1.8rem] border border-border bg-card shadow-sm">
-      <img src={tool.img} alt={tool.title} className="h-44 w-full object-cover sm:h-56" />
-      <div className="p-5 sm:p-6">
-        <h3 className="font-heading text-lg font-bold text-foreground sm:text-xl">{tool.title}</h3>
-        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{tool.desc}</p>
-      </div>
-    </article>
-  );
-}
-
 export default function Index() {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [activeRegion, setActiveRegion] = useState<RegionFilter>('All');
