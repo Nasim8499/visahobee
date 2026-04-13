@@ -124,21 +124,21 @@ const ServiceCardNew = ({ img, title, desc, delay = 0 }: { img: string; title: s
 );
 
 const TrustItem = ({ icon, title, delay = 0 }: { icon: React.ReactNode; title: string; delay?: number }) => (
-  <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay, duration: 0.3 }} className="flex items-center gap-3 bg-gray-50 rounded-xl p-3 sm:p-4">
-    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-orange-50 flex items-center justify-center flex-shrink-0">{icon}</div>
-    <span className="text-xs sm:text-sm font-medium text-gray-800">{title}</span>
+  <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay, duration: 0.3 }} className="flex items-center gap-3 bg-gray-50 dark:bg-gray-800 rounded-xl p-3 sm:p-4">
+    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-orange-50 dark:bg-orange-500/10 flex items-center justify-center flex-shrink-0">{icon}</div>
+    <span className="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">{title}</span>
   </motion.div>
 );
 
 const TestimonialCard = ({ name, role, text, rating = 5, delay = 0 }: { name: string; role: string; text: string; rating?: number; delay?: number }) => (
-  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay, duration: 0.4 }} className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100">
+  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay, duration: 0.4 }} className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100 dark:border-gray-700">
     <StarRating rating={rating} />
-    <p className="text-gray-600 text-xs sm:text-sm leading-relaxed mt-3 sm:mt-4 mb-4 sm:mb-5 line-clamp-4">"{text}"</p>
+    <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mt-3 sm:mt-4 mb-4 sm:mb-5 line-clamp-4">"{text}"</p>
     <div className="flex items-center gap-3">
-      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-xs sm:text-sm">{name.split(' ').map(n => n[0]).join('')}</div>
+      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center text-orange-600 dark:text-orange-400 font-bold text-xs sm:text-sm">{name.split(' ').map(n => n[0]).join('')}</div>
       <div>
-        <p className="text-xs sm:text-sm font-semibold text-gray-900">{name}</p>
-        <p className="text-[10px] sm:text-xs text-gray-500">{role}</p>
+        <p className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">{name}</p>
+        <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">{role}</p>
       </div>
     </div>
   </motion.div>
