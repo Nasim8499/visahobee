@@ -263,25 +263,21 @@ export default function Index() {
 
   return (
     <PageTransition>
-    <div className="min-h-screen bg-[#F5F5F0]">
-      {/* Hero Flight Intro Animation */}
-      {showHeroFlight && (
-        <FlightIntro countryName="Your Global Journey" flag="✈️" onComplete={handleHeroFlightComplete} />
-      )}
+    <div className="min-h-screen bg-[#F5F5F0] overflow-x-hidden">
       {/* Progress bar */}
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-orange-500 z-[60] origin-left" style={{ scaleX }} />
 
       {/* HEADER */}
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrollY > 50 ? 'bg-[#F5F5F0]/95 backdrop-blur-xl shadow-sm' : 'bg-transparent'}`}>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrollY > window.innerHeight * 0.8 ? 'bg-white/95 backdrop-blur-xl shadow-sm' : 'bg-transparent'}`}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
-          <button onClick={() => setMobileMenu(true)} className="sm:hidden text-sm font-medium text-gray-600">Menu</button>
+          <button onClick={() => setMobileMenu(true)} className={`sm:hidden text-sm font-medium transition-colors ${scrollY > window.innerHeight * 0.8 ? 'text-gray-700' : 'text-white/80'}`}>Menu</button>
           <Link to="/" className="flex items-center gap-1">
             <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
             </div>
-            <span className="text-lg font-bold text-gray-900 font-heading">VisaHOBe</span>
+            <span className={`text-lg font-bold font-heading transition-colors ${scrollY > window.innerHeight * 0.8 ? 'text-gray-900' : 'text-white'}`}>VisaHOBe</span>
           </Link>
-          <button onClick={() => setShowContactForm(true)} className="text-sm font-medium text-gray-600 hover:text-orange-500 transition-colors">Contact Us</button>
+          <button onClick={() => setShowContactForm(true)} className={`text-sm font-medium transition-colors ${scrollY > window.innerHeight * 0.8 ? 'text-gray-600 hover:text-orange-500' : 'text-white/80 hover:text-white'}`}>Contact Us</button>
         </div>
       </header>
 
