@@ -78,7 +78,7 @@ const AnimatedCounter = ({ end, suffix = "", label = "" }: { end: number; suffix
 
 const CountryCard = ({ img, country, visa, badge, desc, slug, delay = 0 }: { img: string; country: string; visa: string; badge?: string; desc: string; slug: string; delay?: number; featured?: boolean }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay, duration: 0.4 }} whileHover={{ y: -6 }}>
-    <Link to={`/countries/${slug}`} className="block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-gray-100 group">
+    <Link to={`/countries/${slug}`} className="block bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-gray-100 dark:border-gray-700 group">
       <div className="relative h-36 sm:h-44 overflow-hidden">
         <img src={img} alt={country} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
@@ -87,10 +87,10 @@ const CountryCard = ({ img, country, visa, badge, desc, slug, delay = 0 }: { img
       <div className="p-3 sm:p-5">
         <div className="flex items-center gap-2 mb-1.5">
           <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
-          <span className="text-orange-600 text-[10px] sm:text-xs font-semibold">{visa}</span>
+          <span className="text-orange-600 dark:text-orange-400 text-[10px] sm:text-xs font-semibold">{visa}</span>
         </div>
-        <h3 className="text-sm sm:text-lg font-bold text-gray-900 mb-1 font-heading">{country}</h3>
-        <p className="text-gray-500 text-[10px] sm:text-xs leading-relaxed mb-2 sm:mb-3 line-clamp-2">{desc}</p>
+        <h3 className="text-sm sm:text-lg font-bold text-gray-900 dark:text-white mb-1 font-heading">{country}</h3>
+        <p className="text-gray-500 dark:text-gray-400 text-[10px] sm:text-xs leading-relaxed mb-2 sm:mb-3 line-clamp-2">{desc}</p>
         <div className="flex items-center gap-1 text-orange-500 text-[10px] sm:text-xs font-semibold">
           <span>View Details</span>
           <ArrowIcon />
