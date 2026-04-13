@@ -38,21 +38,11 @@ const StarRating = ({ rating = 5 }: { rating?: number }) => (
   </div>
 );
 
-const SectionWrap = ({ children, className = '', id = '' }: { children: React.ReactNode; className?: string; id?: string }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '100px' });
-  return (
-    <div ref={ref} id={id} className={className}>
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-      >
-        {children}
-      </motion.div>
-    </div>
-  );
-};
+const SectionWrap = ({ children, className = '', id = '' }: { children: React.ReactNode; className?: string; id?: string }) => (
+  <section id={id} className={className}>
+    {children}
+  </section>
+);
 
 const Floating = ({ children, delay = 0, dur = 4, yR = 15, className = "" }: { children: React.ReactNode; delay?: number; dur?: number; yR?: number; className?: string }) => (
   <motion.div className={className} animate={{ y: [-yR, yR, -yR] }} transition={{ duration: dur, repeat: Infinity, ease: 'easeInOut', delay }}>
