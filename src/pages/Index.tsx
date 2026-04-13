@@ -387,9 +387,9 @@ export default function Index() {
         )}
       </AnimatePresence>
 
-      {/* ── HERO — FULL-SCREEN FLIGHT SIMULATOR ── */}
-      <section id="home" className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-        {/* Dark background with world map */}
+      {/* ── HERO — FULL-SCREEN FLIGHT SIMULATOR (no text overlay) ── */}
+      <section id="home" className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
+        {/* Dark background */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a1a] via-[#0f172a] to-[#1e1b4b]" />
 
         {/* Animated world map SVG */}
@@ -413,27 +413,20 @@ export default function Index() {
           { x: 56, y: 30 }, { x: 72, y: 45 }, { x: 60, y: 18 }, { x: 54, y: 32 },
           { x: 47, y: 20 }, { x: 70, y: 40 },
         ].map((dot, i) => (
-          <motion.div
-            key={i}
-            className="absolute"
-            style={{ left: `${dot.x}%`, top: `${dot.y}%` }}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.5 + i * 0.12, type: 'spring' }}
-          >
+          <motion.div key={i} className="absolute" style={{ left: `${dot.x}%`, top: `${dot.y}%` }} initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.5 + i * 0.12, type: 'spring' }}>
             <div className="w-2 h-2 bg-orange-500 rounded-full" />
             <motion.div className="absolute inset-0 w-2 h-2 bg-orange-500 rounded-full" animate={{ scale: [1, 3, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.25 }} />
           </motion.div>
         ))}
 
-        {/* Animated flight arc */}
+        {/* Animated flight arcs */}
         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
           <motion.path d="M 10 75 Q 35 30 50 25 Q 65 20 90 45" fill="none" stroke="rgba(249,115,22,0.5)" strokeWidth="0.3" strokeDasharray="2 2" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 3, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop', repeatDelay: 1 }} />
           <motion.path d="M 15 65 Q 45 45 55 35 Q 75 25 85 55" fill="none" stroke="rgba(249,115,22,0.25)" strokeWidth="0.2" strokeDasharray="1 2" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 4, ease: 'easeInOut', delay: 1.5, repeat: Infinity, repeatType: 'loop', repeatDelay: 1 }} />
         </svg>
 
         {/* Floating airplane */}
-        <motion.div className="absolute z-10" initial={{ x: '-30vw', y: '20vh' }} animate={{ x: ['−30vw', '10vw', '40vw'], y: ['20vh', '-10vh', '15vh'], rotate: [-30, -10, 10] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}>
+        <motion.div className="absolute z-10" initial={{ x: '-30vw', y: '20vh' }} animate={{ x: ['-30vw', '10vw', '40vw'], y: ['20vh', '-10vh', '15vh'], rotate: [-30, -10, 10] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}>
           <svg width="48" height="48" viewBox="0 0 64 64" fill="none">
             <path d="M58 6L28 36M58 6L40 58L28 36M58 6L6 24L28 36" fill="rgba(249,115,22,0.15)" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
@@ -441,39 +434,25 @@ export default function Index() {
 
         {/* Floating particles */}
         {Array.from({ length: 15 }).map((_, i) => (
-          <motion.div
-            key={`p${i}`}
-            className="absolute w-1 h-1 bg-orange-400/60 rounded-full"
-            style={{ left: `${10 + Math.random() * 80}%`, top: `${10 + Math.random() * 80}%` }}
-            animate={{ opacity: [0, 0.7, 0], y: [0, -25] }}
-            transition={{ duration: 2.5 + Math.random() * 2, repeat: Infinity, delay: Math.random() * 3 }}
-          />
+          <motion.div key={`p${i}`} className="absolute w-1 h-1 bg-orange-400/60 rounded-full" style={{ left: `${10 + Math.random() * 80}%`, top: `${10 + Math.random() * 80}%` }} animate={{ opacity: [0, 0.7, 0], y: [0, -25] }} transition={{ duration: 2.5 + Math.random() * 2, repeat: Infinity, delay: Math.random() * 3 }} />
         ))}
 
-        {/* Hero text content on top */}
-        <div className="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-12 text-center">
-          <AnimatePresence mode="wait">
-            <motion.div key={heroIdx} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.5 }}>
-              <p className="text-xs sm:text-sm font-medium text-orange-400/80 mb-3">{slide.subtitle}</p>
-              <h1 className="text-[2.8rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-bold tracking-tighter text-white leading-none font-heading">
-                {slide.title1}
-              </h1>
-              <h1 className="text-[2.8rem] sm:text-[5rem] md:text-[6rem] lg:text-[7rem] font-bold tracking-tighter leading-none font-heading">
-                <span className="text-orange-500">{slide.title2}</span>
-              </h1>
-              <p className="text-xs sm:text-sm text-white/50 mt-4 max-w-xl mx-auto">{slide.desc}</p>
-            </motion.div>
-          </AnimatePresence>
+        {/* Center content — logo + tagline + CTAs */}
+        <div className="relative z-20 text-center px-4">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
+              </div>
+              <span className="text-2xl sm:text-3xl font-bold text-white font-heading">VisaHOBe</span>
+            </div>
+            <h1 className="text-[2.5rem] sm:text-[4rem] md:text-[5rem] lg:text-[6rem] font-bold tracking-tighter text-white leading-none font-heading mb-2">
+              Global <span className="text-orange-500">Mobility</span>
+            </h1>
+            <p className="text-white/40 text-xs sm:text-sm max-w-md mx-auto mt-4 mb-8">Your trusted partner for visa processing & international recruitment across 10 countries.</p>
+          </motion.div>
 
-          {/* Slide indicators */}
-          <div className="flex justify-center gap-2 mt-8">
-            {heroSlides.map((_, i) => (
-              <button key={i} onClick={() => setHeroIdx(i)} className={`h-2 rounded-full transition-all duration-300 ${i === heroIdx ? 'bg-orange-500 w-8' : 'bg-white/30 w-2'}`} />
-            ))}
-          </div>
-
-          {/* CTA Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }} className="flex flex-col sm:flex-row gap-3 justify-center">
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setShowEligibility(true)} className="bg-orange-500 text-white rounded-full px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-bold shadow-lg shadow-orange-500/30 flex items-center justify-center gap-2">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
               Check Eligibility
@@ -482,10 +461,15 @@ export default function Index() {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
               Contact VisaHOBe
             </motion.button>
-          </div>
+          </motion.div>
+
+          {/* Scroll indicator */}
+          <motion.div className="mt-12" animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" className="mx-auto"><polyline points="6 9 12 15 18 9" /></svg>
+          </motion.div>
         </div>
 
-        {/* Bottom fade to page bg */}
+        {/* Bottom fade */}
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#F5F5F0] to-transparent z-20" />
       </section>
 
