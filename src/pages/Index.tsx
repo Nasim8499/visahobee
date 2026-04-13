@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useInView, useScroll } from 'framer-motion';
+import { motion, AnimatePresence, useInView, useScroll, useSpring } from 'framer-motion';
 
 const IMG = {
   singapore: 'https://image.qwenlm.ai/public_source/a7b586f8-7250-4f86-bc01-7c26cadd0134/1e226a98a-3d48-4cd9-a261-e2c515240501.png',
@@ -218,7 +218,8 @@ export default function Index() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [eligResult, setEligResult] = useState<{ score: number; message: string } | null>(null);
 
-  useScroll();
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   const countries = [
     { img: IMG.singapore, country: 'Singapore', visa: 'Work Permit / IPA', badge: 'Top Destination', desc: 'Work Permit and In-Principle Approval support for skilled & semi-skilled workers entering Singapore\'s thriving economy.', featured: true },
@@ -288,7 +289,7 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-[#F5F5F0]">
       {/* Progress bar */}
-      <motion.div className="fixed top-0 left-0 right-0 h-0.5 bg-orange-500 z-[60] origin-left" style={{ scaleX: 0 }} />
+      <motion.div className="fixed top-0 left-0 right-0 h-1 bg-orange-500 z-[60] origin-left" style={{ scaleX }} />
 
       {/* HEADER */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrollY > 50 ? 'bg-[#F5F5F0]/95 backdrop-blur-xl shadow-sm' : 'bg-transparent'}`}>
