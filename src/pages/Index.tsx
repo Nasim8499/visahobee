@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useInView, useScroll, useSpring } from 'framer
 import { Link } from 'react-router-dom';
 import { countries, IMG } from '@/data/countries';
 import FlightIntro from '@/components/FlightIntro';
+import PageTransition from '@/components/PageTransition';
 
 const ArrowIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -261,6 +262,7 @@ export default function Index() {
   const slide = heroSlides[heroIdx];
 
   return (
+    <PageTransition>
     <div className="min-h-screen bg-[#F5F5F0]">
       {/* Hero Flight Intro Animation */}
       {showHeroFlight && (
