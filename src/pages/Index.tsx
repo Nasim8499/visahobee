@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { Link } from 'react-router-dom';
+import FadeIn from '@/components/FadeIn';
 import {
   ArrowRight,
   Award,
@@ -494,7 +495,7 @@ export default function Index() {
                 <CountryCard key={country.slug} country={country} />
               ))}
             </div>
-          </div>
+          </FadeIn>
         </section>
 
         <section id="services" className="scroll-mt-24 bg-muted/50 py-16 sm:py-20">
@@ -509,11 +510,11 @@ export default function Index() {
                 <ServiceCard key={item.title} item={item} />
               ))}
             </div>
-          </div>
+          </FadeIn>
         </section>
 
         <section id="foremployers" className="scroll-mt-24 py-16 sm:py-20">
-          <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_0.95fr]">
+          <FadeIn className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_0.95fr]">
             <div>
               <SectionIntro
                 eyebrow="For Employers"
@@ -543,7 +544,7 @@ export default function Index() {
             <div className="overflow-hidden rounded-[2rem] border border-border bg-card shadow-xl">
               <img src={IMG.team} alt="Employer and recruitment coordination" className="h-72 w-full object-cover sm:h-96" />
             </div>
-          </div>
+          </FadeIn>
         </section>
 
         <section id="process" className="scroll-mt-24 bg-muted/50 py-16 sm:py-20">
@@ -564,7 +565,7 @@ export default function Index() {
                 </article>
               ))}
             </div>
-          </div>
+          </FadeIn>
         </section>
 
         <section className="py-16 sm:py-20">
@@ -579,11 +580,11 @@ export default function Index() {
                 <TrustCard key={item.title} item={item} />
               ))}
             </div>
-          </div>
+          </FadeIn>
         </section>
 
         <section id="about" className="scroll-mt-24 bg-muted/50 py-16 sm:py-20">
-          <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_0.95fr]">
+          <FadeIn className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_0.95fr]">
             <div>
               <SectionIntro
                 eyebrow="About VisaHOBe"
@@ -616,7 +617,7 @@ export default function Index() {
             <div className="overflow-hidden rounded-[2rem] border border-border bg-card shadow-xl">
               <img src={IMG.traveler} alt="Traveler supported by VisaHOBe" className="h-72 w-full object-cover sm:h-96" />
             </div>
-          </div>
+          </FadeIn>
         </section>
 
         <section className="bg-muted/50 py-16 sm:py-20">
@@ -631,11 +632,11 @@ export default function Index() {
                 <TestimonialCard key={testimonial.name} testimonial={testimonial} />
               ))}
             </div>
-          </div>
+          </FadeIn>
         </section>
 
         <section className="py-16 sm:py-20">
-          <div className="mx-auto max-w-3xl px-4 sm:px-6">
+          <FadeIn className="mx-auto max-w-3xl px-4 sm:px-6">
             <SectionIntro
               eyebrow="Frequently Asked Questions"
               title="Answers that stay readable without any motion dependency"
@@ -663,7 +664,7 @@ export default function Index() {
                 );
               })}
             </div>
-          </div>
+          </FadeIn>
         </section>
 
         <section id="contact" className="scroll-mt-24 bg-muted/50 py-16 sm:py-20">
@@ -763,7 +764,7 @@ export default function Index() {
                 )}
               </div>
             </div>
-          </div>
+          </FadeIn>
         </section>
       </main>
 
