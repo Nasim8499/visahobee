@@ -30,6 +30,8 @@ const ArrowIcon = () => (
 export default function CountryDetail() {
   const { slug } = useParams<{ slug: string }>();
   const country = getCountryBySlug(slug || '');
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const [showContact, setShowContact] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [showFlight, setShowFlight] = useState(true);
@@ -37,9 +39,9 @@ export default function CountryDetail() {
 
   if (!country) {
     return (
-      <div className="min-h-screen bg-[#F5F5F0] flex items-center justify-center">
+      <div className="min-h-screen bg-[#F5F5F0] dark:bg-gray-950 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Country Not Found</h1>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Country Not Found</h1>
           <Link to="/" className="text-orange-500 font-semibold hover:underline">← Back to Home</Link>
         </div>
       </div>
@@ -50,23 +52,24 @@ export default function CountryDetail() {
 
   return (
     <PageTransition>
-    <div className="min-h-screen bg-[#F5F5F0]">
+    <div className="min-h-screen bg-[#F5F5F0] dark:bg-gray-950">
       {/* Flight Intro Animation */}
       {showFlight && country && (
         <FlightIntro countryName={country.country} flag={country.flag} onComplete={handleFlightComplete} />
       )}
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#F5F5F0]/95 backdrop-blur-xl shadow-sm">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#F5F5F0]/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-1">
             <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
             </div>
-            <span className="text-lg font-bold text-gray-900">VisaHOBe</span>
+            <span className="text-lg font-bold text-gray-900 dark:text-white">VisaHOBe</span>
           </Link>
           <div className="flex items-center gap-3">
-            <Link to="/" className="text-sm text-gray-500 hover:text-gray-900 transition-colors hidden sm:inline">Home</Link>
-            <button onClick={() => setShowContact(true)} className="text-sm font-medium text-gray-600 hover:text-orange-500 transition-colors">Contact Us</button>
+            <Link to="/" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors hidden sm:inline">Home</Link>
+            <DarkModeToggle className="text-gray-600 dark:text-gray-300 hover:text-orange-500" />
+            <button onClick={() => setShowContact(true)} className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors">Contact Us</button>
           </div>
         </div>
       </header>
