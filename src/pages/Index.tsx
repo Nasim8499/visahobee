@@ -111,14 +111,14 @@ const serviceData = [
 ];
 
 const ServiceCardNew = ({ img, title, desc, delay = 0 }: { img: string; title: string; desc: string; delay?: number }) => (
-  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay, duration: 0.4 }} whileHover={{ y: -4 }} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 group">
+  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay, duration: 0.4 }} whileHover={{ y: -4 }} className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 dark:border-gray-700 group">
     <div className="relative h-32 sm:h-40 overflow-hidden">
       <img src={img} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
     </div>
     <div className="p-4 sm:p-5">
-      <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-1.5 font-heading">{title}</h3>
-      <p className="text-gray-500 text-[10px] sm:text-xs leading-relaxed line-clamp-3">{desc}</p>
+      <h3 className="text-sm sm:text-base font-bold text-gray-900 dark:text-white mb-1.5 font-heading">{title}</h3>
+      <p className="text-gray-500 dark:text-gray-400 text-[10px] sm:text-xs leading-relaxed line-clamp-3">{desc}</p>
     </div>
   </motion.div>
 );
