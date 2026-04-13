@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { countries, IMG } from '@/data/countries';
 import FlightIntro from '@/components/FlightIntro';
 import PageTransition from '@/components/PageTransition';
+import DarkModeToggle from '@/components/DarkModeToggle';
+import { useTheme } from '@/hooks/use-theme';
 
 const ArrowIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
