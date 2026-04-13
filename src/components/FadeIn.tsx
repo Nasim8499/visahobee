@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 
 export default function FadeIn({
   children,
@@ -10,6 +10,7 @@ export default function FadeIn({
   delay?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -18,20 +19,23 @@ export default function FadeIn({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.style.animationDelay = `${delay}ms`;
-          el.classList.add('animate-fade-up');
+          setVisible(true);
           observer.unobserve(el);
         }
       },
-      { threshold: 0.08 }
+      { threshold: 0.05 }
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [delay]);
+  }, []);
 
   return (
-    <div ref={ref} className={`opacity-0 ${className}`}>
+    <div
+      ref={ref}
+      className={`${className} ${visible ? 'animate-fade-up' : 'opacity-0'}`}
+      style={visible && delay ? { animationDelay: `${delay}ms` } : undefined}
+    >
       {children}
     </div>
   );
