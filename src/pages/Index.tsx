@@ -245,7 +245,10 @@ export default function Index() {
   };
 
   useEffect(() => {
-    const h = () => setScrollY(window.scrollY);
+    const h = () => {
+      setScrollY(window.scrollY);
+      setPastHero(window.scrollY > window.innerHeight * 0.75);
+    };
     window.addEventListener('scroll', h, { passive: true });
     return () => window.removeEventListener('scroll', h);
   }, []);
