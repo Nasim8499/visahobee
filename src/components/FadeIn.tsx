@@ -16,6 +16,13 @@ export default function FadeIn({
     const el = ref.current;
     if (!el) return;
 
+    // Check if already in viewport on mount
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 100) {
+      setVisible(true);
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -23,7 +30,7 @@ export default function FadeIn({
           observer.unobserve(el);
         }
       },
-      { threshold: 0.02, rootMargin: '0px 0px 50px 0px' }
+      { threshold: 0, rootMargin: '100px' }
     );
 
     observer.observe(el);
@@ -34,12 +41,11 @@ export default function FadeIn({
     <div
       ref={ref}
       className={className}
-      style={{
-        opacity: visible ? undefined : 0,
-        transform: visible ? undefined : 'translateY(24px)',
-        transition: visible ? 'opacity 0.6s ease-out, transform 0.6s ease-out' : undefined,
-        transitionDelay: visible && delay ? `${delay}ms` : undefined,
-      }}
+      style={
+        visible
+          ? { opacity: 1, transform: 'translateY(0)', transition: `opacity 0.6s ease-out${delay ? ` ${delay}ms` : ''}, transform 0.6s ease-out${delay ? ` ${delay}ms` : ''}` }
+          : { opacity: 0, transform: 'translateY(24px)' }
+      }
     >
       {children}
     </div>
