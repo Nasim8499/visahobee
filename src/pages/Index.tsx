@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useInView, useScroll, useSpring } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { countries, IMG } from '@/data/countries';
+import FlightIntro from '@/components/FlightIntro';
 
 const ArrowIcon = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -178,7 +179,6 @@ const TrustIcon = ({ type }: { type: string }) => {
 /* ── Hero Slides ── */
 const heroSlides = [
   { subtitle: 'Your Trusted Global Mobility Partner', title1: 'Global', title2: 'Mobility', desc: 'End-to-end visa and recruitment support across 10 countries — turning global aspirations into reality.', img: IMG.globevisa },
-  { subtitle: 'Work Permits Made Simple', title1: 'Work', title2: 'Permits', desc: 'Expert processing for Singapore, Australia, Serbia and 7 more countries. Embassy-ready documentation every time.', img: IMG.singapore },
   { subtitle: 'International Recruitment Solutions', title1: 'Global', title2: 'Recruitment', desc: 'Connecting skilled professionals with verified employer demand worldwide. From sourcing to deployment.', img: IMG.team },
   { subtitle: 'Your Career, Our Mission', title1: 'Start', title2: 'Today', desc: 'Free eligibility assessment. 500+ successful placements. 10 countries. One trusted partner.', img: IMG.traveler },
 ];
@@ -206,6 +206,8 @@ export default function Index() {
   const [eligResult, setEligResult] = useState<{ score: number; message: string } | null>(null);
   const [heroIdx, setHeroIdx] = useState(0);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [showHeroFlight, setShowHeroFlight] = useState(true);
+  const handleHeroFlightComplete = useCallback(() => setShowHeroFlight(false), []);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
@@ -260,6 +262,10 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-[#F5F5F0]">
+      {/* Hero Flight Intro Animation */}
+      {showHeroFlight && (
+        <FlightIntro countryName="Your Global Journey" flag="✈️" onComplete={handleHeroFlightComplete} />
+      )}
       {/* Progress bar */}
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-orange-500 z-[60] origin-left" style={{ scaleX }} />
 
