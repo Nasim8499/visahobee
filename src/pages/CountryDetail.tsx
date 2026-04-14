@@ -1,6 +1,9 @@
 import { useParams, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { getCountryBySlug, countries } from '@/data/countries';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import FlightIntro from '@/components/FlightIntro';
+import PageTransition from '@/components/PageTransition';
 import DarkModeToggle from '@/components/DarkModeToggle';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -31,6 +34,8 @@ export default function CountryDetail() {
   const isDark = theme === 'dark';
   const [showContact, setShowContact] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [showFlight, setShowFlight] = useState(true);
+  const handleFlightComplete = useCallback(() => setShowFlight(false), []);
 
   if (!country) {
     return (
@@ -46,7 +51,12 @@ export default function CountryDetail() {
   const otherCountries = countries.filter(c => c.slug !== country.slug).slice(0, 3);
 
   return (
+    <PageTransition>
     <div className="min-h-screen bg-[#F5F5F0] dark:bg-gray-950">
+      {/* Flight Intro Animation */}
+      {showFlight && country && (
+        <FlightIntro countryName={country.country} flag={country.flag} onComplete={handleFlightComplete} />
+      )}
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#F5F5F0]/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
@@ -110,13 +120,13 @@ export default function CountryDetail() {
           {/* Left Column */}
           <div className="lg:col-span-2 space-y-10">
             {/* Overview */}
-            <div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 font-heading">Overview</h2>
               <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base leading-relaxed">{country.overview}</p>
-            </div>
+            </motion.div>
 
             {/* Visa Types & Fees */}
-            <div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 font-heading">Visa Types & Fees</h2>
               <div className="space-y-4">
                 {country.visaTypes.map((vt) => (
@@ -139,10 +149,10 @@ export default function CountryDetail() {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* Requirements */}
-            <div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 font-heading">Required Documents</h2>
               <div className="bg-white dark:bg-gray-800 rounded-2xl p-5 sm:p-6 border border-gray-100 shadow-sm">
                 <ul className="space-y-3">
@@ -156,30 +166,30 @@ export default function CountryDetail() {
                   ))}
                 </ul>
               </div>
-            </div>
+            </motion.div>
 
             {/* Industries */}
-            <div>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 font-heading">Key Industries</h2>
               <div className="flex flex-wrap gap-2">
                 {country.industries.map((ind) => (
                   <span key={ind} className="bg-white text-gray-700 text-sm font-medium px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 shadow-sm">{ind}</span>
                 ))}
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right Sidebar */}
           <div className="space-y-6">
             {/* Apply CTA */}
-            <div className="bg-gray-900 rounded-2xl p-6 text-center sticky top-24">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="bg-gray-900 rounded-2xl p-6 text-center sticky top-24">
               <h3 className="text-white font-bold text-lg mb-2">Apply for {country.country}</h3>
               <p className="text-gray-400 dark:text-gray-500 text-xs mb-5">Get expert guidance for your visa application. Free initial consultation.</p>
               <button onClick={() => setShowContact(true)} className="w-full bg-orange-500 text-white rounded-full py-3 text-sm font-bold hover:bg-orange-600 transition-colors mb-3 flex items-center justify-center gap-2">
                 Start Application <ArrowIcon />
               </button>
               <p className="text-gray-500 text-[10px]">Average processing: {country.visaTypes[0]?.processingTime}</p>
-            </div>
+            </motion.div>
 
             {/* Other Countries */}
             <div>
@@ -203,7 +213,7 @@ export default function CountryDetail() {
       {/* Contact Modal */}
       {showContact && (
         <div className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => { setShowContact(false); setFormSubmitted(false); }}>
-          <div className="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto animate-scale-in" onClick={e => e.stopPropagation()}>
+          <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
             {formSubmitted ? (
               <div className="text-center py-8">
                 <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
@@ -230,7 +240,7 @@ export default function CountryDetail() {
                 </form>
               </>
             )}
-          </div>
+          </motion.div>
         </div>
       )}
 
@@ -249,5 +259,6 @@ export default function CountryDetail() {
         </div>
       </footer>
     </div>
+    </PageTransition>
   );
 }
