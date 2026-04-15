@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { IMG } from '@/data/countries';
 import DarkModeToggle from '@/components/DarkModeToggle';
 import { useTheme } from '@/hooks/use-theme';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 
 const processSteps = [
   { num: '01', title: 'Free Consultation', desc: 'Share your goals and we\'ll recommend the best visa or recruitment pathway.', icon: '💬' },
@@ -21,6 +22,7 @@ const team = [
 export default function About() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  useScrollToTop();
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-950' : 'bg-[#F5F5F0]'}`}>
