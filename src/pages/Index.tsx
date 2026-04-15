@@ -205,7 +205,7 @@ export default function Index() {
           </Link>
           <nav className="hidden lg:flex items-center gap-6">
             {navLinks.map(item => (
-              <button key={item} onClick={() => item === 'Services' ? window.location.href = '/services' : item === 'About' ? window.location.href = '/about' : scrollTo(item === 'Home' ? 'home' : item.toLowerCase())} className={`text-sm font-medium transition-colors ${pastHero ? (isDark ? 'text-gray-400 hover:text-[#177BBB]' : 'text-gray-600 hover:text-[#003B73]') : 'text-white/80 hover:text-white'}`}>
+              <button key={item} onClick={() => handleNav(item)} className={`text-sm font-medium transition-colors ${pastHero ? (isDark ? 'text-gray-400 hover:text-[#177BBB]' : 'text-gray-600 hover:text-[#003B73]') : 'text-white/80 hover:text-white'}`}>
                 {item}
               </button>
             ))}
@@ -227,7 +227,7 @@ export default function Index() {
                 <button onClick={() => setMobileMenu(false)} className="text-gray-400"><CloseIcon /></button>
               </div>
               {navLinks.map(item => (
-                <button key={item} onClick={() => item === 'Services' ? window.location.href = '/services' : item === 'About' ? window.location.href = '/about' : scrollTo(item === 'Home' ? 'home' : item.toLowerCase())} className={`block w-full text-left py-3 text-sm font-medium transition-colors border-b ${isDark ? 'text-gray-300 hover:text-[#177BBB] border-gray-800' : 'text-gray-700 hover:text-[#003B73] border-gray-100'}`}>
+                <button key={item} onClick={() => handleNav(item)} className={`block w-full text-left py-3 text-sm font-medium transition-colors border-b ${isDark ? 'text-gray-300 hover:text-[#177BBB] border-gray-800' : 'text-gray-700 hover:text-[#003B73] border-gray-100'}`}>
                   {item}
                 </button>
               ))}
