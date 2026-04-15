@@ -28,32 +28,24 @@ export default function FlightIntro({ countryName, flag, onComplete }: FlightInt
           transition={{ duration: 0.4 }}
           onClick={onComplete}
         >
-          {/* Background */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#0a0a1a] via-[#0f172a] to-[#1a1033]" />
 
-          {/* Rotating globe wireframe */}
-          <motion.div
-            className="absolute inset-0 flex items-center justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.15, rotate: phase === 'arrive' ? 15 : 0 }}
-            transition={{ duration: 2 }}
-          >
+          <motion.div className="absolute inset-0 flex items-center justify-center" initial={{ opacity: 0 }} animate={{ opacity: 0.15, rotate: phase === 'arrive' ? 15 : 0 }} transition={{ duration: 2 }}>
             <svg width="500" height="500" viewBox="0 0 200 200" fill="none" className="w-[80vw] h-[80vw] max-w-[500px] max-h-[500px]">
-              <circle cx="100" cy="100" r="90" stroke="#F97316" strokeWidth="0.5" opacity="0.4" />
-              <ellipse cx="100" cy="100" rx="60" ry="90" stroke="#F97316" strokeWidth="0.3" opacity="0.3" />
-              <ellipse cx="100" cy="100" rx="30" ry="90" stroke="#F97316" strokeWidth="0.3" opacity="0.2" />
-              <line x1="10" y1="60" x2="190" y2="60" stroke="#F97316" strokeWidth="0.3" opacity="0.2" />
-              <line x1="10" y1="100" x2="190" y2="100" stroke="#F97316" strokeWidth="0.3" opacity="0.3" />
-              <line x1="10" y1="140" x2="190" y2="140" stroke="#F97316" strokeWidth="0.3" opacity="0.2" />
+              <circle cx="100" cy="100" r="90" stroke="#003B73" strokeWidth="0.5" opacity="0.4" />
+              <ellipse cx="100" cy="100" rx="60" ry="90" stroke="#003B73" strokeWidth="0.3" opacity="0.3" />
+              <ellipse cx="100" cy="100" rx="30" ry="90" stroke="#003B73" strokeWidth="0.3" opacity="0.2" />
+              <line x1="10" y1="60" x2="190" y2="60" stroke="#003B73" strokeWidth="0.3" opacity="0.2" />
+              <line x1="10" y1="100" x2="190" y2="100" stroke="#003B73" strokeWidth="0.3" opacity="0.3" />
+              <line x1="10" y1="140" x2="190" y2="140" stroke="#003B73" strokeWidth="0.3" opacity="0.2" />
             </svg>
           </motion.div>
 
-          {/* Plane trail - dotted arc */}
           <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
             <motion.path
               d="M 15 70 Q 30 30 50 25 Q 70 20 85 50"
               fill="none"
-              stroke="#F97316"
+              stroke="#177BBB"
               strokeWidth="0.15"
               strokeDasharray="1 1.5"
               initial={{ pathLength: 0, opacity: 0 }}
@@ -62,7 +54,6 @@ export default function FlightIntro({ countryName, flag, onComplete }: FlightInt
             />
           </svg>
 
-          {/* Plane icon */}
           <motion.div
             className="absolute z-10"
             initial={{ x: '-35vw', y: '25vh', rotate: -40, scale: 0.6, opacity: 0 }}
@@ -76,37 +67,21 @@ export default function FlightIntro({ countryName, flag, onComplete }: FlightInt
             transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
-              <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="#F97316" />
+              <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="#177BBB" />
             </svg>
           </motion.div>
 
-          {/* Center content */}
           <motion.div
             className="relative z-10 text-center px-6"
             initial={{ opacity: 0, y: 30 }}
-            animate={
-              phase === 'arrive'
-                ? { opacity: 1, y: 0 }
-                : { opacity: phase === 'cruise' ? 0.4 : 0, y: phase === 'cruise' ? 10 : 30 }
-            }
+            animate={phase === 'arrive' ? { opacity: 1, y: 0 } : { opacity: phase === 'cruise' ? 0.4 : 0, y: phase === 'cruise' ? 10 : 30 }}
             transition={{ duration: 0.6 }}
           >
-            <motion.span
-              className="text-5xl sm:text-6xl block mb-3"
-              animate={{ scale: phase === 'arrive' ? [1, 1.1, 1] : 1 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
+            <motion.span className="text-5xl sm:text-6xl block mb-3" animate={{ scale: phase === 'arrive' ? [1, 1.1, 1] : 1 }} transition={{ duration: 0.5, delay: 0.3 }}>
               {flag}
             </motion.span>
-            <h2 className="text-xl sm:text-3xl font-bold text-white tracking-wide font-heading">
-              {countryName}
-            </h2>
-            <motion.p
-              className="text-white/30 text-xs mt-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: phase === 'arrive' ? 1 : 0 }}
-              transition={{ delay: 0.4 }}
-            >
+            <h2 className="text-xl sm:text-3xl font-bold text-white tracking-wide font-heading">{countryName}</h2>
+            <motion.p className="text-white/30 text-xs mt-3" initial={{ opacity: 0 }} animate={{ opacity: phase === 'arrive' ? 1 : 0 }} transition={{ delay: 0.4 }}>
               Tap anywhere to skip
             </motion.p>
           </motion.div>
