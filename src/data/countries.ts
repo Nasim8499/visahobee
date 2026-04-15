@@ -38,7 +38,7 @@ export interface CountryData {
 
 export const countries: CountryData[] = [
   {
-    slug: 'singapore', img: IMG.singapore, country: 'Singapore', flag: '🇸🇬',
+    slug: 'singapore', img: IMG.singapore, country: 'Singapore', flag: '🇸🇬', code: 'sg',
     visa: 'Work Permit / IPA', badge: 'Top Destination',
     desc: 'Work Permit and In-Principle Approval support for skilled & semi-skilled workers entering Singapore\'s thriving economy.',
     featured: true, region: 'Asia', capital: 'Singapore', currency: 'SGD', language: 'English, Malay, Mandarin, Tamil',
