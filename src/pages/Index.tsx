@@ -69,43 +69,25 @@ const AnimatedCounter = ({ end, suffix = "", label = "" }: { end: number; suffix
   );
 };
 
-const CountryCard = ({ country, visa, badge, desc, slug, code, delay = 0 }: { img: string; country: string; visa: string; badge?: string; desc: string; slug: string; code: string; delay?: number; featured?: boolean }) => (
-  <motion.div initial={{ opacity: 0, y: 30, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay, duration: 0.5, type: 'spring', stiffness: 120 }} whileHover={{ y: -8, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-    <Link to={`/countries/${slug}`} className="block bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 group">
-      <div className="relative h-36 sm:h-44 overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center">
-        <motion.img
-          src={`https://flagcdn.com/w640/${code}.png`}
-          alt={`${country} flag`}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-          initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: delay + 0.2, duration: 0.6 }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
-        {badge && (
-          <motion.span initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: delay + 0.3 }} className="absolute top-2 left-2 bg-[#003B73] text-white text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-md">
-            {badge}
-          </motion.span>
-        )}
-        <div className="absolute bottom-2 right-2 text-2xl sm:text-3xl drop-shadow-lg">{
-          /* emoji flag as overlay */
-          (() => {
-            const flags: Record<string, string> = { sg: '🇸🇬', au: '🇦🇺', rs: '🇷🇸', md: '🇲🇩', kw: '🇰🇼', kh: '🇰🇭', ru: '🇷🇺', sa: '🇸🇦', by: '🇧🇾', my: '🇲🇾' };
-            return flags[code] || '';
-          })()
-        }</div>
+const CountryCard = ({ img, country, visa, badge, desc, slug, delay = 0 }: { img: string; country: string; visa: string; badge?: string; desc: string; slug: string; delay?: number; featured?: boolean }) => (
+  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay, duration: 0.4 }} whileHover={{ y: -6 }}>
+    <Link to={`/countries/${slug}`} className="block bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-gray-100 dark:border-gray-700 group">
+      <div className="relative h-36 sm:h-44 overflow-hidden">
+        <img src={img} alt={country} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        {badge && <span className="absolute top-2 left-2 bg-[#003B73] text-white text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full">{badge}</span>}
       </div>
       <div className="p-3 sm:p-5">
         <div className="flex items-center gap-2 mb-1.5">
           <div className="w-1.5 h-1.5 rounded-full bg-[#003B73]" />
-          <span className="text-[#003B73] dark:text-[#177BBB] text-[10px] sm:text-xs font-semibold">{visa}</span>
+          <span className="text-[#003B73] dark:text-[#177BBB] dark:text-[#177BBB] text-[10px] sm:text-xs font-semibold">{visa}</span>
         </div>
         <h3 className="text-sm sm:text-lg font-bold text-gray-900 dark:text-white mb-1 font-heading">{country}</h3>
         <p className="text-gray-500 dark:text-gray-400 text-[10px] sm:text-xs leading-relaxed mb-2 sm:mb-3 line-clamp-2">{desc}</p>
-        <motion.div className="flex items-center gap-1 text-[#003B73] dark:text-[#177BBB] text-[10px] sm:text-xs font-semibold" whileHover={{ x: 4 }}>
+        <div className="flex items-center gap-1 text-[#003B73] dark:text-[#177BBB] text-[10px] sm:text-xs font-semibold">
           <span>View Details</span>
           <ArrowIcon />
-        </motion.div>
+        </div>
       </div>
     </Link>
   </motion.div>
