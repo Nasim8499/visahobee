@@ -139,6 +139,7 @@ const heroSlides = [
 ];
 
 export default function Index() {
+  const navigate = useNavigate();
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const [mobileMenu, setMobileMenu] = useState(false);
