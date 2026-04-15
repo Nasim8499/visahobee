@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence, useInView, useScroll, useSpring } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { countries, IMG } from '@/data/countries';
 import PageTransition from '@/components/PageTransition';
 import DarkModeToggle from '@/components/DarkModeToggle';
