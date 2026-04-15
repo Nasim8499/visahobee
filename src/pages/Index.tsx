@@ -407,7 +407,7 @@ export default function Index() {
       <section id="about" className="pt-12 sm:pt-16 pb-12 sm:pb-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <div>
               <span className={`inline-block text-xs font-bold px-3 py-1 rounded-full mb-4 ${isDark ? 'bg-[#177BBB]/10 text-[#177BBB]' : 'bg-[#003B73]/10 text-[#003B73]'}`}>Who We Are</span>
               <h2 className={`text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-4 font-heading ${isDark ? 'text-white' : 'text-gray-900'}`}>About VisaHOBe</h2>
               <p className={`text-sm leading-relaxed mb-4 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
@@ -417,7 +417,7 @@ export default function Index() {
                 Learn More <ArrowIcon />
               </Link>
             </motion.div>
-            <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }}>
+            <div>
               <div className="rounded-3xl overflow-hidden shadow-2xl">
                 <img src={IMG.traveler} alt="VisaHOBe" className="w-full h-48 sm:h-64 md:h-80 object-cover" />
               </div>
