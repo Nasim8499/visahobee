@@ -69,7 +69,7 @@ const CountryCard = ({ img, country, visa, badge, desc, slug, delay = 0 }: { img
         </div>
       </div>
     </Link>
-  </motion.div>
+  </div>
 );
 
 /* ── Service Card ── */
@@ -85,7 +85,7 @@ const ServiceCard = ({ img, title, desc, delay = 0 }: { img: string; title: stri
         <p className="text-gray-500 dark:text-gray-400 text-[9px] sm:text-xs leading-relaxed line-clamp-2">{desc}</p>
       </div>
     </Link>
-  </motion.div>
+  </div>
 );
 
 /* ── Testimonial Card ── */
@@ -104,7 +104,7 @@ const TestimonialCard = ({ name, role, text, delay = 0 }: { name: string; role: 
         <p className="text-[9px] sm:text-[10px] text-gray-500 dark:text-gray-400">{role}</p>
       </div>
     </div>
-  </motion.div>
+  </div>
 );
 
 /* ── Data ── */
@@ -233,8 +233,8 @@ export default function Index() {
               <div className={`mt-8 pt-4 border-t ${isDark ? 'border-gray-800' : 'border-gray-100'}`}>
                 <button onClick={() => { setMobileMenu(false); setShowContactForm(true); }} className="w-full bg-[#003B73] text-white rounded-full py-2.5 text-sm font-bold">Contact Us</button>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
       </AnimatePresence>
 
@@ -274,8 +274,8 @@ export default function Index() {
                   </form>
                 </>
               )}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
       </AnimatePresence>
 
@@ -303,11 +303,11 @@ export default function Index() {
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={`rounded-xl p-4 border ${isDark ? 'bg-[#177BBB]/10 border-[#177BBB]/20' : 'bg-[#003B73]/10 border-[#003B73]/20'}`}>
                     <p className={`font-bold text-lg mb-1 font-heading ${isDark ? 'text-[#177BBB]' : 'text-[#003B73]'}`}>{eligResult.score}% Match</p>
                     <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{eligResult.message}</p>
-                  </motion.div>
+                  </div>
                 )}
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         )}
       </AnimatePresence>
 
@@ -324,14 +324,14 @@ export default function Index() {
             {[100,200,300,400].map(y => <line key={`h${y}`} x1="0" y1={y} x2="1000" y2={y} stroke="rgba(0,59,115,0.06)" strokeWidth="0.5" strokeDasharray="8 8"/>)}
             {[200,400,600,800].map(x => <line key={`v${x}`} x1={x} y1="0" x2={x} y2="500" stroke="rgba(0,59,115,0.06)" strokeWidth="0.5" strokeDasharray="8 8"/>)}
           </svg>
-        </motion.div>
+        </div>
 
         {/* Animated dots */}
         {[{ x: 65, y: 35 }, { x: 82, y: 68 }, { x: 50, y: 22 }, { x: 56, y: 30 }, { x: 72, y: 45 }, { x: 70, y: 40 }].map((dot, i) => (
           <motion.div key={i} className="absolute" style={{ left: `${dot.x}%`, top: `${dot.y}%` }} initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.5 + i * 0.15, type: 'spring' }}>
             <div className="w-2 h-2 bg-[#003B73] rounded-full" />
             <motion.div className="absolute inset-0 w-2 h-2 bg-[#003B73] rounded-full" animate={{ scale: [1, 3, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.25 }} />
-          </motion.div>
+          </div>
         ))}
 
         {/* Flight arcs */}
@@ -354,10 +354,10 @@ export default function Index() {
               </motion.h1>
             </AnimatePresence>
             <p className="text-white/40 text-xs sm:text-sm max-w-md mx-auto mt-3 sm:mt-4 mb-6 sm:mb-8">{slide.desc}</p>
-          </motion.div>
+          </div>
           <motion.div className="mt-8 sm:mt-12" animate={{ y: [0, 8, 0] }} transition={{ duration: 2, repeat: Infinity }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" className="mx-auto"><polyline points="6 9 12 15 18 9" /></svg>
-          </motion.div>
+          </div>
         </div>
 
         <div className={`absolute bottom-0 left-0 right-0 h-20 z-20 bg-gradient-to-t ${isDark ? 'from-gray-950' : 'from-[#F5F5F0]'} to-transparent`} />
@@ -416,12 +416,12 @@ export default function Index() {
               <Link to="/about" className={`inline-flex items-center gap-2 text-sm font-semibold ${isDark ? 'text-[#177BBB]' : 'text-[#003B73]'} transition-colors`}>
                 Learn More <ArrowIcon />
               </Link>
-            </motion.div>
+            </div>
             <div>
               <div className="rounded-3xl overflow-hidden shadow-2xl">
                 <img src={IMG.traveler} alt="VisaHOBe" className="w-full h-48 sm:h-64 md:h-80 object-cover" />
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -465,7 +465,7 @@ export default function Index() {
                   {openFaq === i && (
                     <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }}>
                       <p className={`px-4 pb-4 text-xs sm:text-sm leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>{faq.a}</p>
-                    </motion.div>
+                    </div>
                   )}
                 </AnimatePresence>
               </div>
