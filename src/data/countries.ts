@@ -53,7 +53,7 @@ export const countries: CountryData[] = [
     overview: 'Singapore remains one of the most attractive destinations for foreign workers in Southeast Asia. With a transparent work permit system, strong legal protections for workers, and one of the highest standards of living in the region, it offers excellent career opportunities across multiple sectors. VisaHOBe provides complete end-to-end support for Singapore work permits, from initial employer matching to IPA approval and deployment.',
   },
   {
-    slug: 'australia', img: IMG.australia, country: 'Australia', flag: '🇦🇺',
+    slug: 'australia', img: IMG.australia, country: 'Australia', flag: '🇦🇺', code: 'au',
     visa: 'Visitor / Business / Skilled', badge: 'High Value',
     desc: 'Complete visa pathways including Visitor, Business, and Skilled migration routes to Australia.',
     featured: true, region: 'Middle East', capital: 'Canberra', currency: 'AUD', language: 'English',
