@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import DarkModeToggle from '@/components/DarkModeToggle';
 import { useTheme } from '@/hooks/use-theme';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 
 const services = [
   { img: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600&q=80', title: 'Work Permit Processing', desc: 'End-to-end work permit application processing for multiple countries with embassy-ready documentation.', features: ['Multi-country support', 'Embassy-ready docs', 'Real-time tracking', 'Expert case officers'] },
@@ -15,6 +16,7 @@ const services = [
 export default function Services() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  useScrollToTop();
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-gray-950' : 'bg-[#F5F5F0]'}`}>

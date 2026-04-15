@@ -6,6 +6,7 @@ import FlightIntro from '@/components/FlightIntro';
 import PageTransition from '@/components/PageTransition';
 import DarkModeToggle from '@/components/DarkModeToggle';
 import { useTheme } from '@/hooks/use-theme';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 
 const CloseIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -36,6 +37,7 @@ export default function CountryDetail() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [showFlight, setShowFlight] = useState(true);
   const handleFlightComplete = useCallback(() => setShowFlight(false), []);
+  useScrollToTop();
 
   if (!country) {
     return (
@@ -54,7 +56,7 @@ export default function CountryDetail() {
     <PageTransition>
     <div className={`min-h-screen ${isDark ? 'bg-gray-950' : 'bg-[#F5F5F0]'}`}>
       {showFlight && country && (
-        <FlightIntro countryName={country.country} flag={country.flag} onComplete={handleFlightComplete} />
+        <FlightIntro countryName={country.country} flag={country.flag} countryImage={country.img} onComplete={handleFlightComplete} />
       )}
 
       {/* Header */}
