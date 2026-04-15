@@ -21,6 +21,7 @@ export interface CountryData {
   img: string;
   country: string;
   flag: string;
+  code: string;
   visa: string;
   badge?: string;
   desc: string;
