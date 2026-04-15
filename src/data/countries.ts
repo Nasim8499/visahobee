@@ -68,7 +68,7 @@ export const countries: CountryData[] = [
     overview: 'Australia offers some of the most robust skilled migration pathways in the world. Whether you\'re seeking employer-sponsored visas, skilled independent migration, or business visitor options, the Australian immigration system provides clear routes for qualified professionals. VisaHOBe assists with skills assessments, documentation, and application lodgement across all major visa subclasses.',
   },
   {
-    slug: 'serbia', img: IMG.serbia, country: 'Serbia', flag: '🇷🇸',
+    slug: 'serbia', img: IMG.serbia, country: 'Serbia', flag: '🇷🇸', code: 'rs',
     visa: 'Work Permit', badge: 'European Gateway',
     desc: 'Work permit support for Serbia — an emerging European gateway for international professionals.',
     featured: true, region: 'Europe', capital: 'Belgrade', currency: 'RSD', language: 'Serbian',
@@ -82,7 +82,7 @@ export const countries: CountryData[] = [
     overview: 'Serbia is rapidly emerging as a key European gateway for international workers. With a growing economy, competitive labor costs, and a strategic location bridging Eastern and Western Europe, Serbia offers significant opportunities for skilled professionals. The Serbian work permit process is relatively straightforward, and VisaHOBe provides full support from employer coordination to document preparation.',
   },
   {
-    slug: 'moldova', img: IMG.moldova, country: 'Moldova', flag: '🇲🇩',
+    slug: 'moldova', img: IMG.moldova, country: 'Moldova', flag: '🇲🇩', code: 'md',
     visa: 'Recruitment Pipeline', badge: 'New Route',
     desc: 'Structured recruitment pipeline for Moldova, connecting candidates with verified employer demand.',
     region: 'Europe', capital: 'Chișinău', currency: 'MDL', language: 'Romanian',
@@ -95,7 +95,7 @@ export const countries: CountryData[] = [
     overview: 'Moldova is an emerging destination in VisaHOBe\'s European recruitment pipeline. With growing demand for skilled workers across agriculture, construction, and manufacturing, Moldova offers new opportunities for international professionals. Our structured pipeline connects pre-screened candidates with verified employer demand, ensuring smooth placements and transparent processing.',
   },
   {
-    slug: 'kuwait', img: IMG.kuwait, country: 'Kuwait', flag: '🇰🇼',
+    slug: 'kuwait', img: IMG.kuwait, country: 'Kuwait', flag: '🇰🇼', code: 'kw',
     visa: 'Employer Demand Route',
     desc: 'Kuwait employer demand route — fast-track processing for confirmed job placements.',
     region: 'Middle East', capital: 'Kuwait City', currency: 'KWD', language: 'Arabic, English',
@@ -109,7 +109,7 @@ export const countries: CountryData[] = [
     overview: 'Kuwait\'s oil-rich economy continues to drive demand for international workers across multiple sectors. The employer demand route provides fast-track processing for candidates with confirmed job placements. VisaHOBe coordinates directly with Kuwaiti employers to ensure all documentation meets Ministry of Interior requirements, streamlining the visa approval process.',
   },
   {
-    slug: 'cambodia', img: IMG.cambodia, country: 'Cambodia', flag: '🇰🇭',
+    slug: 'cambodia', img: IMG.cambodia, country: 'Cambodia', flag: '🇰🇭', code: 'kh',
     visa: 'Business Setup + Work', badge: 'Fast Track',
     desc: 'Business setup assistance combined with work route processing for Cambodia.',
     region: 'Asia', capital: 'Phnom Penh', currency: 'KHR/USD', language: 'Khmer, English',
@@ -123,7 +123,7 @@ export const countries: CountryData[] = [
     overview: 'Cambodia is one of Southeast Asia\'s fastest-growing economies with an increasingly business-friendly environment. The country offers streamlined visa processes, especially for business setup and work permits. VisaHOBe provides complete support for both business establishment and work visa processing, making Cambodia an accessible destination for international professionals.',
   },
   {
-    slug: 'russia', img: IMG.russia, country: 'Russia', flag: '🇷🇺',
+    slug: 'russia', img: IMG.russia, country: 'Russia', flag: '🇷🇺', code: 'ru',
     visa: 'Work Permit',
     desc: 'Work permit processing for Russia, covering multiple industry sectors and employment types.',
     region: 'Europe', capital: 'Moscow', currency: 'RUB', language: 'Russian',
@@ -137,7 +137,7 @@ export const countries: CountryData[] = [
     overview: 'Russia remains a significant market for international workers, particularly in oil & gas, construction, and IT sectors. The work permit system includes categories for general workers and highly qualified specialists (HQS) with simplified processing. VisaHOBe handles the complex documentation requirements including translation, notarization, and coordination with Russian employers.',
   },
   {
-    slug: 'saudi-arabia', img: IMG.saudiarabia, country: 'Saudi Arabia', flag: '🇸🇦',
+    slug: 'saudi-arabia', img: IMG.saudiarabia, country: 'Saudi Arabia', flag: '🇸🇦', code: 'sa',
     visa: 'Work Visa',
     desc: 'Saudi Arabia work visa services for construction, healthcare, and technology sectors.',
     region: 'Middle East', capital: 'Riyadh', currency: 'SAR', language: 'Arabic',
@@ -151,7 +151,7 @@ export const countries: CountryData[] = [
     overview: 'Saudi Arabia\'s Vision 2030 is driving massive infrastructure and economic transformation, creating significant demand for international talent. The Kingdom offers competitive salaries and tax-free income across major sectors. VisaHOBe provides comprehensive support for Saudi work visas, including Musaned registration, medical processing, and employer coordination through the Kafala sponsorship system.',
   },
   {
-    slug: 'belarus', img: IMG.belarus, country: 'Belarus', flag: '🇧🇾',
+    slug: 'belarus', img: IMG.belarus, country: 'Belarus', flag: '🇧🇾', code: 'by',
     visa: 'Work Permit',
     desc: 'Belarus work permit processing with employer coordination and documentation support.',
     region: 'Europe', capital: 'Minsk', currency: 'BYN', language: 'Belarusian, Russian',
@@ -164,7 +164,7 @@ export const countries: CountryData[] = [
     overview: 'Belarus offers opportunities for international workers, particularly in IT, manufacturing, and construction sectors. The country has been developing its Hi-Tech Park ecosystem and industrial base, creating demand for skilled professionals. VisaHOBe coordinates with Belarusian employers to handle work permit applications, documentation, and residence permit processing.',
   },
   {
-    slug: 'malaysia', img: IMG.malaysia, country: 'Malaysia', flag: '🇲🇾',
+    slug: 'malaysia', img: IMG.malaysia, country: 'Malaysia', flag: '🇲🇾', code: 'my',
     visa: 'Employment Pass', badge: 'ASEAN Hub',
     desc: 'Malaysia Employment Pass for skilled professionals entering the ASEAN economic hub.',
     region: 'Asia', capital: 'Kuala Lumpur', currency: 'MYR', language: 'Malay, English',
