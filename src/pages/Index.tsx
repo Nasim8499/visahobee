@@ -186,7 +186,7 @@ export default function Index() {
   const slide = heroSlides[heroIdx];
 
   return (
-    <div className={`min-h-screen overflow-x-hidden ${isDark ? 'bg-gray-950' : 'bg-[#F5F5F0]'}`}>
+    <div className={`min-h-screen ${isDark ? 'bg-gray-950' : 'bg-[#F5F5F0]'}`} style={{ overflowX: 'clip' }}>
       {/* Progress bar */}
       <motion.div className="fixed top-0 left-0 right-0 h-0.5 bg-[#003B73] z-[60] origin-left" style={{ scaleX }} />
 
