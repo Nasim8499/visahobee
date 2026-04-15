@@ -538,6 +538,6 @@ export default function Index() {
         </div>
       </footer>
     </div>
-    </PageTransition>
+  );
   );
 }
