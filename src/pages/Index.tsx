@@ -22,8 +22,8 @@ const PlaneSVG = ({ className = "" }: { className?: string }) => (
 
 const VisaStampSVG = ({ className = "" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 80 80" fill="none">
-    <rect x="5" y="15" width="70" height="50" rx="8" stroke="#F97316" strokeWidth="3" strokeDasharray="6 4" />
-    <text x="40" y="38" textAnchor="middle" fill="#F97316" fontSize="14" fontWeight="bold">VISA</text>
+    <rect x="5" y="15" width="70" height="50" rx="8" stroke="#003B73" strokeWidth="3" strokeDasharray="6 4" />
+    <text x="40" y="38" textAnchor="middle" fill="#003B73" fontSize="14" fontWeight="bold">VISA</text>
     <text x="40" y="55" textAnchor="middle" fill="#22C55E" fontSize="10" fontWeight="bold">APPROVED</text>
   </svg>
 );
@@ -31,7 +31,7 @@ const VisaStampSVG = ({ className = "" }: { className?: string }) => (
 const StarRating = ({ rating = 5 }: { rating?: number }) => (
   <div className="flex gap-0.5">
     {[1, 2, 3, 4, 5].map((s) => (
-      <svg key={s} width="14" height="14" viewBox="0 0 24 24" fill={s <= rating ? '#F97316' : '#E5E7EB'} stroke="none">
+      <svg key={s} width="14" height="14" viewBox="0 0 24 24" fill={s <= rating ? '#003B73' : '#E5E7EB'} stroke="none">
         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" />
       </svg>
     ))}
@@ -75,16 +75,16 @@ const CountryCard = ({ img, country, visa, badge, desc, slug, delay = 0 }: { img
       <div className="relative h-36 sm:h-44 overflow-hidden">
         <img src={img} alt={country} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-        {badge && <span className="absolute top-2 left-2 bg-orange-500 text-white text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full">{badge}</span>}
+        {badge && <span className="absolute top-2 left-2 bg-[#003B73] text-white text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full">{badge}</span>}
       </div>
       <div className="p-3 sm:p-5">
         <div className="flex items-center gap-2 mb-1.5">
-          <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
-          <span className="text-orange-600 dark:text-orange-400 text-[10px] sm:text-xs font-semibold">{visa}</span>
+          <div className="w-1.5 h-1.5 rounded-full bg-[#003B73]" />
+          <span className="text-[#003B73] dark:text-[#177BBB] dark:text-[#177BBB] text-[10px] sm:text-xs font-semibold">{visa}</span>
         </div>
         <h3 className="text-sm sm:text-lg font-bold text-gray-900 dark:text-white mb-1 font-heading">{country}</h3>
         <p className="text-gray-500 dark:text-gray-400 text-[10px] sm:text-xs leading-relaxed mb-2 sm:mb-3 line-clamp-2">{desc}</p>
-        <div className="flex items-center gap-1 text-orange-500 text-[10px] sm:text-xs font-semibold">
+        <div className="flex items-center gap-1 text-[#003B73] dark:text-[#177BBB] text-[10px] sm:text-xs font-semibold">
           <span>View Details</span>
           <ArrowIcon />
         </div>
@@ -118,7 +118,7 @@ const ServiceCardNew = ({ img, title, desc, delay = 0 }: { img: string; title: s
 
 const TrustItem = ({ icon, title, delay = 0 }: { icon: React.ReactNode; title: string; delay?: number }) => (
   <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay, duration: 0.3 }} className="flex items-center gap-3 bg-gray-50 dark:bg-gray-800 rounded-xl p-3 sm:p-4">
-    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-orange-50 dark:bg-orange-500/10 flex items-center justify-center flex-shrink-0">{icon}</div>
+    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg bg-[#003B73]/10 dark:bg-[#003B73]/10 flex items-center justify-center flex-shrink-0">{icon}</div>
     <span className="text-xs sm:text-sm font-medium text-gray-800 dark:text-gray-200">{title}</span>
   </motion.div>
 );
@@ -128,7 +128,7 @@ const TestimonialCard = ({ name, role, text, rating = 5, delay = 0 }: { name: st
     <StarRating rating={rating} />
     <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mt-3 sm:mt-4 mb-4 sm:mb-5 line-clamp-4">"{text}"</p>
     <div className="flex items-center gap-3">
-      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center text-orange-600 dark:text-orange-400 font-bold text-xs sm:text-sm">{name.split(' ').map(n => n[0]).join('')}</div>
+      <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#003B73]/15 dark:bg-[#003B73]/20 flex items-center justify-center text-[#003B73] dark:text-[#177BBB] dark:text-[#177BBB] font-bold text-xs sm:text-sm">{name.split(' ').map(n => n[0]).join('')}</div>
       <div>
         <p className="text-xs sm:text-sm font-semibold text-gray-900 dark:text-white">{name}</p>
         <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400">{role}</p>
@@ -142,7 +142,7 @@ const ProcessStep = ({ num, title, desc, icon, delay = 0 }: { num: string; title
   const iv = useInView(ref, { once: true, margin: '-20px' });
   return (
     <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={iv ? { opacity: 1, y: 0 } : {}} transition={{ delay, duration: 0.4 }} className="text-center">
-      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-orange-500 text-white flex items-center justify-center mx-auto mb-2 sm:mb-3 text-xs sm:text-sm font-bold">{num}</div>
+      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#003B73] text-white flex items-center justify-center mx-auto mb-2 sm:mb-3 text-xs sm:text-sm font-bold">{num}</div>
       <p className="text-xl sm:text-2xl mb-1 sm:mb-2">{icon}</p>
       <h3 className="text-white font-semibold text-xs sm:text-sm mb-1 font-heading">{title}</h3>
       <p className="text-gray-400 text-[10px] sm:text-xs leading-relaxed">{desc}</p>
@@ -158,19 +158,19 @@ const CloseIcon = () => (
 );
 
 const CheckIcon = () => (
-  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="3">
+  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#003B73" strokeWidth="3">
     <polyline points="20 6 9 17 4 12" />
   </svg>
 );
 
 const TrustIcon = ({ type }: { type: string }) => {
   const icons: Record<string, React.ReactNode> = {
-    case: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>,
-    country: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>,
-    document: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></svg>,
-    support: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6" /><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z" /><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" /></svg>,
-    transparent: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>,
-    multi: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>,
+    case: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#003B73" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>,
+    country: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#003B73" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" /></svg>,
+    document: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#003B73" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></svg>,
+    support: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#003B73" strokeWidth="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6" /><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z" /><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" /></svg>,
+    transparent: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#003B73" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>,
+    multi: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#003B73" strokeWidth="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>,
   };
   return <>{icons[type] || icons.case}</>;
 };
@@ -267,7 +267,7 @@ export default function Index() {
     <PageTransition>
     <div className={`min-h-screen overflow-x-hidden ${isDark ? 'bg-gray-950' : 'bg-[#F5F5F0]'}`}>
       {/* Progress bar */}
-      <motion.div className="fixed top-0 left-0 right-0 h-1 bg-orange-500 z-[60] origin-left" style={{ scaleX }} />
+      <motion.div className="fixed top-0 left-0 right-0 h-1 bg-[#003B73] z-[60] origin-left" style={{ scaleX }} />
 
       {/* HEADER */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${pastHero ? (isDark ? 'bg-gray-900/95 backdrop-blur-xl shadow-sm' : 'bg-white/95 backdrop-blur-xl shadow-sm') : 'bg-transparent'}`}>
@@ -277,7 +277,7 @@ export default function Index() {
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
           <Link to="/" className="flex items-center gap-1">
-            <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-[#003B73] flex items-center justify-center">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
             </div>
             <span className={`text-lg font-bold font-heading transition-colors ${pastHero ? (isDark ? 'text-white' : 'text-gray-900') : 'text-white'}`}>VisaHOBe</span>
@@ -285,14 +285,14 @@ export default function Index() {
           {/* Desktop nav links */}
           <nav className="hidden lg:flex items-center gap-6">
             {navLinks.map(item => (
-              <button key={item} onClick={() => scrollTo(item === 'Home' ? 'home' : item.toLowerCase().replace(/\s+/g, ''))} className={`text-sm font-medium transition-colors ${pastHero ? (isDark ? 'text-gray-400 hover:text-orange-500' : 'text-gray-600 hover:text-orange-500') : 'text-white/80 hover:text-white'}`}>
+              <button key={item} onClick={() => scrollTo(item === 'Home' ? 'home' : item.toLowerCase().replace(/\s+/g, ''))} className={`text-sm font-medium transition-colors ${pastHero ? (isDark ? 'text-gray-400 hover:text-[#003B73] dark:text-[#177BBB]' : 'text-gray-600 hover:text-[#003B73] dark:text-[#177BBB]') : 'text-white/80 hover:text-white'}`}>
                 {item}
               </button>
             ))}
           </nav>
           <div className="flex items-center gap-2">
-            <DarkModeToggle className={`${pastHero ? (isDark ? 'text-gray-300 hover:text-orange-400' : 'text-gray-600 hover:text-orange-500') : 'text-white/80 hover:text-white'}`} />
-            <button onClick={() => setShowContactForm(true)} className={`text-sm font-medium transition-colors px-4 py-2 rounded-full border ${pastHero ? (isDark ? 'text-gray-300 border-gray-600 hover:text-orange-500 hover:border-orange-500' : 'text-gray-600 border-gray-300 hover:text-orange-500 hover:border-orange-500') : 'text-white border-white/30 hover:bg-white/10'}`}>Contact Us</button>
+            <DarkModeToggle className={`${pastHero ? (isDark ? 'text-gray-300 hover:text-[#177BBB]' : 'text-gray-600 hover:text-[#003B73] dark:text-[#177BBB]') : 'text-white/80 hover:text-white'}`} />
+            <button onClick={() => setShowContactForm(true)} className={`text-sm font-medium transition-colors px-4 py-2 rounded-full border ${pastHero ? (isDark ? 'text-gray-300 border-gray-600 hover:text-[#003B73] dark:text-[#177BBB] hover:border-orange-500' : 'text-gray-600 border-gray-300 hover:text-[#003B73] dark:text-[#177BBB] hover:border-orange-500') : 'text-white border-white/30 hover:bg-white/10'}`}>Contact Us</button>
           </div>
         </div>
       </header>
@@ -307,7 +307,7 @@ export default function Index() {
                 <button onClick={() => setMobileMenu(false)} className="text-gray-400 hover:text-gray-900 dark:hover:text-white"><CloseIcon /></button>
               </div>
               {navLinks.map(item => (
-                <button key={item} onClick={() => scrollTo(item === 'Home' ? 'home' : item.toLowerCase().replace(/\s+/g, ''))} className="block w-full text-left py-3 text-gray-700 dark:text-gray-300 hover:text-orange-500 text-sm font-medium transition-colors border-b border-gray-100 dark:border-gray-800">
+                <button key={item} onClick={() => scrollTo(item === 'Home' ? 'home' : item.toLowerCase().replace(/\s+/g, ''))} className="block w-full text-left py-3 text-gray-700 dark:text-gray-300 hover:text-[#003B73] dark:text-[#177BBB] text-sm font-medium transition-colors border-b border-gray-100 dark:border-gray-800">
                   {item}
                 </button>
               ))}
@@ -352,7 +352,7 @@ export default function Index() {
                       <option>Other</option>
                     </select>
                     <textarea placeholder="Your Message" rows={3} className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors resize-none" />
-                    <button type="submit" className="w-full bg-orange-500 text-white rounded-xl py-3 text-sm font-bold hover:bg-orange-600 transition-colors">Submit Inquiry</button>
+                    <button type="submit" className="w-full bg-[#003B73] text-white rounded-xl py-3 text-sm font-bold hover:bg-[#177BBB] transition-colors">Submit Inquiry</button>
                   </form>
                 </>
               )}
@@ -388,10 +388,10 @@ export default function Index() {
                   <option value="">Experience Level</option>
                   <option>Entry Level (0-2 years)</option><option>Mid Level (3-7 years)</option><option>Senior (8+ years)</option>
                 </select>
-                <button onClick={handleEligCheck} className="w-full bg-orange-500 text-white rounded-xl py-3 text-sm font-bold hover:bg-orange-600 transition-colors">Check Eligibility</button>
+                <button onClick={handleEligCheck} className="w-full bg-[#003B73] text-white rounded-xl py-3 text-sm font-bold hover:bg-[#177BBB] transition-colors">Check Eligibility</button>
                 {eligResult && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-orange-50 rounded-xl p-4 border border-orange-200">
-                    <p className="text-orange-600 font-bold text-lg mb-1 font-heading">{eligResult.score}% Match</p>
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-[#003B73]/10 rounded-xl p-4 border border-[#003B73]/20">
+                    <p className="text-[#003B73] dark:text-[#177BBB] font-bold text-lg mb-1 font-heading">{eligResult.score}% Match</p>
                     <p className="text-gray-600 dark:text-gray-300 text-sm">{eligResult.message}</p>
                   </motion.div>
                 )}
@@ -409,15 +409,15 @@ export default function Index() {
         {/* Animated world map SVG */}
         <motion.div className="absolute inset-0 flex items-center justify-center" initial={{ opacity: 0, scale: 1.2 }} animate={{ opacity: 0.5, scale: 1 }} transition={{ duration: 2 }}>
           <svg className="w-full h-full max-w-none" viewBox="0 0 1000 500" fill="none">
-            <path d="M150 80 L220 60 L280 80 L300 120 L280 180 L240 200 L200 220 L160 200 L120 160 L100 120 Z" fill="rgba(249,115,22,0.12)" stroke="rgba(249,115,22,0.3)" strokeWidth="1"/>
-            <path d="M220 250 L260 240 L280 280 L290 340 L270 400 L240 420 L210 380 L200 320 L210 280 Z" fill="rgba(249,115,22,0.08)" stroke="rgba(249,115,22,0.25)" strokeWidth="1"/>
-            <path d="M440 70 L500 60 L530 80 L520 120 L490 140 L460 130 L440 100 Z" fill="rgba(249,115,22,0.15)" stroke="rgba(249,115,22,0.4)" strokeWidth="1"/>
-            <path d="M460 160 L510 150 L540 180 L550 250 L530 320 L500 350 L470 320 L450 260 L440 200 Z" fill="rgba(249,115,22,0.08)" stroke="rgba(249,115,22,0.25)" strokeWidth="1"/>
-            <path d="M560 60 L700 50 L780 80 L800 140 L760 180 L700 200 L640 190 L580 160 L550 120 L540 80 Z" fill="rgba(249,115,22,0.12)" stroke="rgba(249,115,22,0.3)" strokeWidth="1"/>
-            <path d="M720 200 L780 190 L820 220 L810 260 L770 280 L730 260 L710 230 Z" fill="rgba(249,115,22,0.08)" stroke="rgba(249,115,22,0.25)" strokeWidth="1"/>
-            <path d="M760 320 L840 310 L880 340 L870 380 L830 400 L780 390 L750 360 Z" fill="rgba(249,115,22,0.12)" stroke="rgba(249,115,22,0.3)" strokeWidth="1"/>
-            {[100,200,300,400].map(y => <line key={`h${y}`} x1="0" y1={y} x2="1000" y2={y} stroke="rgba(249,115,22,0.06)" strokeWidth="0.5" strokeDasharray="8 8"/>)}
-            {[200,400,600,800].map(x => <line key={`v${x}`} x1={x} y1="0" x2={x} y2="500" stroke="rgba(249,115,22,0.06)" strokeWidth="0.5" strokeDasharray="8 8"/>)}
+            <path d="M150 80 L220 60 L280 80 L300 120 L280 180 L240 200 L200 220 L160 200 L120 160 L100 120 Z" fill="rgba(0,59,115,0.12)" stroke="rgba(0,59,115,0.3)" strokeWidth="1"/>
+            <path d="M220 250 L260 240 L280 280 L290 340 L270 400 L240 420 L210 380 L200 320 L210 280 Z" fill="rgba(0,59,115,0.08)" stroke="rgba(0,59,115,0.25)" strokeWidth="1"/>
+            <path d="M440 70 L500 60 L530 80 L520 120 L490 140 L460 130 L440 100 Z" fill="rgba(0,59,115,0.15)" stroke="rgba(0,59,115,0.4)" strokeWidth="1"/>
+            <path d="M460 160 L510 150 L540 180 L550 250 L530 320 L500 350 L470 320 L450 260 L440 200 Z" fill="rgba(0,59,115,0.08)" stroke="rgba(0,59,115,0.25)" strokeWidth="1"/>
+            <path d="M560 60 L700 50 L780 80 L800 140 L760 180 L700 200 L640 190 L580 160 L550 120 L540 80 Z" fill="rgba(0,59,115,0.12)" stroke="rgba(0,59,115,0.3)" strokeWidth="1"/>
+            <path d="M720 200 L780 190 L820 220 L810 260 L770 280 L730 260 L710 230 Z" fill="rgba(0,59,115,0.08)" stroke="rgba(0,59,115,0.25)" strokeWidth="1"/>
+            <path d="M760 320 L840 310 L880 340 L870 380 L830 400 L780 390 L750 360 Z" fill="rgba(0,59,115,0.12)" stroke="rgba(0,59,115,0.3)" strokeWidth="1"/>
+            {[100,200,300,400].map(y => <line key={`h${y}`} x1="0" y1={y} x2="1000" y2={y} stroke="rgba(0,59,115,0.06)" strokeWidth="0.5" strokeDasharray="8 8"/>)}
+            {[200,400,600,800].map(x => <line key={`v${x}`} x1={x} y1="0" x2={x} y2="500" stroke="rgba(0,59,115,0.06)" strokeWidth="0.5" strokeDasharray="8 8"/>)}
           </svg>
         </motion.div>
 
@@ -428,21 +428,21 @@ export default function Index() {
           { x: 47, y: 20 }, { x: 70, y: 40 },
         ].map((dot, i) => (
           <motion.div key={i} className="absolute" style={{ left: `${dot.x}%`, top: `${dot.y}%` }} initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.5 + i * 0.12, type: 'spring' }}>
-            <div className="w-2 h-2 bg-orange-500 rounded-full" />
-            <motion.div className="absolute inset-0 w-2 h-2 bg-orange-500 rounded-full" animate={{ scale: [1, 3, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.25 }} />
+            <div className="w-2 h-2 bg-[#003B73] rounded-full" />
+            <motion.div className="absolute inset-0 w-2 h-2 bg-[#003B73] rounded-full" animate={{ scale: [1, 3, 1], opacity: [0.5, 0, 0.5] }} transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.25 }} />
           </motion.div>
         ))}
 
         {/* Animated flight arcs */}
         <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <motion.path d="M 10 75 Q 35 30 50 25 Q 65 20 90 45" fill="none" stroke="rgba(249,115,22,0.5)" strokeWidth="0.3" strokeDasharray="2 2" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 3, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop', repeatDelay: 1 }} />
-          <motion.path d="M 15 65 Q 45 45 55 35 Q 75 25 85 55" fill="none" stroke="rgba(249,115,22,0.25)" strokeWidth="0.2" strokeDasharray="1 2" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 4, ease: 'easeInOut', delay: 1.5, repeat: Infinity, repeatType: 'loop', repeatDelay: 1 }} />
+          <motion.path d="M 10 75 Q 35 30 50 25 Q 65 20 90 45" fill="none" stroke="rgba(0,59,115,0.5)" strokeWidth="0.3" strokeDasharray="2 2" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 3, ease: 'easeInOut', repeat: Infinity, repeatType: 'loop', repeatDelay: 1 }} />
+          <motion.path d="M 15 65 Q 45 45 55 35 Q 75 25 85 55" fill="none" stroke="rgba(0,59,115,0.25)" strokeWidth="0.2" strokeDasharray="1 2" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 4, ease: 'easeInOut', delay: 1.5, repeat: Infinity, repeatType: 'loop', repeatDelay: 1 }} />
         </svg>
 
         {/* Floating airplane */}
         <motion.div className="absolute z-10" initial={{ x: '-30vw', y: '20vh' }} animate={{ x: ['-30vw', '10vw', '40vw'], y: ['20vh', '-10vh', '15vh'], rotate: [-30, -10, 10] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}>
           <svg width="48" height="48" viewBox="0 0 64 64" fill="none">
-            <path d="M58 6L28 36M58 6L40 58L28 36M58 6L6 24L28 36" fill="rgba(249,115,22,0.15)" stroke="#F97316" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M58 6L28 36M58 6L40 58L28 36M58 6L6 24L28 36" fill="rgba(0,59,115,0.15)" stroke="#003B73" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </motion.div>
 
@@ -455,13 +455,13 @@ export default function Index() {
         <div className="relative z-20 text-center px-4">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}>
             <div className="flex items-center justify-center gap-2 mb-6">
-              <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-[#003B73] flex items-center justify-center">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
               </div>
               <span className="text-2xl sm:text-3xl font-bold text-white font-heading">VisaHOBe</span>
             </div>
             <h1 className="text-[2.5rem] sm:text-[4rem] md:text-[5rem] lg:text-[6rem] font-bold tracking-tighter text-white leading-none font-heading mb-2">
-              Global <span className="text-orange-500">Mobility</span>
+              Global <span className="text-[#003B73] dark:text-[#177BBB]">Mobility</span>
             </h1>
             <p className="text-white/40 text-xs sm:text-sm max-w-md mx-auto mt-4 mb-8">Your trusted partner for visa processing & international recruitment across 10 countries.</p>
           </motion.div>
@@ -521,13 +521,13 @@ export default function Index() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}>
-              <span className="inline-block bg-orange-50 text-orange-600 text-xs font-bold px-3 py-1 rounded-full mb-4">For Employers</span>
+              <span className="inline-block bg-[#003B73]/10 text-[#003B73] dark:text-[#177BBB] text-xs font-bold px-3 py-1 rounded-full mb-4">For Employers</span>
               <h2 className="text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-tight mb-4 font-heading">Recruitment Solutions for Global Employers</h2>
               <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-6">VisaHOBe supports candidate sourcing, documentation flow, and recruitment coordination for employers seeking qualified international talent.</p>
               <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-6">
                 {['Candidate Sourcing', 'Document Preparation', 'Employer Coordination', 'Compliance Support'].map(item => (
                   <div key={item} className="flex items-center gap-2">
-                    <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-orange-500/10 flex items-center justify-center flex-shrink-0"><CheckIcon /></div>
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#003B73]/10 flex items-center justify-center flex-shrink-0"><CheckIcon /></div>
                     <span className="text-gray-700 dark:text-gray-300 text-[10px] sm:text-xs font-medium">{item}</span>
                   </div>
                 ))}
@@ -579,7 +579,7 @@ export default function Index() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-xl">
               <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-4">
-                <span className="font-bold text-gray-900">VisaHOBe Pte. Ltd.</span> is a Singapore-registered professional visa and recruitment support company, incorporated on <span className="font-semibold text-orange-500">June 3, 2025</span>. As a Private Company Limited by Shares (UEN: 202524173E), we serve as a complete <span className="font-semibold">"End-to-End"</span> visa travel partner.
+                <span className="font-bold text-gray-900">VisaHOBe Pte. Ltd.</span> is a Singapore-registered professional visa and recruitment support company, incorporated on <span className="font-semibold text-[#003B73] dark:text-[#177BBB]">June 3, 2025</span>. As a Private Company Limited by Shares (UEN: 202524173E), we serve as a complete <span className="font-semibold">"End-to-End"</span> visa travel partner.
               </p>
               <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-4">
                 Our mission is to simplify the complex journey of cross-border employment and visa acquisition. We specialize in facilitating transparent and successful international labor migration, primarily serving the Bangladeshi market with operations spanning 10 countries.
@@ -588,12 +588,12 @@ export default function Index() {
                 Headquartered at 68 Circular Road, #02-01, Singapore 049422, with our operational hub in Dhaka, Bangladesh.
               </p>
               <div className="flex flex-wrap gap-3">
-                <div className="bg-orange-50 rounded-xl px-4 py-2">
-                  <p className="text-orange-600 text-[10px] sm:text-xs font-bold">ACRA Code</p>
+                <div className="bg-[#003B73]/10 rounded-xl px-4 py-2">
+                  <p className="text-[#003B73] dark:text-[#177BBB] text-[10px] sm:text-xs font-bold">ACRA Code</p>
                   <p className="text-gray-700 dark:text-gray-300 text-[10px] sm:text-xs">70201 — Management Consultancy</p>
                 </div>
-                <div className="bg-orange-50 rounded-xl px-4 py-2">
-                  <p className="text-orange-600 text-[10px] sm:text-xs font-bold">UEN</p>
+                <div className="bg-[#003B73]/10 rounded-xl px-4 py-2">
+                  <p className="text-[#003B73] dark:text-[#177BBB] text-[10px] sm:text-xs font-bold">UEN</p>
                   <p className="text-gray-700 dark:text-gray-300 text-[10px] sm:text-xs">202524173E</p>
                 </div>
               </div>
@@ -617,13 +617,13 @@ export default function Index() {
               </div>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} className="order-1 md:order-2">
-              <span className="inline-block bg-orange-50 text-orange-600 text-xs font-bold px-3 py-1 rounded-full mb-4">Coming Soon</span>
+              <span className="inline-block bg-[#003B73]/10 text-[#003B73] dark:text-[#177BBB] text-xs font-bold px-3 py-1 rounded-full mb-4">Coming Soon</span>
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 font-heading">Client Portal</h2>
               <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-4">Manage your visa applications, track progress in real-time, and access all your documents through our intuitive client portal.</p>
               <ul className="space-y-2 mb-6">
                 {['Real-time application tracking', 'Secure document upload & storage', 'Progress notifications', 'Direct communication with your case officer'].map(item => (
                   <li key={item} className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-xs sm:text-sm">
-                    <div className="w-4 h-4 rounded-full bg-orange-500/10 flex items-center justify-center flex-shrink-0"><CheckIcon /></div>
+                    <div className="w-4 h-4 rounded-full bg-[#003B73]/10 flex items-center justify-center flex-shrink-0"><CheckIcon /></div>
                     {item}
                   </li>
                 ))}
@@ -638,10 +638,10 @@ export default function Index() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}>
-              <span className="inline-block bg-orange-50 text-orange-600 text-xs font-bold px-3 py-1 rounded-full mb-4">Job Opportunities</span>
+              <span className="inline-block bg-[#003B73]/10 text-[#003B73] dark:text-[#177BBB] text-xs font-bold px-3 py-1 rounded-full mb-4">Job Opportunities</span>
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4 font-heading">International Job Board</h2>
               <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm leading-relaxed mb-4">Browse verified job openings across our partner countries. Filter by destination, industry, and experience level.</p>
-              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="bg-orange-500 text-white rounded-full px-6 py-2.5 text-sm font-bold shadow-lg shadow-orange-500/30 inline-flex items-center gap-2">
+              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="bg-[#003B73] text-white rounded-full px-6 py-2.5 text-sm font-bold shadow-lg shadow-[#003B73]/30 inline-flex items-center gap-2">
                 Browse Jobs <ArrowIcon />
               </motion.button>
             </motion.div>
@@ -710,7 +710,7 @@ export default function Index() {
           <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-[2rem] sm:text-[3.5rem] md:text-[4rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-4 font-heading">Ready to Start?</motion.h2>
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mb-6 sm:mb-8 max-w-lg mx-auto">Take the first step towards your international career. Our team is ready to guide you through every stage of the process.</motion.p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setShowEligibility(true)} className="bg-orange-500 text-white rounded-full px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-bold shadow-lg shadow-orange-500/30 inline-flex items-center justify-center gap-2">
+            <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setShowEligibility(true)} className="bg-[#003B73] text-white rounded-full px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-bold shadow-lg shadow-[#003B73]/30 inline-flex items-center justify-center gap-2">
               Check Eligibility <ArrowIcon />
             </motion.button>
             <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setShowContactForm(true)} className="bg-gray-900 text-white rounded-full px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-bold shadow-lg inline-flex items-center justify-center gap-2">
@@ -726,7 +726,7 @@ export default function Index() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-8 sm:mb-10">
             <div className="col-span-2 md:col-span-1">
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-[#003B73] flex items-center justify-center">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
                 </div>
                 <span className="text-white font-bold text-lg font-heading">VisaHOBe</span>
@@ -737,7 +737,7 @@ export default function Index() {
               <h4 className="text-white font-semibold text-xs sm:text-sm mb-3 sm:mb-4 font-heading">Services</h4>
               <ul className="space-y-1.5 sm:space-y-2">
                 {['Work Permits', 'Tourist Visas', 'Business Visas', 'Recruitment', 'Document Review'].map(s => (
-                  <li key={s} className="text-gray-400 text-[10px] sm:text-xs hover:text-orange-400 cursor-pointer transition-colors">{s}</li>
+                  <li key={s} className="text-gray-400 text-[10px] sm:text-xs hover:text-[#177BBB] cursor-pointer transition-colors">{s}</li>
                 ))}
               </ul>
             </div>
@@ -746,7 +746,7 @@ export default function Index() {
               <ul className="space-y-1.5 sm:space-y-2">
                 {countries.slice(0, 6).map(c => (
                   <li key={c.slug}>
-                    <Link to={`/countries/${c.slug}`} className="text-gray-400 text-[10px] sm:text-xs hover:text-orange-400 transition-colors">{c.country}</Link>
+                    <Link to={`/countries/${c.slug}`} className="text-gray-400 text-[10px] sm:text-xs hover:text-[#177BBB] transition-colors">{c.country}</Link>
                   </li>
                 ))}
               </ul>

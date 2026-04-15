@@ -15,7 +15,7 @@ const CloseIcon = () => (
 );
 
 const CheckIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="3">
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#003B73" strokeWidth="3">
     <polyline points="20 6 9 17 4 12" />
   </svg>
 );
@@ -42,7 +42,7 @@ export default function CountryDetail() {
       <div className="min-h-screen bg-[#F5F5F0] dark:bg-gray-950 flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Country Not Found</h1>
-          <Link to="/" className="text-orange-500 font-semibold hover:underline">← Back to Home</Link>
+          <Link to="/" className="text-[#003B73] dark:text-[#177BBB] font-semibold hover:underline">← Back to Home</Link>
         </div>
       </div>
     );
@@ -61,15 +61,15 @@ export default function CountryDetail() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#F5F5F0]/95 dark:bg-gray-900/95 backdrop-blur-xl shadow-sm">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-1">
-            <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-[#003B73] flex items-center justify-center">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
             </div>
             <span className="text-lg font-bold text-gray-900 dark:text-white">VisaHOBe</span>
           </Link>
           <div className="flex items-center gap-3">
             <Link to="/" className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors hidden sm:inline">Home</Link>
-            <DarkModeToggle className="text-gray-600 dark:text-gray-300 hover:text-orange-500" />
-            <button onClick={() => setShowContact(true)} className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-orange-500 transition-colors">Contact Us</button>
+            <DarkModeToggle className="text-gray-600 dark:text-gray-300 hover:text-[#003B73] dark:text-[#177BBB]" />
+            <button onClick={() => setShowContact(true)} className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-[#003B73] dark:text-[#177BBB] transition-colors">Contact Us</button>
           </div>
         </div>
       </header>
@@ -96,7 +96,7 @@ export default function CountryDetail() {
       </section>
 
       {/* Quick Info Bar */}
-      <section className="bg-white border-b border-gray-100 dark:border-gray-700">
+      <section className="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-700">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
@@ -107,7 +107,7 @@ export default function CountryDetail() {
             ].map(item => (
               <div key={item.label}>
                 <p className="text-gray-400 dark:text-gray-500 text-xs font-medium">{item.label}</p>
-                <p className="text-gray-900 text-sm font-semibold">{item.value}</p>
+                <p className="text-gray-900 dark:text-white text-sm font-semibold">{item.value}</p>
               </div>
             ))}
           </div>
@@ -131,19 +131,19 @@ export default function CountryDetail() {
               <div className="space-y-4">
                 {country.visaTypes.map((vt) => (
                   <div key={vt.name} className="bg-white dark:bg-gray-800 rounded-2xl p-5 sm:p-6 border border-gray-100 shadow-sm">
-                    <h3 className="font-bold text-gray-900 text-base mb-3">{vt.name}</h3>
+                    <h3 className="font-bold text-gray-900 dark:text-white text-base mb-3">{vt.name}</h3>
                     <div className="grid grid-cols-3 gap-4">
                       <div>
                         <p className="text-gray-400 dark:text-gray-500 text-xs">Processing Time</p>
-                        <p className="text-gray-800 text-sm font-semibold">{vt.processingTime}</p>
+                        <p className="text-gray-800 dark:text-gray-200 text-sm font-semibold">{vt.processingTime}</p>
                       </div>
                       <div>
                         <p className="text-gray-400 dark:text-gray-500 text-xs">Fee</p>
-                        <p className="text-orange-600 text-sm font-semibold">{vt.fee}</p>
+                        <p className="text-[#003B73] dark:text-[#177BBB] text-sm font-semibold">{vt.fee}</p>
                       </div>
                       <div>
                         <p className="text-gray-400 dark:text-gray-500 text-xs">Validity</p>
-                        <p className="text-gray-800 text-sm font-semibold">{vt.validity}</p>
+                        <p className="text-gray-800 dark:text-gray-200 text-sm font-semibold">{vt.validity}</p>
                       </div>
                     </div>
                   </div>
@@ -158,10 +158,10 @@ export default function CountryDetail() {
                 <ul className="space-y-3">
                   {country.requirements.map((req) => (
                     <li key={req} className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-orange-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-5 h-5 rounded-full bg-[#003B73]/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <CheckIcon />
                       </div>
-                      <span className="text-gray-700 text-sm">{req}</span>
+                      <span className="text-gray-700 dark:text-gray-300 text-sm">{req}</span>
                     </li>
                   ))}
                 </ul>
@@ -173,7 +173,7 @@ export default function CountryDetail() {
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 font-heading">Key Industries</h2>
               <div className="flex flex-wrap gap-2">
                 {country.industries.map((ind) => (
-                  <span key={ind} className="bg-white text-gray-700 text-sm font-medium px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 shadow-sm">{ind}</span>
+                  <span key={ind} className="bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm font-medium px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 dark:bg-gray-800 shadow-sm">{ind}</span>
                 ))}
               </div>
             </motion.div>
@@ -185,7 +185,7 @@ export default function CountryDetail() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="bg-gray-900 rounded-2xl p-6 text-center sticky top-24">
               <h3 className="text-white font-bold text-lg mb-2">Apply for {country.country}</h3>
               <p className="text-gray-400 dark:text-gray-500 text-xs mb-5">Get expert guidance for your visa application. Free initial consultation.</p>
-              <button onClick={() => setShowContact(true)} className="w-full bg-orange-500 text-white rounded-full py-3 text-sm font-bold hover:bg-orange-600 transition-colors mb-3 flex items-center justify-center gap-2">
+              <button onClick={() => setShowContact(true)} className="w-full bg-[#003B73] text-white rounded-full py-3 text-sm font-bold hover:bg-[#177BBB] transition-colors mb-3 flex items-center justify-center gap-2">
                 Start Application <ArrowIcon />
               </button>
               <p className="text-gray-500 text-[10px]">Average processing: {country.visaTypes[0]?.processingTime}</p>
@@ -193,13 +193,13 @@ export default function CountryDetail() {
 
             {/* Other Countries */}
             <div>
-              <h3 className="font-bold text-gray-900 text-base mb-3">Other Countries</h3>
+              <h3 className="font-bold text-gray-900 dark:text-white text-base mb-3">Other Countries</h3>
               <div className="space-y-3">
                 {otherCountries.map(c => (
                   <Link key={c.slug} to={`/countries/${c.slug}`} className="flex items-center gap-3 bg-white dark:bg-gray-800 rounded-xl p-3 border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
                     <img src={c.img} alt={c.country} className="w-14 h-10 rounded-lg object-cover" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-gray-900 group-hover:text-orange-500 transition-colors">{c.flag} {c.country}</p>
+                      <p className="text-sm font-semibold text-gray-900 group-hover:text-[#003B73] dark:text-[#177BBB] transition-colors">{c.flag} {c.country}</p>
                       <p className="text-xs text-gray-500 truncate">{c.visa}</p>
                     </div>
                   </Link>
@@ -225,7 +225,7 @@ export default function CountryDetail() {
             ) : (
               <>
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-xl font-bold text-gray-900">Apply for {country.country}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">Apply for {country.country}</h3>
                   <button onClick={() => setShowContact(false)} className="text-gray-400 hover:text-gray-900"><CloseIcon /></button>
                 </div>
                 <form onSubmit={(e) => { e.preventDefault(); setFormSubmitted(true); }} className="space-y-4">
@@ -236,7 +236,7 @@ export default function CountryDetail() {
                     {country.visaTypes.map(vt => <option key={vt.name}>{vt.name}</option>)}
                   </select>
                   <textarea placeholder="Additional details about your application..." rows={3} className="w-full border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors resize-none" />
-                  <button type="submit" className="w-full bg-orange-500 text-white rounded-xl py-3 text-sm font-bold hover:bg-orange-600 transition-colors">Submit Application</button>
+                  <button type="submit" className="w-full bg-[#003B73] text-white rounded-xl py-3 text-sm font-bold hover:bg-[#177BBB] transition-colors">Submit Application</button>
                 </form>
               </>
             )}
@@ -249,7 +249,7 @@ export default function CountryDetail() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-full bg-[#003B73] flex items-center justify-center">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg>
               </div>
               <span className="text-white font-bold">VisaHOBe</span>
