@@ -174,6 +174,11 @@ export default function Index() {
   const tabs = ['All', 'Asia', 'Europe', 'Middle East'];
   const filteredCountries = activeTab === 'All' ? countries : countries.filter(c => c.region === activeTab);
   const navLinks = ['Home', 'Countries', 'Services', 'About', 'Contact'];
+  const handleNav = (item: string) => {
+    if (item === 'Services') { navigate('/services'); setMobileMenu(false); return; }
+    if (item === 'About') { navigate('/about'); setMobileMenu(false); return; }
+    scrollTo(item === 'Home' ? 'home' : item.toLowerCase());
+  };
   const scrollTo = (id: string) => {
     document.getElementById(id.toLowerCase().replace(/\s+/g, ''))?.scrollIntoView({ behavior: 'smooth' });
     setMobileMenu(false);
