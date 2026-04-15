@@ -390,7 +390,7 @@ export default function Index() {
                 </select>
                 <button onClick={handleEligCheck} className="w-full bg-[#003B73] text-white rounded-xl py-3 text-sm font-bold hover:bg-[#177BBB] transition-colors">Check Eligibility</button>
                 {eligResult && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-[#003B73]/10 rounded-xl p-4 border border-[#003B73]/20">
+                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-[#003B73]/10 dark:bg-[#177BBB]/10 rounded-xl p-4 border border-[#003B73]/20 dark:border-[#177BBB]/20">
                     <p className="text-[#003B73] dark:text-[#177BBB] font-bold text-lg mb-1 font-heading">{eligResult.score}% Match</p>
                     <p className="text-gray-600 dark:text-gray-300 text-sm">{eligResult.message}</p>
                   </motion.div>
@@ -678,7 +678,7 @@ export default function Index() {
       </SectionWrap>
 
       {/* ── FAQ SECTION ── */}
-      <SectionWrap className="pt-16 pb-16 bg-white" id="faq">
+      <SectionWrap className="pt-16 pb-16 bg-white dark:bg-gray-900" id="faq">
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Got Questions?</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center text-[1.8rem] sm:text-[2.5rem] md:text-[3rem] font-bold tracking-tighter text-gray-900 dark:text-white leading-none mb-10 font-heading">Frequently Asked Questions</motion.h2>
