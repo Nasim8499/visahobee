@@ -539,5 +539,4 @@ export default function Index() {
       </footer>
     </div>
   );
-  );
 }
