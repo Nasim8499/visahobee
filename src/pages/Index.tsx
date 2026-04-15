@@ -49,7 +49,7 @@ const AnimatedCounter = ({ end, suffix = "", label = "" }: { end: number; suffix
 
 /* ── Country Card ── */
 const CountryCard = ({ img, country, visa, badge, desc, slug, delay = 0 }: { img: string; country: string; visa: string; badge?: string; desc: string; slug: string; delay?: number; featured?: boolean; flag?: string; region?: string }) => (
-  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay, duration: 0.4 }} whileHover={{ y: -4 }}>
+  <div>
     <Link to={`/countries/${slug}`} className="block bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 group">
       <div className="relative h-32 sm:h-44 overflow-hidden">
         <img src={img} alt={country} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -74,7 +74,7 @@ const CountryCard = ({ img, country, visa, badge, desc, slug, delay = 0 }: { img
 
 /* ── Service Card ── */
 const ServiceCard = ({ img, title, desc, delay = 0 }: { img: string; title: string; desc: string; delay?: number }) => (
-  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay, duration: 0.4 }} whileHover={{ y: -4 }}>
+  <div>
     <Link to="/services" className="block bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700 group">
       <div className="relative h-28 sm:h-36 overflow-hidden">
         <img src={img} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -90,7 +90,7 @@ const ServiceCard = ({ img, title, desc, delay = 0 }: { img: string; title: stri
 
 /* ── Testimonial Card ── */
 const TestimonialCard = ({ name, role, text, delay = 0 }: { name: string; role: string; text: string; delay?: number }) => (
-  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay, duration: 0.4 }} className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 shadow-sm border border-gray-100 dark:border-gray-700">
+  <div className="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-5 shadow-sm border border-gray-100 dark:border-gray-700">
     <div className="flex gap-0.5 mb-3">
       {[1,2,3,4,5].map(s => (
         <svg key={s} width="12" height="12" viewBox="0 0 24 24" fill="#003B73" stroke="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" /></svg>
